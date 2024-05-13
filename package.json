@@ -1,19 +1,59 @@
 {
-  "name": "website",
-  "type": "module",
+  "name": "@lavamoat/website",
   "version": "0.0.1",
+  "type": "module",
+  "license": "MIT",
+  "private": true,
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
+    "astro": "astro",
     "build": "astro check && astro build",
+    "dev": "astro dev",
+    "lint": "eslint .",
+    "lint:commit": "commitlint",
+    "lint:staged": "lint-staged",
+    "prepare": "husky",
     "preview": "astro preview",
-    "astro": "astro"
+    "start": "astro dev"
   },
   "dependencies": {
+    "@astrojs/check": "^0.6.0",
     "@astrojs/starlight": "^0.22.2",
     "astro": "^4.3.5",
     "sharp": "^0.32.5",
-    "@astrojs/check": "^0.6.0",
-    "typescript": "^5.4.5"
+    "typescript": "~5.4.5"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "19.2.2",
+    "@commitlint/config-conventional": "19.2.2",
+    "@eslint/js": "9.2.0",
+    "eslint": "8.57.0",
+    "eslint-plugin-astro": "1.2.0",
+    "eslint-plugin-jsonc": "2.15.1",
+    "globals": "15.2.0",
+    "husky": "9.0.11",
+    "lint-staged": "15.2.2",
+    "prettier": "3.2.5",
+    "prettier-plugin-astro": "0.13.0",
+    "prettier-plugin-pkg": "0.18.1",
+    "typescript-eslint": "7.9.0"
+  },
+  "lint-staged": {
+    "*.(m?js|ts)": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.(mdx?|ya?ml|json|astro)": [
+      "prettier --write"
+    ],
+    "!(package-lock*).json": [
+      "prettier --write"
+    ]
+  },
+  "prettier": {
+    "plugins": [
+      "prettier-plugin-astro",
+      "prettier-plugin-pkg"
+    ],
+    "singleQuote": true
   }
 }
