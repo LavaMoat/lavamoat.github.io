@@ -14,6 +14,6 @@ export default [
   ...jsonc.configs['flat/prettier'],
   ...tseslint.configs.recommended,
   {
-    ignores: ['.astro/**/*', '**/env.d.ts'],
+    ignores: ['.astro/**/*', '**/env.d.ts', 'dist/**'],
   },
 ];

@@ -14,8 +14,17 @@ export default defineConfig({
           label: 'Guides',
           items: [
             // Each item here is one entry in the navigation menu.
-            { label: 'Example Guide', link: '/guides/example/' },
+            { label: 'Getting Started', link: '/guide/getting-started/' },
           ],
+        },
+        // note: using autogenerate means you cannot control the order of the items
+        {
+          label: 'Tutorials',
+          autogenerate: { directory: 'tutorials' },
+        },
+        {
+          label: 'Understanding LavaMoat',
+          autogenerate: { directory: 'about' },
         },
         {
           label: 'Reference',
