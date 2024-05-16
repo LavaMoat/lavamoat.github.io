@@ -15,6 +15,8 @@ applications.
 
 > a.k.a. _Secure ECMAScript_ or _SES_
 
+A flavour of JavaScript for safely running third-party code.
+
 ## SES
 
 See [Hardened JavaScript][].
