@@ -11,8 +11,6 @@ JavaScript][] in tandem with user-configurable policies to
 secure the development, build, and runtime environments of JavaScript
 applications.
 
-## SES / Secure ECMAScript
-
 ## Hardened JavaScript
 
 > a.k.a. _Secure ECMAScript_ or _SES_
