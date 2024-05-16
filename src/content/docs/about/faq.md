@@ -1,5 +1,5 @@
 ---
-title: LavaMoat FAQ
+title: FAQ
 description: Frequently Asked Questions
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: LavaMoat Terminology
+title: Terminology
 description: A reference page for LavaMoat and related terminology
 ---
 
