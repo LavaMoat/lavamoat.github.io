@@ -8,8 +8,10 @@
     "astro": "astro",
     "build": "astro check && astro build",
     "dev": "astro dev",
-    "lint": "eslint .",
+    "lint": "npm run lint:eslint && npm run lint:markdown",
     "lint:commit": "commitlint",
+    "lint:eslint": "eslint .",
+    "lint:markdown": "markdownlint-cli2 \"**/*.md\"",
     "lint:staged": "lint-staged",
     "prepare": "husky",
     "preview": "astro preview",
@@ -31,6 +33,8 @@
     "globals": "15.2.0",
     "husky": "9.0.11",
     "lint-staged": "15.2.2",
+    "markdownlint-cli2": "0.13.0",
+    "markdownlint-cli2-formatter-pretty": "0.0.6",
     "prettier": "3.2.5",
     "prettier-plugin-astro": "0.13.0",
     "prettier-plugin-pkg": "0.18.1",
@@ -41,6 +45,9 @@
     "*.(m?js|ts)": [
       "eslint --fix",
       "prettier --write"
+    ],
+    "*.md": [
+      "markdownlint-cli2 --fix"
     ],
     "*.(mdx?|ya?ml|json|astro)": [
       "prettier --write"
