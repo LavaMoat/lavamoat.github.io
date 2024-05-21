@@ -1,5 +1,5 @@
 ---
-title: '@lavamoat/allow-scripts Reference'
+title: '@lavamoat/allow-scripts'
 description: 'A reference page for @lavamoat/allow-scripts in the LavaMoat documentation.'
 ---
 

@@ -1,6 +1,8 @@
 ---
-title: Getting Started with LavaMoat
+title: Getting Started
 description: Getting Started securing your JavaScript with LavaMoat
+sidebar:
+  order: 1
 ---
 
 ## Prerequisites

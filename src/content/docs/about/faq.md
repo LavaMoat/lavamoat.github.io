@@ -1,6 +1,8 @@
 ---
 title: FAQ
 description: Frequently Asked Questions
+sidebar:
+  order: 1
 ---
 
 ## What is LavaMoat?

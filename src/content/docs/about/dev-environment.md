@@ -1,6 +1,8 @@
 ---
-title: Securing the Development Environment
+title: LavaMoat in the Dev Environment
 description: Securing the Development Environment with LavaMoat
+sidebar:
+  order: 2
 ---
 
 In this document, we'll explain how LavaMoat protects your development environment.

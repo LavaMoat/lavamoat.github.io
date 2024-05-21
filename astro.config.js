@@ -12,19 +12,12 @@ export default defineConfig({
       sidebar: [
         {
           label: 'Guides',
-          items: [
-            // Each item here is one entry in the navigation menu.
-            { label: 'Getting Started', link: '/guide/getting-started/' },
-            {
-              label: "User's Guide: allow-scripts",
-              link: '/guide/allow-scripts/',
-            },
-          ],
+          autogenerate: { directory: 'guide' },
         },
         // note: using autogenerate means you cannot control the order of the items
         {
           label: 'Tutorials',
-          autogenerate: { directory: 'tutorials' },
+          autogenerate: { directory: 'tutorial' },
         },
         {
           label: 'Understanding LavaMoat',
