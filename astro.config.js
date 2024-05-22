@@ -10,11 +10,12 @@ export default defineConfig({
         github: 'https://github.com/LavaMoat/LavaMoat',
       },
       sidebar: [
+        // to change the order of items, use the sidebar.order prop
+        // of the frontmatter in the .md file
         {
           label: 'Guides',
           autogenerate: { directory: 'guide' },
         },
-        // note: using autogenerate means you cannot control the order of the items
         {
           label: 'Tutorials',
           autogenerate: { directory: 'tutorial' },
