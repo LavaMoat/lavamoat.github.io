@@ -3,6 +3,8 @@ title: Glossary
 description: Terminology for LavaMoat and related technologies
 ---
 
+This glossary provides definitions for terms used in the context of LavaMoat and related technologies.
+
 ## Compartment
 
 Compartments are a mechanism for isolating and providing limited power to programs within a shared realm. Compartments are necessary for [Hardened JavaScript][] and are described in the [Compartments Proposal][compartments-proposal-ext].

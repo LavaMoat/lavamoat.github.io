@@ -1,0 +1,51 @@
+---
+title: Project Structure
+description: LavaMoat Project Structure Reference
+---
+
+import { FileTree } from '@astrojs/starlight/components';
+
+:::caution[For Contributors]
+
+This document is aimed at **contributors** to the LavaMoat project and the information herein may be of limited interest to end-users.
+
+:::
+
+LavaMoat is a monorepo organized into discrete packages. Below is a directory tree showing directories of interest, and how directories map to packages.
+
+**Click a link to view detailed information about each directory or package.**
+
+<FileTree>
+
+- .config/ Common TypeScript, ESLint & other [configuration][config]
+- .github/ [CI configuration][ci]
+- packages/ Contains all npm workspaces
+  - aa/ [**@lavamoat/aa**][lavamoat-aa] - Generates canonical package names
+  - allow-scripts/ [**@lavamoat/allow-scripts**][lavamoat-allow-scripts] - Allow-list for on-install lifecycle scripts
+  - browserify/ [**lavamoat-browserify**][lavamoat-browserify] - Browserify plugin
+  - core/ [**lavamoat-core**][lavamoat-core] Core LavaMoat functionality
+  - lavapack/ [**@lavamoat/lavapack**][lavamoat-lavapack] - Bundle packer for lavamoat-browserify
+  - laverna/ [**@lavamoat/laverna**][lavamoat-laverna] - Tool to publish multiple workspaces in a monorepo
+  - node/ [**lavamoat-node**][lavamoat-node] - Node.js adapter
+  - preinstall-always-fail/ **@lavamoat/preinstall-always-fail** - Fails if preinstall lifecycle script is run; helper for [allow-scripts][lavamoat-allow-scripts]
+  - tofu/ [**lavamoat-tofu**][lavamoat-tofu] - Generate LavaMoat policy from dependency graph
+  - webpack/ [**@lavamoat/webpack**][lavamoat-webpack] - Webpack plugin
+- scripts/ Custom [scripts][scripts]
+
+</FileTree>
+
+{/* the below are TODOs */}
+
+[ci]: /contributor/ci
+[config]: /contributor/config
+[lavamoat-aa]: /contributor/lavamoat-aa
+[lavamoat-allow-scripts]: /contributor/allow-scripts
+[lavamoat-browserify]: /contributor/lavamoat-browserify
+[lavamoat-core]: /contributor/lavamoat-core
+[lavamoat-lavapack]: /contributor/lavamoat-lavapack
+[lavamoat-laverna]: /contributor/lavamoat-laverna
+[lavamoat-node]: /contributor/lavamoat-node
+[lavamoat-preinstall-always-fail]: /contributor/lavamoat-preinstall-always-fail
+[lavamoat-tofu]: /contributor/lavamoat-tofu
+[lavamoat-webpack]: /contributor/lavamoat-webpack
+[scripts]: /contributor/scripts
