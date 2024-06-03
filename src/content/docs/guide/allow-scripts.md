@@ -17,6 +17,8 @@ description: 'A user guide for @lavamoat/allow-scripts'
 - **npm**: `npm i -D @lavamoat/allow-scripts`
 - **Yarn**: `yarn add -D @lavamoat/allow-scripts`
 
+Note that installation of the dependency is likely to cause your other dependencies to be installed. You could install `@lavamoat/allow-scripts` globally and use it to set up a project without triggering installing dependencies before the setup and the allowlist is in place.
+
 ## Setup
 
 ### Initialization
@@ -28,7 +30,7 @@ The `setup` command will initialize your project for use with `@lavamoat/allow-s
 
 :::tip[What does "setup" do?]
 
-Depending on the detected package manager, the `setup` command will add `ignore-scripts=true` to your package's `.npmrc`, or `ignore-scripts true` to your package's `.yarnrc`. If the file does not exist, it will be created.
+Depending on the detected package manager, the `setup` command will add `ignore-scripts=true` to your package's `.npmrc`, or `enableScripts: false` to your package's `.yarnrc.yml`. If the file does not exist, it will be created. (yarn1 is also still supported)
 
 As a failsafe, the setup command then adds a _dev_ dependency on [`@lavamoat/preinstall-always-fail`][preinstall-fail-ext] to `package.json`. `@lavamoat/preinstall-always-fail` will throw an error if an install-time lifecycle script is run--which _should_ never occur (due to the `ignore-scripts` configuration).
 
@@ -38,23 +40,24 @@ As a failsafe, the setup command then adds a _dev_ dependency on [`@lavamoat/pre
 
 Configuration can be done automatically or manually.
 
-:::caution[Don\'t Overdo It]
+:::caution[Principle of Least Privilege]
 
-While you _can_ choose to allow everything you've been running, strive to limit the list--a tool with an _existing_ lifecycle script can exploited. To determine which packages' scripts can be safely ignored, try [can-i-ignore-scripts][can-i-ignore-scripts-ext]
+While you _can_ choose to allow everything you've been running, strive to limit the list--a tool with an _existing_ lifecycle script can exploited. To determine which packages' scripts can be safely ignored, consider [can-i-ignore-scripts][can-i-ignore-scripts-ext] before you manually research each one of them.
 :::
 
-#### Automatic Configuration
+#### Automatic Allow-listing
 
 The `auto` command will generate and write a configuration to the `lavamoat` property of `package.json`.
 
 - **npm**: `npm exec allow-scripts auto`
 - **Yarn**: `yarn allow-scripts auto`
 
-#### Manual Configuration
+#### Manual Allow-listing
 
 `@lavamoat/allow-scripts`'s configuration is stored in the `lavamoat` property of `package.json` within its `allowScripts` property.
 
-The value is of type `Record<PackageName, boolean>` where `PackageName` is a dependency which is either allowed or disallowed to run lifecycle scripts. To allow script execution, use a value of `true`; to explicitly disallow, use a value of `false`.
+The value is of type `Record<PackageName, boolean>` where `PackageName` is a dependency which is either allowed or disallowed to run lifecycle scripts. To allow script execution, use a value of `true`; to disallow, use a value of `false`.  
+Items missing from the list will cause a warnings so that you know when you might need to add a newly installed item to the list.
 
 #### Example Configuration
 
@@ -77,6 +80,21 @@ When invoked without a command (or with the `run` command), `allow-scripts` will
 - **Yarn**: `yarn allow-scripts run`
 
 `allow-scripts` will fail if it detects dependencies attemping to run scripts which haven't yet been configured; you will be advised to run [`allow-scripts auto`][automatic-configuration] to rectify the situation.
+
+### Yarn plugin
+
+To comfortably work with Yarn Berry (specifically yarn v3 or above) it's recommended that you use a simple plugin to execute `allow-scripts` after installation. 
+
+Yarn plugins are installed via public URLs.
+
+```
+yarn plugin import https://raw.githubusercontent.com/LavaMoat/LavaMoat/main/packages/yarn-plugin-allow-scripts/bundles/@yarnpkg/plugin-allow-scripts.js
+```
+
+:::tip[Raw git URL disclaimer] 
+Fetching scripts from git is not something we like to endorse. Before you run a script you download, check its content. Feel free to remove the entry with the URL from the `.yarnrc.yml` to prevent it from updating and only keep the entry specifying the plugin if you have the `.yarn` folder checked-in to source control. 
+
+:::
 
 ## Show Configured Packages
 
