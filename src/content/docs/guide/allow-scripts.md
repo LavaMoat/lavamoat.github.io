@@ -11,6 +11,7 @@ description: 'A user guide for @lavamoat/allow-scripts'
 - One of the following package managers:
   - [npm](https://www.npmjs.com/) v8.0.0+
   - [Yarn](https://yarnpkg.com/) v1.22.0+
+  - [Yarn Berry](https://yarnpkg.com/) v3 or above
 
 ## Install
 
