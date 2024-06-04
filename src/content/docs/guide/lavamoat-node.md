@@ -3,7 +3,7 @@ title: "User's Guide: lavamoat node runtime"
 description: 'A user guide for running LavaMoat-protected NodeJS applications'
 ---
 
-`lavamoat` is a Node.js runtime where modules are defined in [SES][ses-github-ext] Compartments. It aims to reduce the risk of malicious code in the app dependency graph, known as "software supply chain attacks".
+`lavamoat` is a Node.js runtime where modules are defined in [SES][ses-github-ext] Compartments. It virtualizes CommonJS module loading to apply runtime protections according to a Policy.
 
 :::caution
 
@@ -39,13 +39,13 @@ yarn add lavamoat
 
 ## Usage
 
-### Recommended usage
-
 1. Install
 2. Run your application once with `lavamoat app.js --autopolicy`
 3. Inspect the `./lavamoat/node/policy.json` file it generated
 4. Run your application with `lavamoat app.js`
 5. If you find you need to change the policy in step 2 or 3 create a `./lavamoat/node/policy-override.json` file and introduce changes there. You can both expand and trim the permissions.
+
+For multiple entry points or apps, use the options to set policy paths to maintain policies specific to each app.
 
 For more information on the lavamoat policy file, check [Policy file explained][policy-file] in documentation.
 

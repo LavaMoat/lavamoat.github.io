@@ -20,39 +20,33 @@ hero:
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
-## Next steps
-
-<CardGrid stagger>
-  <Card title="Goal" icon="shield">
-    **The goal of LavaMoat** is to bring added protections to modern JavaScript apps without having to rewrite them from scratch and automate a good first-start security configuration.
-  </Card>
-  <Card title="Video introduction" icon="video">
-    [Watch the introduction video to understand why](https://www.youtube.com/watch?v=Z5Bz0DYga1k)
-  </Card>
-  <Card title="Configure your site" icon="setting">
-    Edit your `sidebar` and other config in `astro.config.mjs`.
-  </Card>
-  <Card title="Read the docs" icon="open-book">
-    Learn more in [the Starlight Docs](https://starlight.astro.build/).
-  </Card>
-</CardGrid>
-
+## What is LavaMoat?
 
 **LavaMoat** is a set of tools for securing JavaScript projects against a category of attacks called **software supply chain attacks.**
 
-This genre of attack occurs when a malicious dependency makes its way into a developer's application. An attacker could use the dependency to then steal important secrets (like credit card numbers, private keys, or data) or make the application vulnerable to a range of other attacks.
+<CardGrid stagger>
+  <Card title="Goal" icon="rocket">
+    **The goal of LavaMoat** is to bring added protections to modern JavaScript apps without having to rewrite them from scratch and automate a good first-start security configuration.
+  </Card>
+  <Card title="Scope" icon="seti:javascript">
+    LavaMoat strives to protect installation, build and runtime of front-ends and back-ends running JavaScript.
+  </Card>
+  <LinkCard title="Video introduction" description="Watch the introduction video to understand why" icon="youtube" href="https://www.youtube.com/watch?v=Z5Bz0DYga1k">
+  </LinkCard>
+  
+  <Card>
+    Made with 🧡 by [MetaMask](https://github.com/metamask/)
+
+    Funded by [ConsenSys](https://github.com/consensys)
+
+    Runs on [Agoric](https://github.com/agoric/) technology
+  </Card>
+  
+</CardGrid>
+
+
+A supply chain attack occurs when a malicious dependency makes its way into a developer's application. An attacker could use the dependency to then steal important secrets (like credit card numbers, private keys, or data) or make the application vulnerable to a range of other attacks.
 
 These attacks have already hit e.g. the cryptocurrency ecosystem and present a significant risk for the developers and users of wallets and apps.
 
 In order to help mitigate the risk of such an attack we are building a suite of tools that aim to tackle the supply chain security at various stages of software lifecycle i.e. at the installation of the package, at build time and most of all - at runtime.
-
-**The goal of LavaMoat** is to bring added protections to modern JavaScript apps without having to rewrite them from scratch and automate a good first-start security configuration.
-
-
----
-
-Made with 🧡 by [MetaMask](https://github.com/metamask/)
-
-Funded by [ConsenSys](https://github.com/consensys)
-
-Runs on [Agoric](https://github.com/agoric/) technology
