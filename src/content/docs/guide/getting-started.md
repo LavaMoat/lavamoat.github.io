@@ -18,7 +18,6 @@ Don't have Node.js installed? [Download and install Node.js from the official si
 
 :::
 
-
 ## How to secure your app against supply-chain attacks
 
 1. Control dependency lifecycle scripts (eg. "postinstall") via [@lavamoat/allow-scripts][lavamoat-allowscripts]
@@ -31,7 +30,7 @@ Even starting with adding just step 1 - the `allow-scripts`, is a great improvem
 
 :::
 
-[lavamoat-allowscripts] /guides/allow-scripts
-[lavamoat-node] /guides/lavamoat-node
-[lavamoat-browserify] /guides/browserify
-[lavamoat-webpack] /guides/webpack
+[lavamoat-allowscripts]: /guides/allow-scripts
+[lavamoat-node]: /guides/lavamoat-node
+[lavamoat-browserify]: /guides/browserify
+[lavamoat-webpack]: /guides/webpack
