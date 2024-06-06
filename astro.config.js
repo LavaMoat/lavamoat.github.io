@@ -33,6 +33,7 @@ export default defineConfig({
           autogenerate: { directory: 'contributor' },
         },
       ],
+      customCss: ['./src/styles/custom.css'],
     }),
   ],
 });
