@@ -20,6 +20,7 @@
   "dependencies": {
     "@astrojs/check": "^0.6.0",
     "@astrojs/starlight": "^0.22.2",
+    "@fontsource/radio-canada": "5.0.20",
     "astro": "^4.3.5",
     "typescript": "~5.4.5"
   },

@@ -33,7 +33,12 @@ export default defineConfig({
           autogenerate: { directory: 'contributor' },
         },
       ],
-      customCss: ['./src/styles/custom.css'],
+      customCss: [
+        '@fontsource/radio-canada/400.css',
+        '@fontsource/radio-canada/400-italic.css',
+        '@fontsource/radio-canada/600.css',
+        './src/styles/custom.css',
+      ],
     }),
   ],
 });
