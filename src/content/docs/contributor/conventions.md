@@ -41,7 +41,7 @@ Packages are versioned independently, and releases are batched together; it's un
 
 LavaMoat follows [Semantic Versioning][semver].
 
-::tip[Further Reading]
+:::tip[Further Reading]
 
 Read [How We Work][how-we-work] for in-depth information on LavaMoat's development workflow, process, and tooling.
 
