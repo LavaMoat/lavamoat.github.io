@@ -14,7 +14,6 @@ The LavaMoat runtime reduces the supply chain risk by:
 1. Preventing modification of JavaScript's built-in data types (`Object`, `String`, `Number`, `Array`, etc.)
 2. Providing granular control over access to the global platform API (`document`, `process`, `WebSocket`, etc.)
 
-
 Both are provided by [SES][SesGithub] containers. Platform API access is granted by a policy file that LavaMoat can generate and allow the project to selectively customize. All details of policy file structure are documented in the [Policy file explained][PolicyDoc] doc.
 
 #### Hardened Javascript (SES)
@@ -47,8 +46,6 @@ As a result, to secure your code in the browser, you need to use one of the supp
 [LavaMoat plugin for Webpack5][lavamoat-webpack] (beta)
 
 [LavaMoat for Browserify][lavamoat-browserify]
-
-
 
 [lavamoat-node] /guides/lavamoat-node
 [lavamoat-browserify] /guides/browserify
