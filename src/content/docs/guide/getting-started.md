@@ -7,14 +7,14 @@ sidebar:
 
 ## Prerequisites
 
-LavaMoat is distributed as a [Node.js](https://nodejs.org) command-line tool. You'll need an LTS version of Node.js:
+LavaMoat is distributed as a [Node.js][node] command-line tool. You'll need an LTS version of Node.js:
 
 - Node.js v20.0.0 (recommended) _or_
 - Node.js v16.20.0 (minimum)
 
 :::tip
 
-Don't have Node.js installed? [Download and install Node.js from the official site.](https://nodejs.org/en/download)
+Don't have Node.js installed? [Download and install Node.js from the official site.][node-download]
 
 :::
 
@@ -34,3 +34,5 @@ Even starting with adding just step 1 - the `allow-scripts`, is a great improvem
 [lavamoat-node]: /guide/lavamoat-node
 [lavamoat-browserify]: /guide/browserify
 [lavamoat-webpack]: /guide/webpack
+[node-download]: https://nodejs.org/en/download
+[node]: https://nodejs.org
