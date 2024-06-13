@@ -123,7 +123,7 @@ You can use any editor you like. We recommend something that understands TypeScr
 1. Fork [LavaMoat/LavaMoat][lavamoat]
 2. Clone your fork to your local machine:
 
-   ```shell
+   ```shell frame="none"
    git clone https://github.com/your-username/LavaMoat
    ```
 
@@ -131,7 +131,7 @@ You can use any editor you like. We recommend something that understands TypeScr
 4. Run `npm run setup` to build the project and install Git hooks.
 5. To work with upstream changes, add a new Git remote to your working copy:
 
-   ```shell
+   ```shell frame="none"
    git remote add upstream https://github.com/LavaMoat/LavaMoat
    ```
 
@@ -172,7 +172,7 @@ git commit
 
 LavaMoat follows the [Conventional Commits][] convention for commit messages, which helps automate the [release workflow][]. Here's an example commit message:
 
-```txt
+```text
 tag: Short description of what you did
 
 Longer description here if necessary
@@ -191,7 +191,13 @@ The `tag` is one of the following:
 - `docs` - changes to documentation only.
 - `chore` - for changes that aren't user-facing.
 
-The `scope` (in parentheses) is typically the _directory name_ relative to `packages/` of the affected project. If multiple projects are affected, separate them by commas. For example:
+The `scope` (in parentheses) is typically the _directory name_ relative to `packages/` of the affected package (workspace). For example:
+
+```text
+chore(webpack): frobnicate the widget
+```
+
+If multiple projects are affected, separate them by commas:
 
 ```text
 fix(core,node): fix a bug in lavamoat-core and lavamoat-node
@@ -207,9 +213,11 @@ The message summary should be a one-sentence description of the change. If the p
 
 Here are some good commit message summary examples:
 
-```txt
+```text
 feat!(core): added default behavior
+
 fix: semicolons no longer breaking everything
+
 chore(webpack): upgrade to browserify v5
 ```
 
@@ -252,11 +260,17 @@ Next, push your changes to your clone:
 git push origin issue1234
 ```
 
-If you are unable to push because some references are old, do a forced push instead:
+If you are unable to push because some references are old, force-push instead:
 
 ```shell
 git push -f origin issue1234
 ```
+
+:::caution[Force Pushing]
+
+Force-pushing is a potentially dangerous operation. Read this post about [how to safely use force-push][force-push].
+
+:::
 
 ### Step 7: Send the pull request<a name="step7"></a>
 
@@ -336,3 +350,4 @@ The LavaMoat team thanks you for contributing! "You're welcome" is appreciated, 
 [github-conflicts]: https://help.github.com/articles/resolving-merge-conflicts-after-a-git-rebase/
 [conventional commits]: https://www.conventionalcommits.org/https://www.conventionalcommits.org/
 [release workflow]: /contributor/release
+[force-push]: https://adamj.eu/tech/2023/10/31/git-force-push-safely/
