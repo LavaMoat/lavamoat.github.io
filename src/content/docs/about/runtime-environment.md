@@ -16,7 +16,7 @@ The LavaMoat runtime reduces the supply chain risk by:
 
 Both are provided by [SES][SesGithub] containers. Platform API access is granted by a policy file that LavaMoat can generate and allow the project to selectively customize. All details of policy file structure are documented in the [Policy file explained][PolicyDoc] doc.
 
-#### Hardened Javascript (SES)
+### Hardened Javascript (SES)
 
 [SES][SesGithub] is the sandbox used in LavaMoat. See SES's [secure computing guide][SesComputingGuide] to learn more about the risks of untrusted javascript.
 
@@ -25,7 +25,7 @@ SES provides `Compartment` and `lockdown` which LavaMoat uses to provide two dis
 - `lockdown` hardens the runtime environment, preventing the JavaScript intrinsics from being tampered with. It therefore stops prototype poisoning attacks from affecting the security of `Compartment` and the rest of the application
 - `Compartment` is used internally to allow isolating each dependency and awarding it access to only the globals and imports allowed by the policy.
 
-#### Scuttling
+### Scuttling
 
 Since LavaMoat is selectively giving copies of global references to confined parts of the application, there no longer is a need for the actual global references to exist.
 
@@ -47,6 +47,9 @@ As a result, to secure your code in the browser, you need to use one of the supp
 
 [LavaMoat for Browserify][lavamoat-browserify]
 
-[lavamoat-node] /guides/lavamoat-node
-[lavamoat-browserify] /guides/browserify
-[lavamoat-webpack] /guides/webpack
+[lavamoat-node]: /guides/lavamoat-node
+[lavamoat-browserify]: /guides/browserify
+[lavamoat-webpack]: /guides/webpack
+[sesgithub]: https://github.com/endojs/endo/tree/master/package/ses
+[policydoc]: /reference/policy
+[sescomputingguide]: https://github.com/endojs/endo/blob/master/packages/ses/docs/secure-coding-guide.md
