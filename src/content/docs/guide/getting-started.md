@@ -30,7 +30,7 @@ Even starting with adding just step 1 - the `allow-scripts`, is a great improvem
 
 :::
 
-[lavamoat-allowscripts]: /guides/allow-scripts
-[lavamoat-node]: /guides/lavamoat-node
-[lavamoat-browserify]: /guides/browserify
-[lavamoat-webpack]: /guides/webpack
+[lavamoat-allowscripts]: /guide/allow-scripts
+[lavamoat-node]: /guide/lavamoat-node
+[lavamoat-browserify]: /guide/browserify
+[lavamoat-webpack]: /guide/webpack
