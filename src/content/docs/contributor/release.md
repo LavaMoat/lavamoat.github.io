@@ -3,9 +3,9 @@ title: Release Process
 description: LavaMoat's Release Process
 ---
 
-:::caution[For Contributors]
+:::caution[For LavaMoat Developers]
 
-This document is aimed at **contributors** to the LavaMoat project and the information herein may be of limited interest to end-users.
+This document is aimed at LavaMoat developers; the information herein may be of limited interest to end-users.
 
 :::
 
