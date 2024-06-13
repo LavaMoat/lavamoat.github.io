@@ -18,10 +18,10 @@
     "start": "astro dev"
   },
   "dependencies": {
-    "@astrojs/check": "^0.6.0",
-    "@astrojs/starlight": "^0.22.2",
+    "@astrojs/check": "^0.7.0",
+    "@astrojs/starlight": "^0.24.2",
     "@fontsource/radio-canada": "5.0.20",
-    "astro": "^4.3.5",
+    "astro": "^4.10.2",
     "astro-embed": "0.7.2",
     "typescript": "~5.4.5"
   },
