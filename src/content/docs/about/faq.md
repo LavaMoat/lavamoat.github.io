@@ -27,7 +27,7 @@ In other words: _you shouldn't need to rewrite your app from scratch_ to improve
 
 **LavaMoat** is usable by any Node.js application, and is compatible with the following bundlers:
 
-- [Webpack v4+](https://webpack.js.org)
+- [Webpack v5+](https://webpack.js.org)
 - [Browserify](https://browserify.org)
 
 **LavaMoat** is designed to be framework-agnostic—but if you run into problems, please read our [troubleshooting guide][troubleshooting].
