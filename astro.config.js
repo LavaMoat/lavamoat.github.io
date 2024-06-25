@@ -14,7 +14,26 @@ export default defineConfig({
         // of the frontmatter in the .md file
         {
           label: 'Guides',
-          autogenerate: { directory: 'guide' },
+          items: [
+            { label: 'Getting Started', link: '/guide/getting-started/' },
+            {
+              label: "User's Guide: allow-scripts",
+              link: '/guide/allow-scripts/',
+            },
+            {
+              label: "User's Guide: lavamoat node runtime",
+              link: '/guide/lavamoat-node',
+            },
+            {
+              label: "User's Guide: lavamoat and webpack",
+              link: '/guide/webpack',
+            },
+            { label: 'Policy File Explained', link: '/guide/policy' },
+            {
+              label: 'Troubleshooting Common Problems',
+              link: '/guide/troubleshooting',
+            },
+          ],
         },
         // {
         //   label: 'Tutorials',
