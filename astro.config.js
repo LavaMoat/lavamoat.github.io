@@ -16,10 +16,10 @@ export default defineConfig({
           label: 'Guides',
           autogenerate: { directory: 'guide' },
         },
-        {
-          label: 'Tutorials',
-          autogenerate: { directory: 'tutorial' },
-        },
+        // {
+        //   label: 'Tutorials',
+        //   autogenerate: { directory: 'tutorial' },
+        // },
         {
           label: 'Understanding LavaMoat',
           autogenerate: { directory: 'about' },
