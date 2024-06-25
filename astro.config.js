@@ -17,15 +17,15 @@ export default defineConfig({
           items: [
             { label: 'Getting Started', link: '/guide/getting-started/' },
             {
-              label: "User's Guide: allow-scripts",
+              label: 'allow-scripts',
               link: '/guide/allow-scripts/',
             },
             {
-              label: "User's Guide: lavamoat node runtime",
+              label: 'lavamoat node runtime',
               link: '/guide/lavamoat-node',
             },
             {
-              label: "User's Guide: lavamoat and webpack",
+              label: 'lavamoat and webpack',
               link: '/guide/webpack',
             },
             { label: 'Policy File Explained', link: '/guide/policy' },
