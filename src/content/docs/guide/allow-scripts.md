@@ -1,5 +1,5 @@
 ---
-title: "User's Guide: allow-scripts"
+title: "allow-scripts"
 description: 'A user guide for @lavamoat/allow-scripts'
 ---
 

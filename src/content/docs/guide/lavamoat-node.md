@@ -1,5 +1,5 @@
 ---
-title: "User's Guide: lavamoat node runtime"
+title: "lavamoat node runtime"
 description: 'A user guide for running LavaMoat-protected NodeJS applications'
 ---
 

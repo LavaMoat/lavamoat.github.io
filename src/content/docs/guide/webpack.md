@@ -1,5 +1,5 @@
 ---
-title: "User's Guide: lavamoat and webpack"
+title: "lavamoat and webpack"
 description: 'A user guide for adding LavaMoat protections to a webpack bundle'
 ---
 
