@@ -9,7 +9,7 @@ LavaMoat Webpack Plugin wraps each module in the bundle in a [SES Compartment](h
 
 
 :::Note[Beta] 
-LavaMoat Webpack plugin is currently in Beta. It's pretty stable at this point, but breaking changes may still happen. 
+LavaMoat Webpack plugin is currently in [Open Beta](https://github.com/LavaMoat/LavaMoat/discussions/723). It's pretty stable at this point, but breaking changes may still happen. 
 :::
 
 :::Note 
