@@ -61,6 +61,6 @@ Read more about how LavaMoat secures the runtime environment in the [Runtime Sec
 :::
 
 [runtime-environment]: /about/runtime-environment
-[allow-scripts-guide]: /guide/allow-scripts
+[allow-scripts-guide]: /guides/allow-scripts
 [allow-scripts-reference]: /reference/allow-scripts
 [husky-ext]: https://typicode.github.io/husky/

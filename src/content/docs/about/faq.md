@@ -32,5 +32,5 @@ In other words: _you shouldn't need to rewrite your app from scratch_ to improve
 
 **LavaMoat** is designed to be framework-agnostic—but if you run into problems, please read our [troubleshooting guide][troubleshooting].
 
-[troubleshooting]: /guide/troubleshooting/
+[troubleshooting]: /guides/troubleshooting/
 [supply-chain-attack]: https://en.wikipedia.org/wiki/Supply_chain_attack

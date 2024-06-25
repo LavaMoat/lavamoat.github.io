@@ -15,23 +15,23 @@ export default defineConfig({
         {
           label: 'Guides',
           items: [
-            { label: 'Getting Started', link: '/guide/getting-started/' },
+            { label: 'Getting Started', link: '/guides/getting-started/' },
             {
               label: 'allow-scripts',
-              link: '/guide/allow-scripts/',
+              link: '/guides/allow-scripts/',
             },
             {
               label: 'lavamoat node runtime',
-              link: '/guide/lavamoat-node',
+              link: '/guides/lavamoat-node',
             },
             {
               label: 'lavamoat and webpack',
-              link: '/guide/webpack',
+              link: '/guides/webpack',
             },
-            { label: 'Policy File Explained', link: '/guide/policy' },
+            { label: 'Policy File Explained', link: '/guides/policy' },
             {
               label: 'Troubleshooting Common Problems',
-              link: '/guide/troubleshooting',
+              link: '/guides/troubleshooting',
             },
           ],
         },
