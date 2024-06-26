@@ -55,7 +55,7 @@ See the [TC39 glossary][tc39-glossary-intrinsic-ext] for more information.
 
 ## LavaMoat
 
-An open source suite of tools for securing JavaScript projects against [software supply chain attacks][supply chain attack]. LavaMoat uses [Hardened JavaScript][] in tandem with user-configurable policies to secure the development, build, and runtime environments of JavaScript applications.
+An open source suite of tools for securing JavaScript projects against [**software supply chain attacks**][supply chain attack]. LavaMoat uses [Hardened JavaScript][] in tandem with user-configurable policies to secure the development, build, and runtime environments of JavaScript applications.
 
 ## Lockdown
 
