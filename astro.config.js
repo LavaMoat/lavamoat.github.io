@@ -21,14 +21,14 @@ export default defineConfig({
               link: '/guides/allow-scripts/',
             },
             {
-              label: 'lavamoat node runtime',
+              label: 'LavaMoat with Node.js',
               link: '/guides/lavamoat-node',
             },
             {
-              label: 'lavamoat and webpack',
+              label: 'LavaMoat with Webpack',
               link: '/guides/webpack',
             },
-            { label: 'Policy File Explained', link: '/guides/policy' },
+            { label: 'Policies', link: '/guides/policy' },
             {
               label: 'Troubleshooting Common Problems',
               link: '/guides/troubleshooting',
