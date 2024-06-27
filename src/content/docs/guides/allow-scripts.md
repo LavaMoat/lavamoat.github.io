@@ -1,5 +1,5 @@
 ---
-title: "allow-scripts"
+title: "Protect dependency installation process with allow-scripts"
 description: 'A user guide for @lavamoat/allow-scripts'
 ---
 

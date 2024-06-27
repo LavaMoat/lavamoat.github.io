@@ -17,7 +17,7 @@ export default defineConfig({
           items: [
             { label: 'Getting Started', link: '/guides/getting-started/' },
             {
-              label: 'allow-scripts',
+              label: 'Protect Installation: allow-scripts',
               link: '/guides/allow-scripts/',
             },
             {
@@ -28,7 +28,7 @@ export default defineConfig({
               label: 'LavaMoat with Webpack',
               link: '/guides/webpack',
             },
-            { label: 'Policies', link: '/guides/policy' },
+            { label: 'Policy files', link: '/guides/policy' },
             {
               label: 'Troubleshooting Common Problems',
               link: '/guides/troubleshooting',
