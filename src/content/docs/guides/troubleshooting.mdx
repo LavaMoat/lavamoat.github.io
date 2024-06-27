@@ -1,0 +1,69 @@
+---
+title: Troubleshooting Common Problems
+description: Troubleshooting integrations and common problems with LavaMoat
+---
+import { YouTube } from 'astro-embed';
+
+## Troubleshooting tutorial
+
+<YouTube id="https://www.youtube.com/watch?v=E39cy5nrKtY" />
+
+## Troubleshooting resources
+
+### Policy configuration
+
+If the result of running automated policy generation is not enough to correctly run your application, remember to put changes you want to manually make in the policy in the `policy-override.json` file and avoid your changes being overwritten when you regenerate policy
+
+#### When I regenerate policy, package keys in `resources` change
+
+The keys in the resources field (we refer to them as canonical names for packages) are the shortest paths through the dependency tree pointing to a package. 
+We could not use names because it's possible for multiple entirely different packages to have the same name (see the intro video on the main page to learn how). 
+
+When you make changes to your dependency tree it's possible that a new, shorter path to a dependency was introduced and that will affect what it's called as a result.
+The algorithm for creating canonical names is designed to make them as stable as possible, but they can change and you may sometimes need to update the keys in `policy-override.json` to match.
+
+### Error codes beginngin with `SES_`
+
+If you get an error beginning with `SES_` - look it up in the collection of documents here: https://github.com/endojs/endo/tree/master/packages/ses/error-codes
+
+### SES lockdown related issues
+
+For troubleshooting interactions with SES->lockdown you should be aware that LavaMoat is passing the folowing configuration to lockdown:
+```js
+    const lockdownOptions = {
+      // gives a semi-high resolution timer
+      dateTaming: 'unsafe',
+      // this is introduces non-determinism, but is otherwise safe
+      mathTaming: 'unsafe',
+      // lets code observe call stack, but easier debuggability
+      errorTaming: 'unsafe',
+      // shows the full call stack
+      stackFiltering: 'verbose',
+      // prevents most common override mistake cases from tripping up users
+      overrideTaming: 'severe',
+      // preserves JS locale methods, to avoid confusing users
+      // prevents aliasing: toLocaleString() to toString(), etc
+      localeTaming: 'unsafe',
+    }
+```
+
+Detailed documentation of `lockdown`: https://github.com/endojs/endo/blob/master/packages/ses/docs/reference.md
+
+#### TypeError: Cannot assign to read only property...
+
+If you get an error like that, it means there was an attempt to assign to one fo the frozen global prototypes. 
+While overrideTaming is enabled, some override mistakes are still possible, so if the assignment looks like it's assigning to a regular object, be aware that the error might be caused by the prototype of that object being frozen.
+See the video above for detailed examples.
+
+#### Troublesome packages
+
+If a package is having trouble working in a locked-down environment, it's either on the list here: https://github.com/endojs/endo/issues/2037 or is worth reporting. 
+The issue contains links to fixes you can introduce.
+
+### Patching packages locally
+
+When a package has a compatibility issue, you can patch it locally before/instad of fixing upstream.
+
+`patch-package` is a tool used to make and maintain fixes to npm dependencies. To use patch-package with npm, you first install it as a development dependency using `npm install patch-package --save-dev`. After making the necessary changes to the files in the `node_modules/PROBLEMATIC_PACKAGE` directory, you run `npx patch-package PROBLEMATIC_PACKAGE` to create a patch file in the `patches` directory. This patch file should be committed to your version control system. Now you need to call `npx patch-package` after each clean install (can be automated).
+
+Yarn Berry has a built-in feature called `yarn patch` that allows you to patch packages directly. To use this feature, you run `yarn patch PROBLEMATIC_PACKAGE`, which creates a temporary directory where you can make your changes. After editing, you run `yarn patch-commit` to generate a `.yarn/patches` file. This patch file is then referenced in your `package.json` under the `resolutions` field. Yarn's patching mechanism is more restrictive in handling versions, ensuring that the patches are applied only to the specified versions of the packages. This built-in feature is very restrictive to versions, so will require more work to update the patches, while patch-package offers more flexibility but requires additional setup.
