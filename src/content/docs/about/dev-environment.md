@@ -36,7 +36,6 @@ Using LavaMoat's `allow-scripts` tool, you can configure (in `package.json`) a l
 :::tip[Further Reading]
 
 - `@lavamoat/allow-scripts`: [User's Guide][allow-scripts-guide]
-- `@lavamoat/allow-scripts`: [Reference][allow-scripts-reference]
 
 :::
 
@@ -62,5 +61,4 @@ Read more about how LavaMoat secures the runtime environment in the [Runtime Sec
 
 [runtime-environment]: /about/runtime-environment
 [allow-scripts-guide]: /guides/allow-scripts
-[allow-scripts-reference]: /reference/allow-scripts
 [husky-ext]: https://typicode.github.io/husky/
