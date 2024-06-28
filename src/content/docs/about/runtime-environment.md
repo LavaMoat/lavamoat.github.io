@@ -51,5 +51,5 @@ As a result, to secure your code in the browser, you need to use one of the supp
 [lavamoat-browserify]: /guides/browserify
 [lavamoat-webpack]: /guides/webpack
 [sesgithub]: https://github.com/endojs/endo/tree/master/packages/ses
-[policydoc]: /reference/policy
+[policydoc]: /guides/policy
 [sescomputingguide]: https://github.com/endojs/endo/blob/master/packages/ses/docs/secure-coding-guide.md
