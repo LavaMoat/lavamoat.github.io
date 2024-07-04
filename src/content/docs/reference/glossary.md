@@ -92,7 +92,21 @@ See the [TC39 glossary][tc39-glossary-primordial-ext] for more information.
 
 ## Prototype pollution
 
-TODO
+A class of JavaScript vulnerabilities and bugs where a modification is inadvertently made on an object prototype. For example,using unsitized user input for keys, the following:
+
+```
+myObj[key] = {};
+myObj[key].totallySafe = true;
+```
+
+could result in overriding functions on the global `Object` prototype:
+
+```
+myObj["__proto__"].totallySafe = val
+const uncheckedObj = {};
+console.log(uncheckedObj.totallySafe) // true
+```
+
 
 ## Realm
 
