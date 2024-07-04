@@ -31,13 +31,11 @@ SES can also be conceptualized as a subset of JavaScript.
 
 SES is the backbone of both [Endo][] and [LavaMoat][].
 
-TODO:
-
-- [ ] Add references to relevant proposal(s)
-
 :::note[Resources]
 
 - [SES on GitHub][ses-ext], part of the [Endo][] project
+- [Secure ECMAScript TC39 proposal][https://github.com/tc39/proposal-ses]
+- [Compartment TC39 proposal][https://github.com/tc39/proposal-compartments]
 - [Video: Hardened JavaScript][hardened-js-video-ext], an introduction by Kris Kowal
 - [Secure computing guide][ses-secure-ext] to learn more about the risks of untrusted JavaScript
 - [Programming guide][ses-programming-ext] for an introduction
@@ -139,6 +137,7 @@ A technical committee which maintains the [ECMAScript][] standard.
 :::
 
 [compartments-proposal-ext]: https://github.com/tc39/proposal-compartments
+[tc39-proposal-ext]: https://github.com/tc39/proposal-ses
 [ecma-262-ext]: https://ecma-international.org/publications-and-standards/standards/ecma-262
 [ecma-262-realms-ext]: https://tc39.es/ecma262/#sec-code-realms
 [ecmascript]: #ecmascript
