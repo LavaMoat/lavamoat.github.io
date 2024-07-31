@@ -1,5 +1,5 @@
 ---
-title: "Protect dependency installation process with allow-scripts"
+title: 'Protect dependency installation process with allow-scripts'
 description: 'A user guide for @lavamoat/allow-scripts'
 ---
 
@@ -57,7 +57,7 @@ The `auto` command will generate and write a configuration to the `lavamoat` pro
 
 `@lavamoat/allow-scripts`'s configuration is stored in the `lavamoat` property of `package.json` within its `allowScripts` property.
 
-The value is of type `Record<PackageName, boolean>` where `PackageName` is a dependency which is either allowed or disallowed to run lifecycle scripts. To allow script execution, use a value of `true`; to disallow, use a value of `false`.  
+The value is of type `Record<PackageName, boolean>` where `PackageName` is a dependency which is either allowed or disallowed to run lifecycle scripts. To allow script execution, use a value of `true`; to disallow, use a value of `false`.
 Items missing from the list will cause a warnings so that you know when you might need to add a newly installed item to the list.
 
 #### Example Configuration
@@ -84,16 +84,16 @@ When invoked without a command (or with the `run` command), `allow-scripts` will
 
 ### Yarn plugin
 
-To comfortably work with Yarn Berry (specifically yarn v3 or above) it's recommended that you use a simple plugin to execute `allow-scripts` after installation. 
+To comfortably work with Yarn Berry (specifically yarn v3 or above) it's recommended that you use a simple plugin to execute `allow-scripts` after installation.
 
 Yarn plugins are installed via public URLs.
 
-```
+```shell
 yarn plugin import https://raw.githubusercontent.com/LavaMoat/LavaMoat/main/packages/yarn-plugin-allow-scripts/bundles/@yarnpkg/plugin-allow-scripts.js
 ```
 
-:::tip[Raw git URL disclaimer] 
-Fetching scripts from git is not something we like to endorse. Before you run a script you download, check its content. Feel free to remove the entry with the URL from the `.yarnrc.yml` to prevent it from updating and only keep the entry specifying the plugin if you have the `.yarn` folder checked-in to source control. 
+:::tip[Raw git URL disclaimer]
+Fetching scripts from git is not something we like to endorse. Before you run a script you download, check its content. Feel free to remove the entry with the URL from the `.yarnrc.yml` to prevent it from updating and only keep the entry specifying the plugin if you have the `.yarn` folder checked-in to source control.
 
 :::
 
@@ -146,7 +146,7 @@ When a disallowed `bin` script is attempted to be executed, the command will fai
 
 [nodejs-ext]: https://nodejs.org/
 [husky-ext]: https://typicode.github.io/husky/
-[automatic-configuration]: #automatic-configuration
+[automatic-configuration]: #configuration
 [can-i-ignore-scripts-ext]: https://npm.im/can-i-ignore-scripts
 [bin-scripts-ext]: https://socket.dev/blog/npm-bin-script-confusion
 [shell-injection-ext]: https://en.wikipedia.org/wiki/Code_injection#Shell_injection

@@ -34,8 +34,8 @@ SES is the backbone of both [Endo][] and [LavaMoat][].
 :::note[Resources]
 
 - [SES on GitHub][ses-ext], part of the [Endo][] project
-- [Secure ECMAScript TC39 proposal][https://github.com/tc39/proposal-ses]
-- [Compartment TC39 proposal][https://github.com/tc39/proposal-compartments]
+- [Secure ECMAScript TC39 proposal][ses-proposal]
+- [Compartment TC39 proposal][compartments-proposal]
 - [Video: Hardened JavaScript][hardened-js-video-ext], an introduction by Kris Kowal
 - [Secure computing guide][ses-secure-ext] to learn more about the risks of untrusted JavaScript
 - [Programming guide][ses-programming-ext] for an introduction
@@ -94,19 +94,18 @@ See the [TC39 glossary][tc39-glossary-primordial-ext] for more information.
 
 A class of JavaScript vulnerabilities and bugs where a modification is inadvertently made on an object prototype. For example,using unsitized user input for keys, the following:
 
-```
+```js
 myObj[key] = {};
 myObj[key].totallySafe = true;
 ```
 
 could result in overriding functions on the global `Object` prototype:
 
-```
-myObj["__proto__"].totallySafe = val
+```js
+myObj['__proto__'].totallySafe = val;
 const uncheckedObj = {};
-console.log(uncheckedObj.totallySafe) // true
+console.log(uncheckedObj.totallySafe); // true
 ```
-
 
 ## Realm
 
@@ -151,7 +150,6 @@ A technical committee which maintains the [ECMAScript][] standard.
 :::
 
 [compartments-proposal-ext]: https://github.com/tc39/proposal-compartments
-[tc39-proposal-ext]: https://github.com/tc39/proposal-ses
 [ecma-262-ext]: https://ecma-international.org/publications-and-standards/standards/ecma-262
 [ecma-262-realms-ext]: https://tc39.es/ecma262/#sec-code-realms
 [ecmascript]: #ecmascript
@@ -179,3 +177,5 @@ A technical committee which maintains the [ECMAScript][] standard.
 [tc39-glossary-override-mistake-ext]: https://ecma-international.org/publications-and-standards/standards/ecma-262#override-mistake
 [tc39-glossary-primordial-ext]: https://ecma-international.org/publications-and-standards/standards/ecma-262#primordial
 [tc39]: #tc39
+[ses-proposal]: https://github.com/tc39/proposal-ses
+[compartments-proposal]: https://github.com/tc39/proposal-compartments

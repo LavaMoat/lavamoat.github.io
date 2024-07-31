@@ -1,5 +1,5 @@
 ---
-title: "lavamoat and webpack"
+title: 'lavamoat and webpack'
 description: 'A user guide for adding LavaMoat protections to a webpack bundle'
 ---
 
@@ -7,29 +7,29 @@ TODO: make it more like a guide and less like just a readme.
 
 LavaMoat Webpack Plugin wraps each module in the bundle in a [SES Compartment](https://github.com/endojs/endo/tree/master/packages/ses#compartment) and enforces a Policy independently per package.
 
-
-:::Note[Beta] 
-LavaMoat Webpack plugin is currently in [Open Beta](https://github.com/LavaMoat/LavaMoat/discussions/723). It's pretty stable at this point, but breaking changes may still happen. 
+:::Note[Beta]
+LavaMoat Webpack plugin is currently in [Open Beta](https://github.com/LavaMoat/LavaMoat/discussions/723). It's pretty stable at this point, but breaking changes may still happen.
 :::
 
-:::Note 
+:::Note
 LavaMoat Webpack plugin does not support advanced features relying on dynamic chunk loading including Module Federation and Hot Module Reloading.
 :::
-
 
 ## Usage
 
 1. Install
-```
+
+```shell
 npm i -D @lavamoat/webpack
-yarn add -D @lavamoat/webpack
+# or
+# yarn add -D @lavamoat/webpack
 ```
+
 1. Create a webpack bundle with the LavaMoat plugin enabled and the `generatePolicy` flag set to true
 2. Make sure you add a `<script src="./lockdown"></script>` before all other scripts or enable the `HtmlWebpackPluginInterop` option if you're using `html-webpack-plugin`. (Note there's no `.js` there because it's the only way to prevent webpack from minifying the file thus undermining its security guarantees)
 3. Tweak the policy if needed with policy-override.json
 
-
-:::Note[Beta] 
+:::Note[Beta]
 Policy generation might still get confused about aliases and custom resolvers. Please report n issue if that occurs.
 :::
 
@@ -40,7 +40,7 @@ Policy generation might still get confused about aliases and custom resolvers. P
 Basic starting point:
 
 ```js
-const LavaMoatPlugin = require('@lavamoat/webpack')
+const LavaMoatPlugin = require('@lavamoat/webpack');
 
 module.exports = {
   // ... other webpack configuration properties
@@ -51,18 +51,18 @@ module.exports = {
     }),
   ],
   // ... other webpack configuration properties
-}
+};
 ```
 
 Some recommended settings:
 
 ```js
-const LavaMoat = require('@lavamoat/webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const path = require('path')
+const LavaMoat = require('@lavamoat/webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
 
 module.exports = {
-  entry:  './app.js',
+  entry: './app.js',
   mode: 'development',
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -81,20 +81,16 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: [
-          "style-loader",
-          'css-loader',
-          LavaMoat.exclude,
-        ],
+        use: ['style-loader', 'css-loader', LavaMoat.exclude],
         sideEffects: true,
       },
     ],
   },
-}
+};
 ```
 
-
 ### All options
+
 The LavaMoat plugin takes an options object with the following properties (all optional):
 
 | Property                   | Description                                                                                                                                                                                                                                                                                                           | Default                  |
@@ -105,7 +101,7 @@ The LavaMoat plugin takes an options object with the following properties (all o
 | `readableResourceIds`      | Boolean to decide whether to keep resource IDs human readable (possibly regardless of production/development mode). If `false`, they are replaced with a sequence of numbers. Keeping them readable may be useful for debugging when a policy violation error is thrown. By default, follows the Webpack config mode. | `(mode==='development')` |
 | `lockdown`                 | Configuration for [SES lockdown][]. Setting the option replaces defaults from LavaMoat.                                                                                                                                                                                                                               | reasonable defaults      |
 | `HtmlWebpackPluginInterop` | Boolean to add a script tag to the HTML output for `./lockdown` file if `HtmlWebpackPlugin` is in use.                                                                                                                                                                                                                | `false`                  |
-| `inlineLockdown`           | Array of output filenames in which to inline lockdown (instead of adding it as a file to the output directory).                                                                                                                                                                                                       |
+| `inlineLockdown`           | Array of output filenames in which to inline lockdown (instead of adding it as a file to the output directory).                                                                                                                                                                                                       |                          |
 | `runChecks`                | Boolean property to indicate whether to check resulting code with wrapping for correctness.                                                                                                                                                                                                                           | `false`                  |
 | `diagnosticsVerbosity`     | Number property to represent diagnostics output verbosity. A larger number means more overwhelming diagnostics output. Setting a positive verbosity will enable `runChecks`.                                                                                                                                          | `0`                      |
 | `policy`                   | The LavaMoat policy object (if not loading from file; see `policyLocation`)                                                                                                                                                                                                                                           | `undefined`              |
@@ -116,7 +112,7 @@ The LavaMoat plugin takes an options object with the following properties (all o
 This is an experimental feature and excluding may be configured differently in the future if this approach is proven insecure.
 :::
 
-The default way to define specific behaviors for webpack is creating module rules. To ensure exclude rules are applied on the same exact files that match certain rules (the same RegExp may be matched against different things at different times) we're providing the exclude functionality as a loader you can add to the list of existing loaders or use individually.  
+The default way to define specific behaviors for webpack is creating module rules. To ensure exclude rules are applied on the same exact files that match certain rules (the same RegExp may be matched against different things at different times) we're providing the exclude functionality as a loader you can add to the list of existing loaders or use individually.
 The loader is available as `LavaMoatPlugin.exclude` from the default export of the plugin. It doesn't do anything to the code, but its presence is detected and treated as a mark on the file. Any file that's been processed by `LavaMoatPlugin.exclude` will not be wrapped in a Compartment.
 
 :::Note
@@ -141,9 +137,7 @@ Example: avoid wrapping CSS modules:
   },
 ```
 
-
 ### Gotchas
-
 
 #### `concatenateModules` option
 
@@ -155,7 +149,7 @@ One important thing to note when using the LavaMoat plugin is that it disables t
 
 When a dependency (eg. `buffer`) is provided by Webpack, and you need to add it explicitly to your dependencies, you'll receive the following error:
 
-```
+```text
 Error: LavaMoat - Encountered unknown package directory for file "/home/(...)/node_modules/buffer/index.js"
 ```
 
@@ -164,7 +158,7 @@ Error: LavaMoat - Encountered unknown package directory for file "/home/(...)/no
 When a built-in Node.js module is ignored by Webpack5, Webpack generates something like this:
 
 ```js
-const nodeCrypto = __webpack_require__(/*! crypto */ '?0b7d')
+const nodeCrypto = __webpack_require__(/*! crypto */ '?0b7d');
 ```
 
 A carveout is necessary in policy enforcement for these modules.
@@ -172,7 +166,7 @@ Sadly, even treeshaking doesn't eliminate that module. It's left there and faili
 
 This plugin will skip policy enforcement for such ignored modules so that they do not have to be explicitly listed in the policy file.
 
-# Security
+## Security
 
 **This is an experimental software. Use at your own risk!**
 
@@ -181,7 +175,7 @@ This plugin will skip policy enforcement for such ignored modules so that they d
   - Optionally lockdown can be inlined into the bundle files. You need to list the scripts that get to load as the first script on the page to apply lockdown only once when inlined. When you have a single bundle, you just configure a list with one element. It gets more complex with builds for multiple pages. The plugin doesn't attempt to guess where to inline lockdown.
 - Each javascript module resulting from the webpack build is scoped to its package's policy
 
-## Threat Model
+### Threat Model
 
 - Webpack itself is considered trusted.
 - All plugins can bypass LavaMoat protections intentionally.
@@ -190,6 +184,8 @@ This plugin will skip policy enforcement for such ignored modules so that they d
 - Some plugins (eg. MiniCssExtractPlugin) execute code from the bundle at build time. To make the plugin work you need to trust it and the modules it runs and add the LavaMoat.exclude loader for them.
 - This Webpack plugin _does not_ protect against malicious execution by other third-party plugins at runtime (use [LavaMoat](https://npm.im/lavamoat) for that).
 
-## Webpack runtime
+### Webpack runtime
 
 Elements of the Webpack runtime (e.g., `__webpack_require__.*`) are currently mostly left intact. To avoid opening up potential bypasses, some functionality of the Webpack runtime is not available.
+
+[ses lockdown]: https://github.com/endojs/endo/tree/master/packages/ses#lockdown
