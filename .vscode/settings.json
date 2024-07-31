@@ -1,10 +1,6 @@
 {
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.codeActionsOnSave": {
-    "source.organizeImports": "explicit",
-    "source.fixAll": "explicit",
-    "source.formatDocument": "explicit"
-  },
+  "editor.codeActionsOnSave": ["source.fixAll"],
   "prettier.useEditorConfig": true,
   "editor.formatOnSave": true
 }
