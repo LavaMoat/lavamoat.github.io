@@ -1,5 +1,5 @@
 ---
-title: "LavaMoat Node.js runtime"
+title: 'LavaMoat Node.js runtime'
 description: 'A user guide for running LavaMoat-protected NodeJS applications'
 ---
 
@@ -144,7 +144,7 @@ For more details go to the [troubleshooting section][troubleshooting]
 Programmatic usage is almost identical to the commandline and its arguments.
 
 ```js
-const { runLava } = require('lavamoat')
+const { runLava } = require('lavamoat');
 
 runLava({
   entryPath: './app.js',
@@ -158,7 +158,7 @@ runLava({
   projectRoot: process.cwd(),
   debugMode: false,
   statsMode: false,
-})
+});
 ```
 
 [ses-github-ext]: https://github.com/endojs/endo/tree/master/packages/ses
