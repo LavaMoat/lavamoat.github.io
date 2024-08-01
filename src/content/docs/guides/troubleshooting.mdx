@@ -9,7 +9,7 @@ import { YouTube } from 'astro-embed';
 
 <YouTube
   id="https://www.youtube.com/watch?v=E39cy5nrKtY"
-  title="LavaMoat Troubleshooting Tutortial"
+  title="LavaMoat Troubleshooting Tutorial"
 />
 
 ## Troubleshooting resources
@@ -26,7 +26,7 @@ We could not use names because it's possible for multiple entirely different pac
 When you make changes to your dependency tree it's possible that a new, shorter path to a dependency was introduced and that will affect what it's called as a result.
 The algorithm for creating canonical names is designed to make them as stable as possible, but they can change and you may sometimes need to update the keys in `policy-override.json` to match.
 
-### Error codes beginngin with `SES_`
+### Error codes beginning with `SES_`
 
 If you get an error beginning with `SES_` - look it up in the collection of documents here: https://github.com/endojs/endo/tree/master/packages/ses/error-codes
 
@@ -67,7 +67,7 @@ The issue contains links to fixes you can introduce.
 
 ### Patching packages locally
 
-When a package has a compatibility issue, you can patch it locally before/instad of fixing upstream.
+When a package has a compatibility issue, you can patch it locally before/instead of fixing upstream.
 
 `patch-package` is a tool used to make and maintain fixes to npm dependencies. To use patch-package with npm, you first install it as a development dependency using `npm install patch-package --save-dev`. After making the necessary changes to the files in the `node_modules/PROBLEMATIC_PACKAGE` directory, you run `npx patch-package PROBLEMATIC_PACKAGE` to create a patch file in the `patches` directory. This patch file should be committed to your version control system. Now you need to call `npx patch-package` after each clean install (can be automated).
 

@@ -80,7 +80,7 @@ When invoked without a command (or with the `run` command), `allow-scripts` will
 - **npm**: `npm exec allow-scripts run`
 - **Yarn**: `yarn allow-scripts run`
 
-`allow-scripts` will fail if it detects dependencies attemping to run scripts which haven't yet been configured; you will be advised to run [`allow-scripts auto`][automatic-configuration] to rectify the situation.
+`allow-scripts` will fail if it detects dependencies attempting to run scripts which haven't yet been configured; you will be advised to run [`allow-scripts auto`][automatic-configuration] to rectify the situation.
 
 ### Yarn plugin
 

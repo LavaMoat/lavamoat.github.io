@@ -17,7 +17,7 @@ Policies are fundamental to LavaMoat's operation.
 
 ## Policy Files: `policy.json` and `policy-override.json`
 
-When getting stared with LavaMoat, you'll first generate a Policy file using the LavaMoat CLI. To do this, LavaMoat crawls your applicaiton's dependency tree and determines which resources each dependency is _currently_ using. In other words, auto-generating a Policy takes a _snapshot_ of the permissions at a point in time. LavaMoat writes this policy to `policy.json`.
+When getting stared with LavaMoat, you'll first generate a Policy file using the LavaMoat CLI. To do this, LavaMoat crawls your application's dependency tree and determines which resources each dependency is _currently_ using. In other words, auto-generating a Policy takes a _snapshot_ of the permissions at a point in time. LavaMoat writes this policy to `policy.json`.
 
 At some point, you'll want to add, update, or remove dependencies. When you do, you'll want to have LavaMoat _re-generate_ `policy.json`—another snapshot.
 

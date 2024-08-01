@@ -162,7 +162,7 @@ const nodeCrypto = __webpack_require__(/*! crypto */ '?0b7d');
 ```
 
 A carveout is necessary in policy enforcement for these modules.
-Sadly, even treeshaking doesn't eliminate that module. It's left there and failing to work when reached by runtime control flow.
+Sadly, even tree shaking doesn't eliminate that module. It's left there and failing to work when reached by runtime control flow.
 
 This plugin will skip policy enforcement for such ignored modules so that they do not have to be explicitly listed in the policy file.
 
