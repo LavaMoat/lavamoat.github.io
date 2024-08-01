@@ -32,7 +32,7 @@ Before you use lavamoat runtime protections, make sure you've set up allow-scrip
 
 Use one of:
 
-```
+```shell
 npm i lavamoat
 yarn add lavamoat
 ```
@@ -117,7 +117,7 @@ Options:
 
 This uses the existing policy and policy-override files to run your app.
 
-```bash
+```shell
 lavamoat index.js
 ```
 
@@ -127,8 +127,8 @@ Automatically searches for policy files inside `./lavamoat/node/`.
 
 This uses the override policy specified at `./policies/policy-override.json`.
 
-```
-$ lavamoat index.js --override './policies/policy-override.json'
+```shell
+lavamoat index.js --override './policies/policy-override.json'
 ```
 
 ## Troubleshooting
