@@ -90,9 +90,13 @@ An intrinsic value that is accessible to ECMAScript code and required to exist b
 
 See the [TC39 glossary][tc39-glossary-primordial-ext] for more information.
 
+## Prototype poisoning
+
+> See [Prototype pollution][].
+
 ## Prototype pollution
 
-A class of JavaScript vulnerabilities and bugs where a modification is inadvertently made on an object prototype. For example,using unsitized user input for keys, the following:
+A class of JavaScript vulnerabilities and bugs where a modification is inadvertently made on an object prototype. For example, using unsanitized user input for keys, the following:
 
 ```js
 myObj[key] = {};
@@ -165,6 +169,7 @@ A technical committee which maintains the [ECMAScript][] standard.
 [ocap-video-ext]: https://youtu.be/YcWXqHPui_w
 [ocap-wiki-ext]: https://en.wikipedia.org/wiki/Object-capability_model
 [primordial]: #primordial
+[prototype pollution]: #prototype-pollution
 [ses-diagram-ext]: https://github.com/endojs/Jessie/blob/main/README.md#subsetting-ecmascript
 [ses-ext]: https://github.com/endojs/endo/tree/master/packages/ses#readme
 [ses-programming-ext]: https://github.com/endojs/endo/blob/master/packages/ses/docs/guide.md
