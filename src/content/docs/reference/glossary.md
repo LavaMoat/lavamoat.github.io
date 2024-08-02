@@ -57,7 +57,15 @@ An open source suite of tools for securing JavaScript projects against [**softwa
 
 ## Lockdown
 
-TODO
+The `lockdown()` function introduced by [SES][], when called creates a [hardened JavaScript][] environment that protects against [prototype pollution][].
+
+:::note[Resources]
+
+- [Lockdown](https://github.com/endojs/endo/tree/master/packages/ses#lockdown) on GitHub, part of the [`ses` package][ses-ext]
+- [What Lockdown does to JavaScript](https://github.com/endojs/endo/blob/master/packages/ses/docs/guide.md#what-lockdown-does-to-javascript) in the Programming Guide
+- [Lockdown()](https://github.com/endojs/endo/blob/master/packages/ses/docs/reference.md#lockdown) in the Programming Reference
+
+:::
 
 ## Object Capability Programming
 
@@ -170,6 +178,7 @@ A technical committee which maintains the [ECMAScript][] standard.
 [ocap-wiki-ext]: https://en.wikipedia.org/wiki/Object-capability_model
 [primordial]: #primordial
 [prototype pollution]: #prototype-pollution
+[ses]: #ses
 [ses-diagram-ext]: https://github.com/endojs/Jessie/blob/main/README.md#subsetting-ecmascript
 [ses-ext]: https://github.com/endojs/endo/tree/master/packages/ses#readme
 [ses-programming-ext]: https://github.com/endojs/endo/blob/master/packages/ses/docs/guide.md
