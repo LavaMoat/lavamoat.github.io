@@ -57,7 +57,7 @@ You can regenerate the main policy file on updates (and review for unexpected ne
 
 ### All options
 
-```
+```text
 lavamoat <entryPath> [Options]
 
 Positionals:
