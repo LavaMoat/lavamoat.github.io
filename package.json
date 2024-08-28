@@ -8,6 +8,7 @@
     "astro": "astro",
     "build": "astro check && astro build",
     "dev": "astro dev",
+    "format:check": "prettier . --check",
     "lint": "npm run lint:eslint && npm run lint:markdown",
     "lint:commit": "commitlint",
     "lint:eslint": "eslint .",
