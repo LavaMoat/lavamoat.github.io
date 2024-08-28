@@ -8,6 +8,6 @@
 
 ## License
 
-Copyright © 2024, Consensys Software, Inc.  Licensed MIT
+Copyright © 2024, Consensys Software, Inc. Licensed MIT
 
 [LavaMoat]: https://github.com/LavaMoat/LavaMoat
