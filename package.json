@@ -18,7 +18,8 @@
     "lint:staged": "lint-staged",
     "prepare": "husky",
     "preview": "astro preview",
-    "start": "astro dev"
+    "start": "astro dev",
+    "tsc": "tsc"
   },
   "dependencies": {
     "@astrojs/check": "^0.7.0",
