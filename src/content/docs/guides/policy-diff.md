@@ -26,27 +26,30 @@ It also lists which other packages are allowed for the current package to import
 The goal of reviewing the diff is to spot a malicious package being added.
 
 #### TL;DR
+
 - check `globals` and `builtins` for new powers and investigate if you're surprised the package would need them
 - check if new relationships in `packages` are pointing to packages with very [powerful APIs](#powerful-apis) (e.g. spawning child processes in Node.js)
 - be aware that the identifier may change to `pkgC>actual-name` from `pkgB>pkgA>actual-name` BUT! If the package now also has totally different powers, it's likely a different package of the same name. Investigate! `npm ls actual-name` should help.
 - when a new package is added, consider limiting its powers to what you actually use.
 
-#### Good practices for spotting suspicious changes:
+#### Good practices for spotting suspicious changes
 
 First of all - you need to check if any of the packages get access to new [powerful APIs](#powerful-apis) unexpectedly.
 
-If a package that was supposed to only be doing basic string operations is suddenly also using `fetch` and `process.env` in your build system, you should give it a closer look or add 
-```
+If a package that was supposed to only be doing basic string operations is suddenly also using `fetch` and `process.env` in your build system, you should give it a closer look or add
+
+```json
 "fetch": false,
 "process": false
 ```
+
 to the globals for that package in policy-override.json
 
-When a new dependency shows up in `packages` field of *packageA*: look up what it's pointing to and if the dependency has access to very [powerful APIs](#powerful-apis); doublecheck whether it makes sense to you that *packageA* would need to use it.
+When a new dependency shows up in `packages` field of _packageA_: look up what it's pointing to and if the dependency has access to very [powerful APIs](#powerful-apis); doublecheck whether it makes sense to you that _packageA_ would need to use it.
 
 When dependency tree changes, it's possible that the dependency nesting might change - so the shortest identifier for one of the resources may now be `pkgC>actual-name`, _not_ `pkgB>pkgA>actual-name`.
 But there are other more nefarious reasons why that could happen.
-If the package now also has totally different powers or dependencies listed it's likely a different package of the same name. There can be more than one `actual-name` named package in this case. It could have been introduced as a different version or a totally different package installed from git or as a bundled dependency. 
+If the package now also has totally different powers or dependencies listed it's likely a different package of the same name. There can be more than one `actual-name` named package in this case. It could have been introduced as a different version or a totally different package installed from git or as a bundled dependency.
 
 Whn a new package is added, consider limiting its powers to what you actually use.
 
@@ -54,7 +57,7 @@ Whn a new package is added, consider limiting its powers to what you actually us
 
 The goal of reviewing the initial policy is to spot where packages are given powers that allow them escaping LavaMoat protections or abusing the application.
 
-The minimal viable review is to look at the `globals` and `builtins` fields of the policy file to see if any of the packages have access to unexpected [powerful APIs](#powerful-apis). 
+The minimal viable review is to look at the `globals` and `builtins` fields of the policy file to see if any of the packages have access to unexpected [powerful APIs](#powerful-apis).
 
 A more advanced review would be to apply [Principle of Least Authority][PoLA] and add entries to policy-override.json to limit the powers of packages to what they actually need to serve your usecase.
 
@@ -62,17 +65,16 @@ A more advanced review would be to apply [Principle of Least Authority][PoLA] an
 
 Examples of powerful APIs - not an exhaustive list:
 
-| global| builtin | description |
-| --|--|-- |
-| |`child_process` and any form of `exec` or `spawn` | Allows running arbitrary commands on the host machine and is not covered  |
-| |`fs` | Allows reading and writing files on the host machine |
-| `fetch`, `XMLHttpRequest`, `WebSocket`, `EventSource`| `http`, `https`, `net` | Allows making network requests |
-| `document`| | contains a lot of powerful APIs that can be used to manipulate the DOM, including creating iframes with unprotected globals |
-| `open`| | `window.open` allows opening new windows/tabs and accessing clean globals there |
-| `navigator`| | contains a lot of powerful APIs that can be used to fingerprint the user or control the browser |
-| `chrome` or `browser`| | extension APIs - should only be accessed by a package that is a helper library for cross-browser extensions |
-| `process`| | Allows reading and writing environment variables and other process-related operations |
-| |`vm` | Allows running arbitrary code in a new context |
-
+| global                                                | builtin                                           | description                                                                                                                 |
+| ----------------------------------------------------- | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+|                                                       | `child_process` and any form of `exec` or `spawn` | Allows running arbitrary commands on the host machine and is not covered                                                    |
+|                                                       | `fs`                                              | Allows reading and writing files on the host machine                                                                        |
+| `fetch`, `XMLHttpRequest`, `WebSocket`, `EventSource` | `http`, `https`, `net`                            | Allows making network requests                                                                                              |
+| `document`                                            |                                                   | contains a lot of powerful APIs that can be used to manipulate the DOM, including creating iframes with unprotected globals |
+| `open`                                                |                                                   | `window.open` allows opening new windows/tabs and accessing clean globals there                                             |
+| `navigator`                                           |                                                   | contains a lot of powerful APIs that can be used to fingerprint the user or control the browser                             |
+| `chrome` or `browser`                                 |                                                   | extension APIs - should only be accessed by a package that is a helper library for cross-browser extensions                 |
+| `process`                                             |                                                   | Allows reading and writing environment variables and other process-related operations                                       |
+|                                                       | `vm`                                              | Allows running arbitrary code in a new context                                                                              |
 
 [PoLA]: https://en.wikipedia.org/wiki/Principle_of_least_privilege
