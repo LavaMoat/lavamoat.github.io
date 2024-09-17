@@ -5,7 +5,7 @@ description: How to review LavaMoat Policy and its diffs
 
 <!-- markdownlint-disable no-inline-html -->
 
-This guide will help you review your policy on a continuous basis.
+This guide will show you how to review changes to your LavaMoat Policy File.
 
 ## Why review Policy?
 
@@ -18,7 +18,7 @@ If you generate the initial policy from a known uncompromised version of your ap
 
 ## How to review your policy?
 
-LavaMoat Policy is listing all powers that a package can use. That's what you'll find in `globals` and `builtin` fields.
+The LavaMoat Policy lists all powers that a package can use; these are the `globals` and `builtin` fields.
 It also lists which other packages are allowed for the current package to import. You can follow those relations to see whether a package with access to very [powerful APIs](#powerful-apis) is used by any suspicious packages as a dependency. See [Principle of Least Authority][PoLA]
 
 ### What to look for when reviewing a Policy diff?
@@ -32,7 +32,7 @@ The goal of reviewing the diff is to spot a malicious package being added.
 - be aware that the identifier may change to `pkgC>actual-name` from `pkgB>pkgA>actual-name` BUT! If the package now also has totally different powers, it's likely a different package of the same name. Investigate! `npm ls actual-name` should help.
 - when a new package is added, consider limiting its powers to what you actually use.
 
-#### Good practices for spotting suspicious changes
+#### Best Practices for Finding Suspicious Changes
 
 First of all - you need to check if any of the packages get access to new [powerful APIs](#powerful-apis) unexpectedly.
 
@@ -43,7 +43,7 @@ If a package that was supposed to only be doing basic string operations is sudde
 "process": false
 ```
 
-to the globals for that package in policy-override.json
+to the `globals` field for that package in `policy-override.json`.
 
 When a new dependency shows up in `packages` field of _packageA_: look up what it's pointing to and if the dependency has access to very [powerful APIs](#powerful-apis); doublecheck whether it makes sense to you that _packageA_ would need to use it.
 
