@@ -67,6 +67,10 @@ The `lockdown()` function introduced by [SES][], when called creates a [hardened
 
 :::
 
+## Powers
+
+There's a concept in [Hardened JavaScript][] called _powers_. Powers are the capabilities that a compartment has access to. The compartment can only access the powers that it has been granted. For the specific use-case that LavaMoat Policy provides, Powers are effectively the globals and built-in (in case of Node.js programs) modules that are available to the compartment.
+
 ## Object Capability Programming
 
 > a.k.a. _OCAP_ or _object-capability model_
