@@ -136,7 +136,9 @@ See the [ECMAScript Spec][ecma-262-realms-ext] for more information.
 
 ## Scuttling
 
-TODO
+Destroying all possible global references with [LavaMoat][].
+
+See the [LavaMoat docs][lavamoat-scuttling-ext] for more information.
 
 ## SES
 
@@ -175,6 +177,7 @@ A technical committee which maintains the [ECMAScript][] standard.
 [hardened-js-video-ext]: https://youtu.be/RZ7bBIU8DRc
 [intrinsic]: #intrinsic
 [lavamoat]: #lavamoat
+[lavamoat-scuttling-ext]: https://github.com/LavaMoat/LavaMoat/blob/main/docs/scuttling.md
 [object-capability-programming]: #object-capability-programming
 [ocap-awesome-ext]: https://github.com/dckc/awesome-ocap#readme
 [ocap-thesis-ext]: http://erights.org/talks/thesis/
