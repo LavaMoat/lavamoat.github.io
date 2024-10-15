@@ -7,7 +7,7 @@ This glossary provides definitions for terms used in the context of LavaMoat and
 
 ## Compartment
 
-Compartments are a mechanism for isolating and providing limited power to programs within a shared realm. Compartments are necessary for [Hardened JavaScript][] and are described in the [Compartments Proposal][compartments-proposal-ext].
+Compartments are a mechanism for isolating and providing limited power to programs within a shared realm. Compartments are necessary for [Hardened JavaScript][hardened-javascript] and are described in the [Compartments Proposal][compartments-proposal-ext].
 
 ## ECMA-262
 
@@ -19,7 +19,7 @@ ECMAScript is the standard upon which JavaScript is based. The standard is defin
 
 ## Endo
 
-Endo is an [open source project][endo-ext] providing a distributed sandbox for JavaScript. The foundation of Endo is [Hardened JavaScript][].
+Endo is an [open source project][endo-ext] providing a distributed sandbox for JavaScript. The foundation of Endo is [Hardened JavaScript][hardened-javascript].
 
 ## Hardened JavaScript
 
@@ -34,8 +34,8 @@ SES is the backbone of both [Endo][] and [LavaMoat][].
 :::note[Resources]
 
 - [SES on GitHub][ses-ext], part of the [Endo][] project
-- [Secure ECMAScript TC39 proposal][ses-proposal]
-- [Compartment TC39 proposal][compartments-proposal]
+- [Secure ECMAScript TC39 proposal][ses-proposal-ext]
+- [Compartment TC39 proposal][compartments-proposal-ext]
 - [Video: Hardened JavaScript][hardened-js-video-ext], an introduction by Kris Kowal
 - [Secure computing guide][ses-secure-ext] to learn more about the risks of untrusted JavaScript
 - [Programming guide][ses-programming-ext] for an introduction
@@ -53,11 +53,11 @@ See the [TC39 glossary][tc39-glossary-intrinsic-ext] for more information.
 
 ## LavaMoat
 
-An open source suite of tools for securing JavaScript projects against [**software supply chain attacks**][supply chain attack]. LavaMoat uses [Hardened JavaScript][] in tandem with user-configurable policies to secure the development, build, and runtime environments of JavaScript applications.
+An open source suite of tools for securing JavaScript projects against [**software supply chain attacks**][supply-chain-attack]. LavaMoat uses [Hardened JavaScript][hardened-javascript] in tandem with user-configurable policies to secure the development, build, and runtime environments of JavaScript applications.
 
 ## Lockdown
 
-The `lockdown()` function introduced by [SES][], when called creates a [hardened JavaScript][] environment that protects against [prototype pollution][].
+The `lockdown()` function introduced by [SES][], when called creates a [hardened JavaScript][hardened-javascript] environment that protects against [prototype pollution][prototype-pollution].
 
 :::note[Resources]
 
@@ -69,13 +69,13 @@ The `lockdown()` function introduced by [SES][], when called creates a [hardened
 
 ## Powers
 
-There's a concept in [Hardened JavaScript][] called _powers_. Powers are the capabilities that a compartment has access to. The compartment can only access the powers that it has been granted. For the specific use-case that LavaMoat Policy provides, Powers are effectively the globals and built-in (in case of Node.js programs) modules that are available to the compartment.
+There's a concept in [Hardened JavaScript][hardened-javascript] called _powers_. Powers are the capabilities that a compartment has access to. The compartment can only access the powers that it has been granted. For the specific use-case that [LavaMoat][] Policy provides, Powers are effectively the globals and built-in (in case of Node.js programs) modules that are available to the compartment.
 
 ## Object Capability Programming
 
 > a.k.a. _OCAP_ or _object-capability model_
 
-Object capability programming is a security model that uses the concept of _object capabilities_ to control access to resources. In this model, an object's authority to access resources is determined by the capabilities it holds. This approach is used in [Hardened JavaScript][] to provide a secure environment for running untrusted code.
+Object capability programming is a security model that uses the concept of _object capabilities_ to control access to resources. In this model, an object's authority to access resources is determined by the capabilities it holds. This approach is used in [Hardened JavaScript][hardened-javascript] to provide a secure environment for running untrusted code.
 
 :::note[Resources]
 
@@ -94,7 +94,7 @@ Object capability programming is a security model that uses the concept of _obje
 
 ECMAScript behavior wherein a `TypeError` is thrown (in strict mode) for code `T[K] = ...` when `K` is a non-writable property in the prototype of `T`.
 
-See [TC39's definition][tc39-glossary-override-mistake-ext] for further details.
+See [TC39's definition][tc39-glossary-override-mistake-ext] for more information.
 
 ## Primordial
 
@@ -104,7 +104,7 @@ See the [TC39 glossary][tc39-glossary-primordial-ext] for more information.
 
 ## Prototype poisoning
 
-> See [Prototype pollution][].
+> See [Prototype pollution][prototype-pollution].
 
 ## Prototype pollution
 
@@ -142,11 +142,11 @@ See the [LavaMoat docs][lavamoat-scuttling-ext] for more information.
 
 ## SES
 
-> See [Hardened JavaScript][].
+> See [Hardened JavaScript][hardened-javascript].
 
 ## Secure ECMAScript
 
-> See [Hardened JavaScript][].
+> See [Hardened JavaScript][hardened-javascript].
 
 ## Supply Chain Attack
 
@@ -171,9 +171,9 @@ A technical committee which maintains the [ECMAScript][] standard.
 [ecma-262-ext]: https://ecma-international.org/publications-and-standards/standards/ecma-262
 [ecma-262-realms-ext]: https://tc39.es/ecma262/#sec-code-realms
 [ecmascript]: #ecmascript
-[endo-ext]: https://github.com/endojs/endo#readme
 [endo]: #endo
-[hardened javascript]: #hardened-javascript
+[endo-ext]: https://github.com/endojs/endo#readme
+[hardened-javascript]: #hardened-javascript
 [hardened-js-video-ext]: https://youtu.be/RZ7bBIU8DRc
 [intrinsic]: #intrinsic
 [lavamoat]: #lavamoat
@@ -184,19 +184,18 @@ A technical committee which maintains the [ECMAScript][] standard.
 [ocap-video-ext]: https://youtu.be/YcWXqHPui_w
 [ocap-wiki-ext]: https://en.wikipedia.org/wiki/Object-capability_model
 [primordial]: #primordial
-[prototype pollution]: #prototype-pollution
+[prototype-pollution]: #prototype-pollution
 [ses]: #ses
-[ses-diagram-ext]: https://github.com/endojs/Jessie/blob/main/README.md#subsetting-ecmascript
 [ses-ext]: https://github.com/endojs/endo/tree/master/packages/ses#readme
+[ses-diagram-ext]: https://github.com/endojs/Jessie/blob/main/README.md#subsetting-ecmascript
 [ses-programming-ext]: https://github.com/endojs/endo/blob/master/packages/ses/docs/guide.md
+[ses-proposal-ext]: https://github.com/tc39/proposal-ses
 [ses-secure-ext]: https://github.com/endojs/endo/blob/master/packages/ses/docs/secure-coding-guide.md
 [shim]: #shim
-[supply chain attack]: #supply-chain-attack
+[supply-chain-attack]: #supply-chain-attack
 [tc39-ext]: https://ecma-international.org/technical-committees/tc39/
 [tc39-glossary-ext]: https://ecma-international.org/publications-and-standards/standards/ecma-262
 [tc39-glossary-intrinsic-ext]: https://ecma-international.org/publications-and-standards/standards/ecma-262#intrinsic
 [tc39-glossary-override-mistake-ext]: https://ecma-international.org/publications-and-standards/standards/ecma-262#override-mistake
 [tc39-glossary-primordial-ext]: https://ecma-international.org/publications-and-standards/standards/ecma-262#primordial
 [tc39]: #tc39
-[ses-proposal]: https://github.com/tc39/proposal-ses
-[compartments-proposal]: https://github.com/tc39/proposal-compartments
