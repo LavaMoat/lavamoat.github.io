@@ -11,7 +11,7 @@ sidebar:
 
 This project and everyone participating in it is governed by the [LavaMoat Code of Conduct][coc].
 
-By participating, you are expected to uphold this code. Please report unacceptable behavior to [lavamoat@consenys.net][moderation-email].
+By participating, you are expected to uphold this code. Please report unacceptable behavior to [lavamoat@consensys.net][moderation-email].
 
 ## I Have a Question
 
