@@ -29,6 +29,7 @@ export default defineConfig({
               link: '/guides/webpack',
             },
             { label: 'Policy files', link: '/guides/policy' },
+            { label: 'Policy review', link: '/guides/policy-diff' },
             {
               label: 'Troubleshooting Common Problems',
               link: '/guides/troubleshooting',

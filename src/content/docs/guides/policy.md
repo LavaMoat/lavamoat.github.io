@@ -9,7 +9,7 @@ This guide will help you understand what a LavaMoat Policy is and how to use it.
 
 ## What's a Policy?
 
-A Policy is an object that describes which _resources_ any given dependency can access. These "resources" include globals, builtins (e.g., `node:fs`), native modules, and other packages. _All direct and transitive dependencies_ in your application's dependency tree are subject to a Policy.
+A Policy is an object that describes which _powers_ any given dependency can access. These "powers" include globals, builtins (e.g., `node:fs`), native modules, and other packages. _All direct and transitive dependencies_ in your application's dependency tree are subject to a Policy.
 
 **The behavior of _your application_ is not restricted by the Policy.** A Policy _only_ applies to direct and transitive dependencies of your application.
 
@@ -17,7 +17,7 @@ Policies are fundamental to LavaMoat's operation.
 
 ## Policy Files: `policy.json` and `policy-override.json`
 
-When getting stared with LavaMoat, you'll first generate a Policy file using the LavaMoat CLI. To do this, LavaMoat crawls your application's dependency tree and determines which resources each dependency is _currently_ using. In other words, auto-generating a Policy takes a _snapshot_ of the permissions at a point in time. LavaMoat writes this policy to `policy.json`.
+When getting stared with LavaMoat, you'll first generate a Policy file using the LavaMoat CLI. To do this, LavaMoat crawls your application's dependency tree and determines which powers each dependency is _currently_ using. In other words, auto-generating a Policy takes a _snapshot_ of the permissions at a point in time. LavaMoat writes this policy to `policy.json`.
 
 At some point, you'll want to add, update, or remove dependencies. When you do, you'll want to have LavaMoat _re-generate_ `policy.json`—another snapshot.
 
@@ -36,6 +36,10 @@ In summary, the Policy files are:
 
 Both `policy.json` and `policy-override.json` should be under version control. This makes it easier to compare the diffs of the generated policies and an audit trail of who changed the policies and when.
 
+:::
+
+:::note[Reviewing Policy]
+[Learn how to review your policy and policy diffs](./policy-diff)
 :::
 
 ## Policy, By Example
