@@ -3,9 +3,7 @@ title: 'lavamoat and webpack'
 description: 'A user guide for adding LavaMoat protections to a webpack bundle'
 ---
 
-
 LavaMoat Webpack Plugin wraps each module in the bundle in a [Compartment](https://hardenedjs.org/#compartment) and enforces a Policy independently per package.
-
 
 :::Note
 LavaMoat Webpack plugin does not support some features relying on dynamic module loading and overwriting, including Module Federation and Hot Module Reloading.
@@ -95,7 +93,7 @@ The LavaMoat plugin takes an options object with the following properties (all o
 | `readableResourceIds`      | Boolean to decide whether to keep resource IDs human readable (possibly regardless of production/development mode). If `false`, they are replaced with a sequence of numbers. Keeping them readable may be useful for debugging when a policy violation error is thrown. By default, follows the Webpack config mode. | `(mode==='development')` |
 | `lockdown`                 | Configuration for [SES lockdown][]. Setting the option replaces defaults from LavaMoat.                                                                                                                                                                                                                               | reasonable defaults      |
 | `HtmlWebpackPluginInterop` | Boolean to add a script tag to the HTML output for `./lockdown` file if `HtmlWebpackPlugin` is in use.                                                                                                                                                                                                                | `false`                  |
-| `inlineLockdown`           | A RegExp for matching files to be prepended with lockdown (instead of adding it as a file to the output directory).                                                                                                                                                                                                   |
+| `inlineLockdown`           | A RegExp for matching files to be prepended with lockdown (instead of adding it as a file to the output directory).                                                                                                                                                                                                   |                          |
 | `runChecks`                | Boolean property to indicate whether to check resulting code with wrapping for correctness.                                                                                                                                                                                                                           | `false`                  |
 | `diagnosticsVerbosity`     | Number property to represent diagnostics output verbosity. A larger number means more overwhelming diagnostics output.                                                                                                                                                                                                | `0`                      |
 | `debugRuntime`             | Only for local debugging use - Enables debugging tools that help detect gaps in generated policy and add missing entries to overrides                                                                                                                                                                                 | `false`                  |
@@ -156,6 +154,10 @@ A carveout is necessary in policy enforcement for these modules.
 Sadly, even tree shaking doesn't eliminate that module. It's left there and failing to work when reached by runtime control flow.
 
 This plugin will skip policy enforcement for such ignored modules so that they do not have to be explicitly listed in the policy file.
+
+#### Ambient assets
+
+Whenever webpack finds `new URL('./existing/path/to/file')` in the code it turns that file into an asset in your output folder by default. LavaMoat disables that for files requested from node_modules.
 
 ## Security
 
