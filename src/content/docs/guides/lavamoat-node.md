@@ -7,7 +7,7 @@ description: 'A user guide for running LavaMoat-protected NodeJS applications'
 
 :::caution
 
-This runtime does not support ESM modules. A new runtime that's ESM-first is a work in progress.
+This runtime does not support ESM modules. A new runtime that's ESM-first is a work in progress. You can try it out by installing `@lavamoat/node`.
 
 :::
 
