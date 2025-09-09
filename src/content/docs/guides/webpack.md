@@ -3,16 +3,10 @@ title: 'lavamoat and webpack'
 description: 'A user guide for adding LavaMoat protections to a webpack bundle'
 ---
 
-TODO: make it more like a guide and less like just a readme.
-
-LavaMoat Webpack Plugin wraps each module in the bundle in a [SES Compartment](https://github.com/endojs/endo/tree/master/packages/ses#compartment) and enforces a Policy independently per package.
-
-:::Note[Beta]
-LavaMoat Webpack plugin is currently in [Open Beta](https://github.com/LavaMoat/LavaMoat/discussions/723). It's pretty stable at this point, but breaking changes may still happen.
-:::
+LavaMoat Webpack Plugin wraps each module in the bundle in a [Compartment](https://hardenedjs.org/#compartment) and enforces a Policy independently per package.
 
 :::Note
-LavaMoat Webpack plugin does not support advanced features relying on dynamic chunk loading including Module Federation and Hot Module Reloading.
+LavaMoat Webpack plugin does not support some features relying on dynamic module loading and overwriting, including Module Federation and Hot Module Reloading.
 :::
 
 ## Usage
@@ -21,15 +15,13 @@ LavaMoat Webpack plugin does not support advanced features relying on dynamic ch
 
 ```shell
 npm i -D @lavamoat/webpack
-# or
-# yarn add -D @lavamoat/webpack
 ```
 
 1. Create a webpack bundle with the LavaMoat plugin enabled and the `generatePolicy` flag set to true
 2. Make sure you add a `<script src="./lockdown"></script>` before all other scripts or enable the `HtmlWebpackPluginInterop` option if you're using `html-webpack-plugin`. (Note there's no `.js` there because it's the only way to prevent webpack from minifying the file thus undermining its security guarantees)
 3. Tweak the policy if needed with policy-override.json
 
-:::Note[Beta]
+:::Note
 Policy generation might still get confused about aliases and custom resolvers. Please report n issue if that occurs.
 :::
 
@@ -101,16 +93,13 @@ The LavaMoat plugin takes an options object with the following properties (all o
 | `readableResourceIds`      | Boolean to decide whether to keep resource IDs human readable (possibly regardless of production/development mode). If `false`, they are replaced with a sequence of numbers. Keeping them readable may be useful for debugging when a policy violation error is thrown. By default, follows the Webpack config mode. | `(mode==='development')` |
 | `lockdown`                 | Configuration for [SES lockdown][]. Setting the option replaces defaults from LavaMoat.                                                                                                                                                                                                                               | reasonable defaults      |
 | `HtmlWebpackPluginInterop` | Boolean to add a script tag to the HTML output for `./lockdown` file if `HtmlWebpackPlugin` is in use.                                                                                                                                                                                                                | `false`                  |
-| `inlineLockdown`           | Array of output filenames in which to inline lockdown (instead of adding it as a file to the output directory).                                                                                                                                                                                                       |                          |
+| `inlineLockdown`           | A RegExp for matching files to be prepended with lockdown (instead of adding it as a file to the output directory).                                                                                                                                                                                                   |                          |
 | `runChecks`                | Boolean property to indicate whether to check resulting code with wrapping for correctness.                                                                                                                                                                                                                           | `false`                  |
-| `diagnosticsVerbosity`     | Number property to represent diagnostics output verbosity. A larger number means more overwhelming diagnostics output. Setting a positive verbosity will enable `runChecks`.                                                                                                                                          | `0`                      |
+| `diagnosticsVerbosity`     | Number property to represent diagnostics output verbosity. A larger number means more overwhelming diagnostics output.                                                                                                                                                                                                | `0`                      |
+| `debugRuntime`             | Only for local debugging use - Enables debugging tools that help detect gaps in generated policy and add missing entries to overrides                                                                                                                                                                                 | `false`                  |
 | `policy`                   | The LavaMoat policy object (if not loading from file; see `policyLocation`)                                                                                                                                                                                                                                           | `undefined`              |
 
 ### Excluding modules
-
-:::Caution
-This is an experimental feature and excluding may be configured differently in the future if this approach is proven insecure.
-:::
 
 The default way to define specific behaviors for webpack is creating module rules. To ensure exclude rules are applied on the same exact files that match certain rules (the same RegExp may be matched against different things at different times) we're providing the exclude functionality as a loader you can add to the list of existing loaders or use individually.
 The loader is available as `LavaMoatPlugin.exclude` from the default export of the plugin. It doesn't do anything to the code, but its presence is detected and treated as a mark on the file. Any file that's been processed by `LavaMoatPlugin.exclude` will not be wrapped in a Compartment.
@@ -165,6 +154,10 @@ A carveout is necessary in policy enforcement for these modules.
 Sadly, even tree shaking doesn't eliminate that module. It's left there and failing to work when reached by runtime control flow.
 
 This plugin will skip policy enforcement for such ignored modules so that they do not have to be explicitly listed in the policy file.
+
+#### Ambient assets
+
+Whenever webpack finds `new URL('./existing/path/to/file')` in the code it turns that file into an asset in your output folder by default. LavaMoat disables that for files requested from node_modules.
 
 ## Security
 
