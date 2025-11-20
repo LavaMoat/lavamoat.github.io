@@ -11,6 +11,8 @@ This document is aimed at **contributors** to the LavaMoat project and the infor
 
 :::
 
+## LavaMoat's Conventions
+
 In this document, we want to expand on the conventions LavaMoat uses and why the reasoning behind them.
 
 ### Code Style

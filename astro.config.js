@@ -7,7 +7,11 @@ export default defineConfig({
     starlight({
       title: 'LavaMoat',
       social: [
-        {icon: 'github', href: 'https://github.com/LavaMoat/LavaMoat', label: 'GitHub'},
+        {
+          icon: 'github',
+          href: 'https://github.com/LavaMoat/LavaMoat',
+          label: 'GitHub',
+        },
       ],
       sidebar: [
         // to change the order of items, use the sidebar.order prop
