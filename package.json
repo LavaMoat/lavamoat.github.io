@@ -19,7 +19,7 @@
     "prepare": "husky",
     "preview": "astro preview",
     "start": "astro dev",
-    "tsc": "tsc",
+    "tsc": "tsc --noEmit",
     "tsc:config": "tsc --showConfig"
   },
   "devDependencies": {
