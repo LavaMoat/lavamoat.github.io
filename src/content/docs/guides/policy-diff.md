@@ -36,6 +36,7 @@ The goal of reviewing the diff is to spot a malicious package being added.
 - Check if new relationships in `packages` are pointing to packages with very [powerful APIs](#powerful-apis) (e.g. spawning child processes in Node.js)
 - Be aware that the identifier may change to `pkgC>actual-name` from `pkgB>pkgA>actual-name` BUT! If the package now also has totally different powers, it's likely a different package of the same name. Investigate! `npm ls actual-name` should help
 - When a new package is added, consider limiting its powers to what you actually use
+  - If you see a big bag of capabilities being exposed (like `document` in the browser or `process` in node.js) always try to narrow it down to a reasonable minimum.
 
 #### Best Practices for Finding Suspicious Changes
 
@@ -66,24 +67,49 @@ The minimal viable review is to look at the `globals` and `builtins` fields of t
 
 A more advanced review would be to apply [Principle of Least Authority][PoLA] and add entries to policy-override.json to limit the powers of packages to what they actually need to serve your usecase.
 
+A combination of both of the above leads to limiting what is exposed from the most powerful APIs. E.g. `process` in node.js exposes capabilities to run child processes, import builtin modules synchronously and running more javascript files.
+Policy generation is static analysis and may not figure out that all a package needs is `process.env`. In that case, you need a following override:
+
+```js
+  "globals": {
+    "process": false,
+    "process.env": true
+  }
+```
+
 ## Powerful APIs
 
 Examples of powerful APIs - not an exhaustive list:
 
-| global                                                 | builtin                                           | description                                                                                                                 |
-| -----------------------------------------------------  | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-|                                                        | `child_process` and any form of `exec` or `spawn` | Allows running arbitrary commands on the host machine and is not covered                                                    |
-|                                                        | `fs`                                              | Allows reading and writing files on the host machine                                                                        |
-| `fetch`, `XMLHttpRequest`, `WebSocket`, `EventSource`  | `http`, `https`, `net`                            | Allows making network requests                                                                                              |
-| `document`                                             |                                                   | contains a lot of powerful APIs that can be used to manipulate the DOM, including creating iframes with unprotected globals |
-| `open`                                                 |                                                   | `window.open` allows opening new windows/tabs and accessing clean globals there                                             |
-| `navigator`                                            |                                                   | contains a lot of powerful APIs that can be used to fingerprint the user or control the browser                             |
-| `chrome` or `browser`                                  |                                                   | extension APIs - should only be accessed by a package that is a helper library for cross-browser extensions                 |
-| `process`                                              |                                                   | Allows reading and writing environment variables and other process-related operations                                       |
-|                                                        | `vm`                                              | Allows running arbitrary code in a new context                                                                              |
-| `document.querySelector`, `document.createElement`, etc|                                                   | Grants access to powerful context related objects such as `document` and `window` (aka globalThis) via properties such as `ownerDocument` or `defaultView` which are exposed by DOM nodes (which are the type of return values of such APIs)                            |
-| `Document.prototype`, `Node.prototype`, etc            |                                                   | Redefining methods of these prototypes may allow attackers to hijack these at runtime when are being used by innocent code elsewhere                           |
-| `addEventListener`                                     |                                                   | Events leak powerful objects such as DOM nodes, `document` and `window` - such API may grant attackers access to such events. Also, listening to the `message` event specifically may allow attackers to intercept sensitive messages being sent across the app | 
-| `location`                                             |                                                   | A powerful API that may allow attackers change the location of the app which may result in phishing attempts                |
+| global                                                  | builtin                                           | description                                                                                                                                                                                                                                                     |
+| ------------------------------------------------------- | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|                                                         | `child_process` and any form of `exec` or `spawn` | Allows running arbitrary commands on the host machine and is not covered                                                                                                                                                                                        |
+|                                                         | `fs`                                              | Allows reading and writing files on the host machine                                                                                                                                                                                                            |
+| `fetch`, `XMLHttpRequest`, `WebSocket`, `EventSource`   | `http`, `https`, `net`                            | Allows making network requests                                                                                                                                                                                                                                  |
+| `document`                                              |                                                   | contains a lot of powerful APIs that can be used to manipulate the DOM, including creating iframes with unprotected globals                                                                                                                                     |
+| `open`                                                  |                                                   | `window.open` allows opening new windows/tabs and accessing clean globals there                                                                                                                                                                                 |
+| `navigator`                                             |                                                   | contains a lot of powerful APIs that can be used to fingerprint the user or control the browser                                                                                                                                                                 |
+| `chrome` or `browser`                                   |                                                   | extension APIs - should only be accessed by a package that is a helper library for cross-browser extensions                                                                                                                                                     |
+| `process`                                               |                                                   | Allows reading and writing environment variables and other process-related operations. Exposes functions that allow loading built-in, native and regular JS modules, exposes spawning child processes.                                                          |
+|                                                         | `vm`                                              | Allows running arbitrary code in a new context                                                                                                                                                                                                                  |
+| `document.querySelector`, `document.createElement`, etc |                                                   | Grants access to powerful context related objects such as `document` and `window` (aka globalThis) via properties such as `ownerDocument` or `defaultView` which are exposed by DOM nodes (which are the type of return values of such APIs)                    |
+| `Document.prototype`, `Node.prototype`, etc             |                                                   | Redefining methods of these prototypes may allow attackers to hijack these at runtime when are being used by innocent code elsewhere                                                                                                                            |
+| `addEventListener`                                      |                                                   | Events leak powerful objects such as DOM nodes, `document` and `window` - such API may grant attackers access to such events. Also, listening to the `message` event specifically may allow attackers to intercept sensitive messages being sent across the app |
+| `location`                                              |                                                   | A powerful API that may allow attackers change the location of the app which may result in phishing attempts                                                                                                                                                    |
+
+### Powerful buffers
+
+Due to how node.js handles buffers, there's a shared memory pool behind them and every buffer instance is exposing a reference to the entire memory pool. When buffers are passed around in security-critical code, you need to put additional effort into reviewing what has access to any other buffers.  
+TypedArrays don't have a shared memory pool, so using them for handling secrets is easier to control.
+
+If you want to avoid many of the risks around using buffers at the cost of the performance of allocating them, you can zero-fill the memory when used:
+
+```sh
+node --zero-fill-buffers
+```
+
+You can also set `Buffer.poolSize` to zero early in your program to avoid buffers sharing memory space.
+
+LavaMoat may provide built-in options to tighten memory sharing in puffers in the future.
 
 [PoLA]: https://en.wikipedia.org/wiki/Principle_of_least_privilege
