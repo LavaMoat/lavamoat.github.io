@@ -24,11 +24,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout your repository using git
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
       - name: Install, build, and upload your site output
-        uses: withastro/action@v2
+        uses: withastro/action@v6
         with:
-          node-version: 20
+          node-version: 24
 
   deploy:
     needs: build
