@@ -6,9 +6,13 @@ export default defineConfig({
   integrations: [
     starlight({
       title: 'LavaMoat',
-      social: {
-        github: 'https://github.com/LavaMoat/LavaMoat',
-      },
+      social: [
+        {
+          icon: 'github',
+          label: 'GitHub',
+          href: 'https://github.com/LavaMoat/LavaMoat',
+        },
+      ],
       sidebar: [
         // to change the order of items, use the sidebar.order prop
         // of the frontmatter in the .md file
