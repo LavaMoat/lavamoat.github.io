@@ -135,7 +135,7 @@ lavamoat index.js --override './policies/policy-override.json'
 
 - Having trouble reading thrown Errors? try running with the `--debugMode` flag. **Warning:** not safe for production runs.
 
-- Got a dependency that wont quite work under LavaMoat? try [patch-package](https://www.npmjs.com/package/patch-package)
+- Got a dependency that won't quite work under LavaMoat? try [patch-package](https://www.npmjs.com/package/patch-package)
 
 For more details go to the [troubleshooting section][troubleshooting]
 
