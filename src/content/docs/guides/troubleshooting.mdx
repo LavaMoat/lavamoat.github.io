@@ -32,7 +32,7 @@ If you get an error beginning with `SES_` - look it up in the collection of docu
 
 ### SES lockdown related issues
 
-For troubleshooting interactions with SES->lockdown you should be aware that LavaMoat is passing the folowing configuration to lockdown:
+For troubleshooting interactions with SES->lockdown you should be aware that LavaMoat is passing the following configuration to lockdown:
 
 ```js
 const lockdownOptions = {
@@ -56,7 +56,7 @@ Detailed documentation of `lockdown`: https://github.com/endojs/endo/blob/master
 
 #### TypeError: Cannot assign to read only property...
 
-If you get an error like that, it means there was an attempt to assign to one fo the frozen global prototypes.
+If you get an error like that, it means there was an attempt to assign to one of the frozen global prototypes.
 While overrideTaming is enabled, some override mistakes are still possible, so if the assignment looks like it's assigning to a regular object, be aware that the error might be caused by the prototype of that object being frozen.
 See the video above for detailed examples.
 

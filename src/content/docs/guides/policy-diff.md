@@ -57,7 +57,7 @@ When dependency tree changes, it's possible that the dependency nesting might ch
 But there are other more nefarious reasons why that could happen.
 If the package now also has totally different powers or dependencies listed it's likely a different package of the same name. There can be more than one `actual-name` named package in this case. It could have been introduced as a different version or a totally different package installed from git or as a bundled dependency.
 
-Whn a new package is added, consider limiting its powers to what you actually use.
+When a new package is added, consider limiting its powers to what you actually use.
 
 ### What to look for in initial review?
 
@@ -99,7 +99,7 @@ Examples of powerful APIs - not an exhaustive list:
 
 ### Powerful buffers
 
-Due to how node.js handles buffers, there's a shared memory pool behind them and every buffer instance is exposing a reference to the entire memory pool. When buffers are passed around in security-critical code, you need to put additional effort into reviewing what has access to any other buffers.  
+Due to how node.js handles buffers, there's a shared memory pool behind them and every buffer instance is exposing a reference to the entire memory pool. When buffers are passed around in security-critical code, you need to put additional effort into reviewing what has access to any other buffers.
 TypedArrays don't have a shared memory pool, so using them for handling secrets is easier to control.
 
 If you want to avoid many of the risks around using buffers at the cost of the performance of allocating them, you can zero-fill the memory when used:
