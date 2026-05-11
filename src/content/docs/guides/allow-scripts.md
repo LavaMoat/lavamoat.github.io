@@ -12,11 +12,33 @@ description: 'A user guide for @lavamoat/allow-scripts'
   - [npm](https://www.npmjs.com/) v8.0.0+
   - [Yarn](https://yarnpkg.com/) v1.22.0+
   - [Yarn Berry](https://yarnpkg.com/) v3 or above
+  - [pnpm](https://pnpm.io/)
 
 ## Install
 
+### Install globally
+
+We recommend using the globally installed `@lavamoat/allow-scripts` for the initial `setup`. This avoids triggering installation of your other dependencies before the setup and the allowlist is in place.
+
+```sh
+npm i -g @lavamoat/allow-scripts
+```
+
+Be sure to include the `@lavamoat/` namespace in the package name.
+
+Now without triggering an installation in the project you're setting up, you can go to the project folder and run:
+
+```sh
+allow-scripts setup
+```
+
+### Project-local installation
+
+Install as a project-local development dependency to enable contributors to execute allowed scripts.
+
 - **npm**: `npm i -D @lavamoat/allow-scripts`
 - **Yarn**: `yarn add -D @lavamoat/allow-scripts`
+- **pnpm**: `pnpm add -D @lavamoat/allow-scripts`
 
 Note that installation of the dependency is likely to cause your other dependencies to be installed. You could install `@lavamoat/allow-scripts` globally and use it to set up a project without triggering installing dependencies before the setup and the allowlist is in place.
 
@@ -32,6 +54,8 @@ The `setup` command will initialize your project for use with `@lavamoat/allow-s
 :::tip[What does "setup" do?]
 
 Depending on the detected package manager, the `setup` command will add `ignore-scripts=true` to your package's `.npmrc`, or `enableScripts: false` to your package's `.yarnrc.yml`. If the file does not exist, it will be created. (yarn1 is also still supported)
+
+`pnpm` ignores scripts by default, but the `.npmrc` file is generated anyway. It's worth keeping in case someone runs `npm install` before they notice pnpm is used in the repo.
 
 As a failsafe, the setup command then adds a _dev_ dependency on [`@lavamoat/preinstall-always-fail`][preinstall-fail-ext] to `package.json`. `@lavamoat/preinstall-always-fail` will throw an error if an install-time lifecycle script is run--which _should_ never occur (due to the `ignore-scripts` configuration).
 
@@ -57,8 +81,8 @@ The `auto` command will generate and write a configuration to the `lavamoat` pro
 
 `@lavamoat/allow-scripts`'s configuration is stored in the `lavamoat` property of `package.json` within its `allowScripts` property.
 
-The value is of type `Record<PackageName, boolean>` where `PackageName` is a dependency which is either allowed or disallowed to run lifecycle scripts. To allow script execution, use a value of `true`; to disallow, use a value of `false`.
-Items missing from the list will cause a warnings so that you know when you might need to add a newly installed item to the list.
+The value is of type `Record<PackageName, boolean>` where `PackageName` is a dependency (with a `#version` suffix by default) which is either allowed or disallowed to run lifecycle scripts. To allow script execution, use a value of `true`; to disallow, use a value of `false`.
+Items missing from the list will cause warnings so that you know when you might need to add a newly installed item to the list.
 
 #### Example Configuration
 
@@ -66,12 +90,23 @@ Items missing from the list will cause a warnings so that you know when you migh
 {
   "lavamoat": {
     "allowScripts": {
-      "keccak": true,
-      "core-js": false
+      "keccak#3.0.4": true,
+      "rezeplayer>core-js#3.49.0": false,
+      "some-package-denied-for-all-versions": false
     }
   }
 }
 ```
+
+:::note[Version pinning]
+
+- `allow-scripts` pins versions of the dependencies with lifecycle scripts since v5.
+- Items set to `false` will be updated via `allow-scripts auto` to the current detected version.
+- To avoid churn in the list, you can remove the `#version` suffix from a disallowed item and it will be denied regardless of version.
+- Versions are mandatory for allowed packages in case of maintainer compromise.
+- You can opt out of this behavior with the `--skip-versions` flag on both `auto` and `run`.
+
+:::
 
 ## Running Lifecycle Scripts
 
@@ -99,7 +134,7 @@ Fetching scripts from git is not something we like to endorse. Before you run a 
 
 ## Show Configured Packages
 
-Use the `list` command to print information about configured packages and scripts, specifying _allowed_ and _disallowed_ packages.
+Use the `list` command (alias: `debug`) to print all information `allow-scripts` uses to populate and run the allowed scripts, including the list of changes it would make if `allow-scripts auto` was executed.
 
 - **npm**: `npm exec allow-scripts list`
 - **Yarn**: `yarn allow-scripts list`
@@ -122,7 +157,7 @@ In the future, when you add additional post-processing scripts, e.g. [`husky`][h
 
 :::caution
 
-This is an experimental feature.
+This is an experimental feature. It will be replaced with a simpler one in a minor version soon.
 
 :::
 
