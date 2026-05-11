@@ -10,10 +10,10 @@ This is not _defense-in-depth_, but rather provides the most _bang-for-your-buck
 
 ## Malware avoidance defaults
 
-This section explains how to configure your project to prevent dangerous package manager behavior. 
+This section explains how to configure your project to prevent dangerous package manager behavior.
 
 :::tip[Don't ignore npm]
-If you use Node.js, then `npm` is installed.  If you're not using it, it's all the more reason to put in strict defaults in `~/.npmrc` and local `.npmrc` files in projects.
+If you use Node.js, then `npm` is installed. If you're not using it, it's all the more reason to put in strict defaults in `~/.npmrc` and local `.npmrc` files in projects.
 :::
 
 ### npm
@@ -21,13 +21,13 @@ If you use Node.js, then `npm` is installed.  If you're not using it, it's all t
 For npm you should put a default `.npmrc` in your home folder; this configuration will be consulted whenever the project doesn't have one. Create this, and create one for every project.
 
 ```ini title=.npmrc
-## Ignore all lifecycle scripts by default. You can 
-## still allow them on a per-package basis with 
+## Ignore all lifecycle scripts by default. You can
+## still allow them on a per-package basis with
 ## @lavamoat/allow-scripts
 ignore-scripts=true
 # Avoid installing packages published in last 2 days
 min-release-age=3
-## Don't install packages from git urls, which can 
+## Don't install packages from git urls, which can
 ## be used to bypass the above two settings
 allow-git=none
 ## allow direct git dependencies only
@@ -38,11 +38,11 @@ allow-git=none
 ## support allow-git and repositories that override it
 # git=false
 
-## Don't install packages without asking (only 
+## Don't install packages without asking (only
 ## applicable to old npx versions)
 install=false
 
-## enable this if you don't really use npm and want to 
+## enable this if you don't really use npm and want to
 ## avoid consequences of some script calling npm or npx
 ## Don't install packages unless they're in local cache
 # offline=true
@@ -72,19 +72,20 @@ Upgrade to Yarn 4.14+ which adds the `approvedGitRepositories` setting.
 Once you add the setting, earlier versions of Yarn 4.x will complain about an unknown field, so it'll be hard to miss you're not on the right version.
 
 ```yaml title=.yarnrc.yml
-## Don't run lifecycle scripts by default. You can still allow them on a per-package basis with @lavamoat/allow-scripts
+## Don't run lifecycle scripts by default. You can still
+## allow them on a per-package basis with @lavamoat/allow-scripts
 enableScripts: false
 ## Allowlist of git dependencies. Empty to block all git deps.
 approvedGitRepositories: []
 ## Avoid installing packages published in last 3 days
 npmMinimalAgeGate: 4320 # 3 days (in minutes)
-## Override the minimal age gate, allowing certain packages to be installed
-## regardless of their publish age.
+## Override the minimal age gate, allowing certain packages
+## to be installed regardless of their publish age.
 #npmPreapprovedPackages:
 #  - '@yournamespace/*'
 
 ## This one is a bit paranoid
-##disable global cache to avoid cross-project poisoning
+## disable global cache to avoid cross-project poisoning
 enableGlobalCache: false
 ```
 
@@ -95,8 +96,9 @@ ignore-scripts true
 ```
 
 :::note[approvedGitRepositories]
-yarn 4.14+ will avoid installing git dependencies in new projects by default, but for your existing projects, declaring this is the way to go. So why not do it everywhere.
+Yarn 4.14+ will avoid installing git dependencies in new projects by default. For your existing projects, declaring empty `approvedGitRepositories` is necessary. Do it everywhere as a convention to avoid surprises.
 :::
+
 :::tip[allow-scripts Yarn integration]
 Use a Yarn plugin to always run `@lavamoat/allow-scripts`. This avoids the need to run `yarn allow-scripts run` every time you `yarn install`. Conveniently, we have such a plugin: [yarn-plugin-allow-scripts](https://github.com/LavaMoat/LavaMoat/tree/main/packages/yarn-plugin-allow-scripts)
 :::
@@ -110,8 +112,8 @@ You can still use `@lavamoat/allow-scripts` for the allow-list with version mana
 ```yaml title=pnpm-workspace.yaml
 ## Avoid installing packages published in last 3 days
 minimumReleaseAge: 4320 # 3 days (in minutes)
-## Override the minimal age gate, allowing certain packages to be installed
-# regardless of their publish age.
+## Override the minimal age gate, allowing certain packages
+## to be installed regardless of their publish age.
 # minimumReleaseAgeExclude:
 # - '@yournamespace/*'
 
@@ -120,8 +122,10 @@ minimumReleaseAge: 4320 # 3 days (in minutes)
 #   package@VERSION: true
 #   package@VERSION || ANOTHERVERSION: true
 
-## This might prevent some cases of package takeover, but will also react to maintainers publishing versions inconsistently
-## Fail if trusted publishing or provenance is gone from a package that used to have it
+## This might prevent some cases of package takeover, but
+## will also react to maintainers publishing versions inconsistently
+## Fail if trusted publishing or provenance is gone from a
+## package that used to have it
 trustPolicy: no-downgrade
 ## Only if you're still on pnpm v10
 # blockExoticSubdeps: true # block git and file dependencies of dependencies
@@ -132,14 +136,14 @@ trustPolicy: no-downgrade
 - `allowBuilds` does not force you to pin versions of allowed packages (it's better for your security posture if you just can't do the risky thing)
 - the ux of `pnpm approve-builds` and `allow-scripts auto` differs
 - `allow-scripts` needs to be run manually to execute the allowed lifecycle script, while `pnpm` will run allowed scripts as part of the install process
-- `allowBuilds` uses package names as identifiers, so you must pin specific versions and avoid installing
+- `allowBuilds` uses package names as identifiers, so you must pin specific versions and avoid installing packages from bogus sources that could spoof their names.
 
 :::
 
 ### Securely Running Lifecycle Scripts
 
 If you need to allow lifecycle scripts for some packages, use `@lavamoat/allow-scripts` to set up a per-package allowlist.
-It identifies packages with their position in the dependency tree, so you can allow a package without allowing anything in your dependencies that has the same name in `package.json`
+It identifies packages with their position in the dependency tree, so if you allow one package, scripts from different packages that match the name will not run. (git and bundled dependencies declare their own name in `pacage.json` to be whatever they want)
 
 For more information, see the [complete `@lavamoat/allow-scripts` guide](./allow-scripts.md).
 
@@ -149,12 +153,14 @@ If you must use git dependencies, there's a tool to help you validate they're be
 
 `@lavamoawt/git-safe-dependencies` is a CLI tool which validates Git dependencies against a set of opinionated rules.
 
-_BTW, you can also use it for your Github Actions workflows - they install all of their dependencies from git._
+:::tip[Github Actions]
+BTW, you can also use it for your Github Actions workflows - they install all of their dependencies from git.
+:::
 
 ## Fundamental secrets hygiene
 
 1. Use a password manager
-2. Enable 2fa on your npm account (even if you don't publish from localhost)
+2. Enable 2fa on your `npmjs.com` account (even if you don't publish from localhost)
 3. Protect your ssh keys
    A: Configure an ssh agent with a password protected key
 
@@ -186,7 +192,7 @@ It'd be great to have a virtual dev environment for every project or find a way 
 
 - `docker sandbox` on any OS
 - `firejail` or `bubblewrap` on Linux
-- `windows-sandbox` on windows
+- `windows-sandbox` on Windows
 
 ...but _without_ giving up on the developer experience (if you already do, feel free to skip this part).
 
@@ -194,13 +200,13 @@ Remember, we're focusing on low-effort high-reward solutions here.
 
 ### Kipuka
 
-Kipuka is an experimental tool, that - once installed - transparently wraps every use of your package manager in a docker container.
+Kipuka is an experimental tool, that - once installed - transparently wraps every use of your package manager in a Docker container.
 
 You can use it to:
 
-- Avoid exposing your entire OS and filesystem to the code that runs when you `npm run lint` or `yarn build`, etc.  It aliases your package manager and runs the container transparently, so you don't have to change the workflow you're used to.
+- Avoid exposing your entire OS and filesystem to the code that runs when you `npm run lint` or `yarn build`, etc. It aliases your package manager and runs the container transparently, so you don't have to change the workflow you're used to.
 - Quickly spin up a container to run commands in the current folder in isolation.
-- Customize your container without learning all the details of how a `Dockerfile`  works
+- Customize your container without learning all the details of how a `Dockerfile` works
 
 See the [Kipuka README](https://github.com/lavamoat/kipuka) for installation instructions and usage details.
 
