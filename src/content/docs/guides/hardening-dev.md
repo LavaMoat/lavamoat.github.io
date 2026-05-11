@@ -6,35 +6,44 @@ description: 'A guide on how to settings that minimise the risk of local dev com
 > Updated: 2026-05
 
 This document lists the low-hanging-fruit settings you can put in place to make your local development environment more resistant to compromise when working with the Web ecosystem.
-This is not defense in depth, but the best effort-to-impact ration for mitigations against supply chain attacks and other common attack vectors in the ecosystem.
+This is not _defense-in-depth_, but rather provides the most _bang-for-your-buck_ against supply chain attacks and other common attack vectors in the ecosystem.
 
 ## Malware avoidance defaults
 
-Configure your project to prevent dangerous behaviors from the package manager. Note that having `npm` installed is unavoidable, so if you're not using it, it's all the more reason to put in strict defaults in `~/.npmrc` and local `.npmrc` files in projects.
+This section explains how to configure your project to prevent dangerous package manager behavior. 
+
+:::tip[Don't ignore npm]
+If you use Node.js, then `npm` is installed.  If you're not using it, it's all the more reason to put in strict defaults in `~/.npmrc` and local `.npmrc` files in projects.
+:::
 
 ### npm
 
-For npm you get to put a default `.npmrc` in your home folder that's consulted whenever the project doesn't have one. You should have it. And also put one in each project for you and everyone else involved.
+For npm you should put a default `.npmrc` in your home folder; this configuration will be consulted whenever the project doesn't have one. Create this, and create one for every project.
 
 ```ini title=.npmrc
-## Ignore all lifecycle scripts by default. You can still allow them on a per-package basis with @lavamoat/allow-scripts
+## Ignore all lifecycle scripts by default. You can 
+## still allow them on a per-package basis with 
+## @lavamoat/allow-scripts
 ignore-scripts=true
 # Avoid installing packages published in last 2 days
 min-release-age=3
-## Don't install packages from git urls, which can be used to bypass the above two settings
+## Don't install packages from git urls, which can 
+## be used to bypass the above two settings
 allow-git=none
 ## allow direct git dependencies only
 # allow-git=root
 
 ## Enable this if you never want to use git dependencies
 ## Break git usage for older npm versions that don't
-##  support allow-git and repositories that overide it
+## support allow-git and repositories that override it
 # git=false
 
-## Don't install packages without asking (only applicable to old npx versions)
+## Don't install packages without asking (only 
+## applicable to old npx versions)
 install=false
 
-## enable this if you don't really use npm and want to avoid consequences of some script calling npm or npx
+## enable this if you don't really use npm and want to 
+## avoid consequences of some script calling npm or npx
 ## Don't install packages unless they're in local cache
 # offline=true
 ## Don't put commands from packages in PATH
@@ -44,7 +53,7 @@ install=false
 :::note[How the two git options interact]
 If you're ready to commit to never installing git dependencies, setting `git=false` in your home config `~/.npmrc` will stop npm from using git at all.
 
-Fun fact: the value is not a boolean - it's a binary to use as the git cli. `false` is a command available in bash that always fails. So any attempt at using git by npm will fail with an error
+Fun fact: `false` here is _not_ a boolean; it's an executable to use as the `git` command. `false` is a command available in POSIX shells that always fails. Thus, any attempt to use `git` by `npm` will fail with an error.
 
 ```sh
 npm ERR! code 1
@@ -52,14 +61,15 @@ npm ERR! command failed
 npm ERR! command false ls-remote ssh://git@github.com/something/something.git
 ```
 
-If you want to set `allow-git=root` in some of the projects, you can't put `git=false` in the home config, but you can still set `allow-git=none` and `git=false` in configs of specific projects and put `allow-git=root` and no value for a git command override in the projects where you want to allow direct git dependencies.
+If you want to set `allow-git=root` in some of the projects, you can't put `git=false` in your home config, but you _can_ still set `allow-git=none` and `git=false` in project-specific `.npmrc` files and put `allow-git=root` and no value for a git command override in the projects where you want to allow direct git dependencies.
 
 :::
 
-### yarn
+### Yarn
 
-Upgrade to yarn 4.14+ to get the `approvedGitRepositories` setting.
-Once you add the setting, earlier versions of yarn4 will complain about an unknown field, so it'll be hard to miss you're not on the right version.
+Upgrade to Yarn 4.14+ which adds the `approvedGitRepositories` setting.
+
+Once you add the setting, earlier versions of Yarn 4.x will complain about an unknown field, so it'll be hard to miss you're not on the right version.
 
 ```yaml title=.yarnrc.yml
 ## Don't run lifecycle scripts by default. You can still allow them on a per-package basis with @lavamoat/allow-scripts
@@ -78,7 +88,7 @@ npmMinimalAgeGate: 4320 # 3 days (in minutes)
 enableGlobalCache: false
 ```
 
-In case someone goes into your project without yarn version set up, you need to avoid yarn v1 running the lifecycle scripts.
+In case a contributor attempts to use the wrong Yarn version, you need to avoid Yarn v1.x running the lifecycle scripts.
 
 ```ini title=.yarnrc
 ignore-scripts true
@@ -87,16 +97,15 @@ ignore-scripts true
 :::note[approvedGitRepositories]
 yarn 4.14+ will avoid installing git dependencies in new projects by default, but for your existing projects, declaring this is the way to go. So why not do it everywhere.
 :::
-:::tip[allow-scripts yarn integration]
-To automatically run scripts allowed by `@lavamoat/allow-scripts` and avoid the need to run `yarn allow-scripts run` every time you install, you can set up a plugin that always runs it:  
-[yarn-plugin-allow-scripts](https://github.com/LavaMoat/LavaMoat/tree/main/packages/yarn-plugin-allow-scripts)
+:::tip[allow-scripts Yarn integration]
+Use a Yarn plugin to always run `@lavamoat/allow-scripts`. This avoids the need to run `yarn allow-scripts run` every time you `yarn install`. Conveniently, we have such a plugin: [yarn-plugin-allow-scripts](https://github.com/LavaMoat/LavaMoat/tree/main/packages/yarn-plugin-allow-scripts)
 :::
 
 ### pnpm
 
-You're pretty much set, if you're on pnpm 11+
+You're pretty much set, if you're on pnpm 11+.
 
-You can still use `@lavamoat/allow-scrtipts` for the allowlisting with version management, but `pnpm` is equally good.
+You can still use `@lavamoat/allow-scripts` for the allow-list with version management, but `pnpm` is equally good.
 
 ```yaml title=pnpm-workspace.yaml
 ## Avoid installing packages published in last 3 days
@@ -122,23 +131,23 @@ trustPolicy: no-downgrade
 
 - `allowBuilds` does not force you to pin versions of allowed packages (it's better for your security posture if you just can't do the risky thing)
 - the ux of `pnpm approve-builds` and `allow-scripts auto` differs
-- `allow-scripts` needs to be run to execute the allowed lifecycle script, while `pnpm` will run allowed scripts as part of the install process
+- `allow-scripts` needs to be run manually to execute the allowed lifecycle script, while `pnpm` will run allowed scripts as part of the install process
 - `allowBuilds` uses package names as identifiers, so you must pin specific versions and avoid installing
 
 :::
 
-### Allowing lifecycle scripts, securely
+### Securely Running Lifecycle Scripts
 
 If you need to allow lifecycle scripts for some packages, use `@lavamoat/allow-scripts` to set up a per-package allowlist.
 It identifies packages with their position in the dependency tree, so you can allow a package without allowing anything in your dependencies that has the same name in `package.json`
 
-Get a complete guide on how to set up `@lavamoat/allow-scripts` in the [Allow Scripts guide](./allow-scripts.md).
+For more information, see the [complete `@lavamoat/allow-scripts` guide](./allow-scripts.md).
 
-### In case you are forced to use git dependencies
+### If You Absolutely Must Use Git Dependencies
 
-If you must use git dependencies, there's a tool to help you validate they're being used as safely as possible.
+If you must use git dependencies, there's a tool to help you validate they're being used as safely as possible: [@lavamoat/git-safe-dependencies](https://www.npmjs.com/package/@lavamoat/git-safe-dependencies).
 
-[@lavamoat/git-safe-dependencies](https://www.npmjs.com/package/@lavamoat/git-safe-dependencies) is a CLI tool that validates git dependencies against a set of opinionated rules.
+`@lavamoawt/git-safe-dependencies` is a CLI tool which validates Git dependencies against a set of opinionated rules.
 
 _BTW, you can also use it for your Github Actions workflows - they install all of their dependencies from git._
 
@@ -147,10 +156,10 @@ _BTW, you can also use it for your Github Actions workflows - they install all o
 1. Use a password manager
 2. Enable 2fa on your npm account (even if you don't publish from localhost)
 3. Protect your ssh keys
-   A: set up to use an ssh agent with a password protected key
+   A: Configure an ssh agent with a password protected key
 
-   - use an ssh agent to avoid having to enter the password every time you use the key.
-   - make your existing ssh key hard to crack with the -a option setting iterations to 1024 instead of 16 (it will take a few seconds to unlock, but you can survive that once a day)
+   - An ssh agent will help avoid needing to enter the password every time you use the key.
+   - Make your existing ssh key hard to crack with the `-a` option. Set iterations to 1024 instead of 16 (it will take a few seconds to unlock, but you can survive that once a day)
 
    ```sh
    ssh-keygen -p -a 1024 -t ed25519 -f ~/.ssh/id_ed25519
@@ -161,12 +170,12 @@ _BTW, you can also use it for your Github Actions workflows - they install all o
    - [1Password ssh-agent](https://developer.1password.com/docs/ssh/agent/)
    - (please suggest other password managers that have a good locked-by-default ssh agent)
 
-4. Don't give secrets to AI agents. And generally don't run things like openclaw on the same machine as your development environment.
-5. Avoid storing plaintext secrets, even for unimportant testing environments, in .env files or similar. If you have to put them there while you're testing, make sure to delete them ASAP and only store them permanently in a password manager.
+4. Don't give secrets to AI agents. Don't run highly-privileged agents (e.g., Openclaw) on the same machine as your development environment.
+5. Avoid storing plaintext secrets, even for unimportant testing environments, in `.env` files or similar. If you have to put them there while you're testing, make sure to _delete them ASAP_ and only store them permanently in a password manager.
 
 ## Get early warnings
 
-You can install Socket Firewall to prevent known malware from being installed on your machine. In some cases it can detect malware that's still active on npm registry.
+You can install Socket Firewall to prevent known malware from being installed on your machine. In some cases it can detect malware that's still active on the npm registry.
 
 - [Socket Firewall Free](https://docs.socket.dev/docs/socket-firewall-free)
 
@@ -176,12 +185,12 @@ We've eliminated the most popular install-time compromise vectors by this point,
 It'd be great to have a virtual dev environment for every project or find a way to consistently use tools like:
 
 - `docker sandbox` on any OS
-- `firejail`,`bubblewrap` on linux,
+- `firejail` or `bubblewrap` on Linux
 - `windows-sandbox` on windows
 
-without giving up on the developer experience and if you already do, feel free to skip this part.
+...but _without_ giving up on the developer experience (if you already do, feel free to skip this part).
 
-But we're focusing on minimal effort solutions here.
+Remember, we're focusing on low-effort high-reward solutions here.
 
 ### Kipuka
 
@@ -189,9 +198,9 @@ Kipuka is an experimental tool, that - once installed - transparently wraps ever
 
 You can use it to:
 
-- Avoid exposing your entire OS and filesystem to the code that runs when you `npm run lint` or `yarn build` etc. - it aliases your package manager and runs the container transparently, so you don't have to change the workflow you're used to.
+- Avoid exposing your entire OS and filesystem to the code that runs when you `npm run lint` or `yarn build`, etc.  It aliases your package manager and runs the container transparently, so you don't have to change the workflow you're used to.
 - Quickly spin up a container to run commands in the current folder in isolation.
-- Customize your container without learning all the details of how Dockerfiles work
+- Customize your container without learning all the details of how a `Dockerfile`  works
 
 See the [Kipuka README](https://github.com/lavamoat/kipuka) for installation instructions and usage details.
 
