@@ -34,6 +34,10 @@ export default defineConfig({
               label: 'Troubleshooting Common Problems',
               link: '/guides/troubleshooting',
             },
+            {
+              label: 'Hardening Dev Environment',
+              link: '/guides/hardening-dev',
+            },
           ],
         },
         // {
