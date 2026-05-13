@@ -41,7 +41,7 @@
     "lint-staged": "15.2.10",
     "markdownlint-cli2": "0.14.0",
     "markdownlint-cli2-formatter-pretty": "0.0.6",
-    "prettier": "3.2.5",
+    "prettier": "3.8.3",
     "prettier-plugin-astro": "0.13.0",
     "prettier-plugin-pkg": "0.18.1",
     "sharp": "0.33.3",
