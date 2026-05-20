@@ -1,0 +1,20 @@
+{
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: [
+    'config:recommended',
+    'group:definitelyTyped', // groups all `@types/*` packages together
+    'helpers:pinGitHubActionDigests', // pins SHAs of GitHub actions
+    ':enableVulnerabilityAlerts', // enables GitHub vulnerability alerts
+    ':semanticCommits', // use semantic commits
+    'group:linters', // group lint-related packages together
+    'workarounds:typesNodeVersioning', // tracks node versions from engines field in package.json for @types/node,
+    'helpers:disableTypesNodeMajor', // disable major updates for @types/node. TODO: we will need to do this manually when dropping v18
+  ],
+  schedule: '* 0-6 * * *', // run things only during 0-6am UTC
+  packageRules: [
+    {
+      groupName: 'astro',
+      matchPackageNames: ['astro', 'astro-embed', '@astrojs/*'],
+    },
+  ],
+}
