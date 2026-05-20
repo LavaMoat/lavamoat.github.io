@@ -11,8 +11,11 @@ export default [
   { languageOptions: { globals: globals.browser } },
   pluginJs.configs.recommended,
   ...astro.configs['flat/recommended'],
-  ...jsonc.configs['flat/prettier'],
   ...tseslint.configs.recommended,
+  ...jsonc.configs['flat/prettier'].map((config) => ({
+    ...config,
+    files: ['**/tsconfig*.json', '**/*.json5', '**/*.jsonc'],
+  })),
   {
     ignores: ['.astro/**/*', '**/env.d.ts', 'dist/**'],
   },
