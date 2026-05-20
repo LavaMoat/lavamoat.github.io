@@ -26,7 +26,7 @@
     "@astrojs/check": "^0.7.0",
     "@astrojs/starlight": "0.24.4",
     "@fontsource/radio-canada": "5.0.20",
-    "astro": "4.11.1",
+    "astro": "6.1.10",
     "astro-embed": "0.7.2",
     "typescript": "~5.4.5"
   },
