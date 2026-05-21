@@ -43,7 +43,7 @@
     "markdownlint-cli2-formatter-pretty": "0.0.10",
     "prettier": "3.8.3",
     "prettier-plugin-astro": "0.14.1",
-    "prettier-plugin-pkg": "0.18.1",
+    "prettier-plugin-pkg": "0.22.1",
     "sharp": "0.33.3",
     "typescript-eslint": "7.18.0"
   },
