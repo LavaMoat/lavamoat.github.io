@@ -23,7 +23,7 @@
     "tsc:config": "tsc --showConfig"
   },
   "dependencies": {
-    "@astrojs/check": "0.9.8",
+    "@astrojs/check": "0.9.9",
     "@astrojs/starlight": "0.39.2",
     "@fontsource/radio-canada": "5.2.10",
     "astro": "6.3.5",
