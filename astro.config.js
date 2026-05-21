@@ -50,15 +50,15 @@ export default defineConfig({
         // },
         {
           label: 'Understanding LavaMoat',
-          autogenerate: { directory: 'about' },
+          items: [{ autogenerate: { directory: 'about' } }],
         },
         {
           label: 'Reference',
-          autogenerate: { directory: 'reference' },
+          items: [{ autogenerate: { directory: 'reference' } }],
         },
         {
           label: 'For Contributors',
-          autogenerate: { directory: 'contributor' },
+          items: [{ autogenerate: { directory: 'contributor' } }],
         },
       ],
       customCss: [
