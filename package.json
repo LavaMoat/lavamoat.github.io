@@ -38,7 +38,7 @@
     "eslint-plugin-astro": "1.2.0",
     "eslint-plugin-jsonc": "2.15.1",
     "husky": "9.1.7",
-    "lint-staged": "15.2.10",
+    "lint-staged": "15.5.2",
     "markdownlint-cli2": "0.14.0",
     "markdownlint-cli2-formatter-pretty": "0.0.10",
     "prettier": "3.2.5",
