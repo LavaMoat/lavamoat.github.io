@@ -4,7 +4,6 @@
   "type": "module",
   "license": "MIT",
   "private": true,
-  "packageManager": "npm@10.8.1",
   "scripts": {
     "astro": "astro",
     "build": "astro check && astro build",
