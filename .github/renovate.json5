@@ -14,7 +14,12 @@
   packageRules: [
     {
       groupName: 'astro',
-      matchPackageNames: ['astro', 'astro-embed', '@astrojs/*'],
+      matchPackageNames: [
+        'astro',
+        'astro-embed',
+        '@astrojs/starlight',
+        '@astrojs/check',
+      ],
     },
   ],
 }
