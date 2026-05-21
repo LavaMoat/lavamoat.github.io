@@ -163,7 +163,6 @@ BTW, you can also use it for your Github Actions workflows - they install all of
 2. Enable 2fa on your `npmjs.com` account (even if you don't publish from localhost)
 3. Protect your ssh keys
    A: Configure an ssh agent with a password protected key
-
    - An ssh agent will help avoid needing to enter the password every time you use the key.
    - Make your existing ssh key hard to crack with the `-a` option. Set iterations to 1024 instead of 16 (it will take a few seconds to unlock, but you can survive that once a day)
 
@@ -172,7 +171,6 @@ BTW, you can also use it for your Github Actions workflows - they install all of
    ```
 
    B: If you're a 1Password user, use the ssh-agent from 1Password and keep your keys there. Works best if you need to tap the fingerprint reader every time your key is used.
-
    - [1Password ssh-agent](https://developer.1password.com/docs/ssh/agent/)
    - (please suggest other password managers that have a good locked-by-default ssh agent)
 

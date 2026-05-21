@@ -30,7 +30,6 @@ LavaMoat follows [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html
 2. _Immediately after_ merging, **checkout** the `main` branch and **pull** the changes from [LavaMoat/LavaMoat][] into your working copy.
 
    :::caution[Safe Working Copies]
-
    1. It is recommended you **clone fresh** or use a separate local copy for publishing.
    2. **Never** publish from a fork.
    3. Pulling `main` _should_ be a fast-forward operation; if it isn't, please start over from a fresh clone.
@@ -48,7 +47,6 @@ LavaMoat follows [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html
    :::
 
 7. This step depends on whether you are publishing a new package:
-
    - If you _are not_ publishing a new package, **execute** `npm run release`
    - If you _are_ publishing a new package, **execute** `npm run release --newPkg=<package-name>`
 
