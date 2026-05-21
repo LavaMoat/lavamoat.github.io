@@ -1,6 +1,5 @@
 // @ts-check
 
-// @ts-expect-error - no types
 import pluginJs from '@eslint/js';
 import astro from 'eslint-plugin-astro';
 import jsonc from 'eslint-plugin-jsonc';
