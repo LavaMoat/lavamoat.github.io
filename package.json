@@ -19,6 +19,7 @@
     "prepare": "husky",
     "preview": "astro preview",
     "start": "astro dev",
+    "test": "node --run check && node --run lint",
     "tsc": "tsc",
     "tsc:config": "tsc --showConfig"
   },
@@ -47,6 +48,9 @@
     "prettier-plugin-pkg": "0.22.1",
     "sharp": "0.34.5",
     "typescript-eslint": "8.59.4"
+  },
+  "overrides": {
+    "yaml": ">=2.8.3"
   },
   "lint-staged": {
     "*.(m?js|ts)": [
