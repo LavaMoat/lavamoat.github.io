@@ -175,7 +175,10 @@ BTW, you can also use it for your Github Actions workflows - they install all of
    - (please suggest other password managers that have a good locked-by-default ssh agent)
 
 4. Don't give secrets to AI agents. Don't run highly-privileged agents (e.g., Openclaw) on the same machine as your development environment.
-5. Avoid storing plaintext secrets, even for unimportant testing environments, in `.env` files or similar. If you have to put them there while you're testing, make sure to _delete them ASAP_ and only store them permanently in a password manager.
+5. Avoid storing plaintext secrets, even for unimportant testing environments,
+
+- `gh` CLI can reveal your access token. Logout after each use or only use it in a dedicated container.
+- in `.env` files or similar: If you have to put them there while you're testing, make sure to _delete them ASAP_ and only store them permanently in a password manager.
 
 ## Get early warnings
 
