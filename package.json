@@ -32,8 +32,8 @@
     "typescript": "~6.0.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "21.0.1",
-    "@commitlint/config-conventional": "21.0.1",
+    "@commitlint/cli": "21.0.2",
+    "@commitlint/config-conventional": "21.0.2",
     "@eslint/js": "10.0.1",
     "eslint": "10.4.0",
     "eslint-plugin-astro": "1.7.0",
