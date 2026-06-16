@@ -16,8 +16,8 @@
     "lint:eslint": "eslint .",
     "lint:markdown": "markdownlint-cli2 \"**/*.md\"",
     "lint:staged": "lint-staged",
-    "prepare": "husky",
     "preview": "astro preview",
+    "setup": "husky",
     "start": "astro dev",
     "test": "node --run check && node --run lint",
     "tsc": "tsc",
@@ -51,21 +51,6 @@
   },
   "overrides": {
     "yaml": ">=2.8.3"
-  },
-  "lint-staged": {
-    "*.(m?js|ts)": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "*.md": [
-      "markdownlint-cli2 --fix"
-    ],
-    "*.(mdx?|ya?ml|json|astro)": [
-      "prettier --write"
-    ],
-    "!(package-lock*).json": [
-      "prettier --write"
-    ]
   },
   "prettier": {
     "plugins": [
