@@ -21,8 +21,8 @@ export default defineConfig({
           items: [
             { label: 'Getting Started', link: '/guides/getting-started/' },
             {
-              label: 'Protect Installation: allow-scripts',
-              link: '/guides/allow-scripts/',
+              label: 'Harden your project',
+              link: '/guides/harden/',
             },
             {
               label: 'LavaMoat with Node.js',
@@ -41,6 +41,10 @@ export default defineConfig({
             {
               label: 'Hardening Dev Environment',
               link: '/guides/hardening-dev',
+            },
+            {
+              label: 'Deprecated: allow-scripts tool',
+              link: '/guides/allow-scripts/',
             },
           ],
         },
