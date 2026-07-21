@@ -70,7 +70,7 @@ harden defaults -p yarn --level baseline
 
 #### Options
 
-```
+```txt
 Options:
   -p, --package-manager <pm>  Package manager to harden (npm, yarn, pnpm)
   -l, --level <level>         Hardening level: baseline, moderate, paranoid  [default: moderate]

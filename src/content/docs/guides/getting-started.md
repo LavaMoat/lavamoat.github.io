@@ -21,9 +21,7 @@ Don't have Node.js installed? [Download and install Node.js from the official si
 ## How to secure your app against supply-chain attacks
 
 1. Harden your project's configuration with [@lavamoat/harden][lavamoat-harden]
-
-- Or control dependency lifecycle scripts (eg. "postinstall") via [@lavamoat/allow-scripts][lavamoat-allowscripts]
-
+   1.a. Or control dependency lifecycle scripts (eg. "postinstall") via [@lavamoat/allow-scripts][lavamoat-allowscripts]
 2. Run your server or build process in [lavamoat-node][lavamoat-node]
 3. Build your ui with our [Webpack5 plugin][lavamoat-webpack] or use LavaMoat for [Browserify][lavamoat-browserify]
 
