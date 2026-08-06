@@ -5,7 +5,7 @@ description: 'A user guide for @lavamoat/allow-scripts'
 
 :::note[Deprecated]
 
-Use [@lavamoat/harden][lavamoat-harden] if you're on modern versions of popular package managers, it leverages their native capabilities to provide the same protections. `allow-scripts` is now only recommended for older versions of package managers or to achieve precise dependency pinning with yarn allowlist.
+Use [@lavamoat/harden][lavamoat-harden] if you're using a modern version of a popular package manager. It leverages their native capabilities to provide the same protections. `@lavamoat/allow-scripts` is now only recommended for older versions of package managers or to achieve precise dependency pinning under yarn.
 
 :::
 

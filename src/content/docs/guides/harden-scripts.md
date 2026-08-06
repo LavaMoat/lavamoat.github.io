@@ -5,9 +5,9 @@ description: 'How to choose scriptsConfig entries and Node.js permission profile
 
 This guide covers the Script Execution Environment hardening feature of [`@lavamoat/harden`](/guides/harden).
 
-`@lavamoat/harden` can assign Node.js permission profiles to your `package.json` scripts so commands like `build`, `lint`, `test`, or `release` do not all run with the same level of access. That lets you keep routine local scripts constrained while still making room for the few commands that genuinely need broader capabilities.
+`@lavamoat/harden` can assign Node.js permission profiles to your `package.json` scripts so commands like `build`, `lint`, `test`, or `release` do not all run with the same level of access. This lets you keep routine local scripts constrained while still making room for the few commands that genuinely need broader capabilities.
 
-This page focuses on how to use `scriptsConfig` to achieve the best [principle of least privilege][least-privilege] for your scripts with the least impact on your workflow.
+This page focuses on how to use `scriptsConfig` to achieve the best [principle of least privilege][least-privilege] for your scripts with minimal impact on your workflow.
 
 If you want the broader overview of the tool first, start with the [main harden guide](/guides/harden).
 
@@ -70,7 +70,7 @@ This means:
 - `build` gets the loose profile.
 - `release` gets a dedicated custom profile.
 
-It is unlikely, but possible that some of your scripts will be very difficult to cover with an impactful permissions profile at all without breaking them. If you're introducing this tool to an existing project with many complex scripts, you may prefer the compatibility-first approach initially.
+It is unlikely—but possible—that some of your scripts will be very difficult to cover with an impactful permissions profile without breaking them. If you're introducing this tool to an existing project with many complex scripts, you may initially prefer the compatibility-first approach.
 
 ### 2. Compatibility-first
 
@@ -78,7 +78,7 @@ It is unlikely, but possible that some of your scripts will be very difficult to
 - Add explicit entries for most commonly used scripts that you can afford to harden.
 - Build up a set of profiles over time as you learn what each script needs.
 
-Skipping setting a default is particularly useful when you often compose scripts from other scripts.
+Omitting a default is particularly useful when you often compose scripts from other scripts.
 
 ```json
 "scripts": {
@@ -106,9 +106,9 @@ Be careful about situations where it's mixed:
 }
 ```
 
-It's recommended that you rearrange scripts so that the scriptsConfig entries have enough granularity to set the least permissions.
+It's recommended that you organize your scripts so that the `scriptsConfig` entries have enough granularity to set the minimal permissions.
 
-### The shipped profiles
+### Starter Profiles
 
 `@lavamoat/harden` ships two starter profiles. They are examples, not ideal end states.
 
@@ -116,13 +116,13 @@ It's recommended that you rearrange scripts so that the scriptsConfig entries ha
 
 Use this for scripts that only need to work inside the project directory.
 
-The shipped strict profile:
+The "strict" profile:
 
-- enables the Node.js permission model
-- allows reading `./`
-- allows writing `./`
-- denies network
-- denies all powerful capabilities that could undermine the permissions model limitations if used maliciously.
+- Enables the Node.js permission model.
+- Allows reading `./`.
+- Allows writing `./`.
+- Denies network access.
+- Denies all powerful capabilities that could undermine the permissions model limitations if used maliciously.
 
 Good candidates:
 
@@ -135,7 +135,7 @@ Good candidates:
 
 Use this for scripts that are still local-only in spirit, but depend on toolchains that need more native capabilities.
 
-The shipped loose profile:
+The "loose" profile:
 
 - enables the Node.js permission model
 - allows broad file reads
@@ -155,7 +155,7 @@ The loose profile is useful, but it is intentionally much broader than the stric
 
 **It is recommended to create multiple tailored profiles, especially for the more sensitive scripts or the ones that pull in many dependencies.**
 
-## Recommended custom profiles
+## Example Custom Profiles
 
 In practice, most projects benefit from adding a few custom profiles instead of relying only on `strict` and `loose`.
 
@@ -236,7 +236,7 @@ Create a dedicated profile for scripts that:
 - contact remote APIs
 
 These scripts may need `--allow-net`, but they should usually remain special-case entries in `scriptsConfig`, never the `#default` profile.
-Having allowed network access, you might want to limit the file-system access to avoid accidental exposure of your `.ssh` or browser profiles on your dev machine.
+Having allowed network access, you might want to limit the file-system access to avoid accidental exposure of your `.ssh` or browser profiles in your development environment.
 
 ## Choosing permissions
 
@@ -251,7 +251,7 @@ Good defaults:
 - Add temp-directory write access generously, as it is usually safe and needed by many tools.
 - Avoid broad read access such as `/` unless compatibility forces it. Remember you can use `$npm_*` environment variables to allow access to specific directories that your package manager chooses dynamically across different OSes and configurations in your team and CI. For example, `$npm_config_cache` is the npm cache directory, and `$npm_config_prefix` is the global install directory. See more in the npm documentation: [npm config](https://docs.npmjs.com/cli/v11/using-npm/scripts#environment).
 
-The shipped `scripts.loose.json` allows broad reads because some real-world toolchains expect access outside the project directory. That is compatible, but not ideal. Narrow it when you can.
+The example `scripts.loose.json` allows broad reads because some real-world toolchains expect access outside the project directory. This maximizes compatibility, but is not ideal. Narrow it when you can.
 
 ### Network permissions
 
@@ -263,33 +263,33 @@ The shipped `scripts.loose.json` allows broad reads because some real-world tool
 
 ### Native capabilities and process spawning
 
-These are the most powerful capabilities and can be used to bypass your disk and network access limitations sometimes, but are commonly used in dev toolchains. The best you can do is narrow them down as much as possible.
+These are the most powerful capabilities and could be used to bypass your disk and network access limitations, but are commonly used in developer toolchains. The best you can do is narrow them down as much as possible.
 
-Other LavaMoat tools can help you reduce the risk of attacks through these capabilities, see [LavaMoat Node.js runtime guide](/guides/lavamoat-node) for more details.
+Other LavaMoat tools can help you reduce the risk of attacks through these capabilities; see [LavaMoat Node.js runtime guide](/guides/lavamoat-node) for more details.
 
 ## Extensions to Node.js permissions
 
 `@lavamoat/harden` adds a few extensions to the Node.js permission model:
 
 - `--allow-fs-tmp` allows writing to the OS temporary directory. This is a common need for many tools, and usually safe to allow, but very uncomfortable to maintain in a file shared among team members with different operating systems.
-- Resolving environment variables in `--allow-fs-*` permissions - `@lavamoat/harden` script runtime will resolve environment variables in the `--allow-fs-*` permissions, so you can use `$npm_*` environment variables that package managers set based on their configuration but also any environment variables that you set in your CI or local.
+- Resolving environment variables in `--allow-fs-*` permissions:
+   The `@lavamoat/harden` script runtime will resolve environment variables in the `--allow-fs-*` permissions, so you can use `$npm_*` environment variables that package managers set based on their configuration but also any environment variables that you set in your CI or local.
 
-> These extensions are not part of the Node.js permission model, but we'll attempt to upstream them.
 
 ## How it works
 
-If you're wondering how `@lavamoat/harden` applies the permission profiles, it does so by setting the `NODE_OPTIONS` environment variable for each script to include the permission flags from the profile file. That way every Node.js process running under this environment will be covered with the policy even though your script might be a line of bash with a few indirections or a shell script.
+`@lavamoat/harden` applies the permission profiles by setting the `NODE_OPTIONS` environment variable for each script to include the permission flags from the profile file. That way, every Node.js process running under this environment will be covered with the policy _even though_ your script might be a line of bash with a few indirections or a shell script.
 
 The environment modifications are applied by the package manager when it runs the script, so you don't have to do anything special in your scripts themselves.
 
-For `npm` and `pnpm` we make the modifications by intercepting the shell in which scripts are spawned. For `yarn` we use a plugin that modifies environment in the `wrapScriptExecution` hook.
+For `npm` and `pnpm`, we make the modifications by intercepting the shell in which scripts are spawned. For `yarn` we use a plugin that modifies environment in the `wrapScriptExecution` hook.
 
 ## Limitations
 
 - The mechanism relies on specific package manager features and `node --run` is not currently supported. If you use `node --run` to run scripts, the permission flags will not be applied.
-- Threat models for Node.js, Permissions Model and LavaMoat are stemming from different principles and my differ from your project's threat model too. You are still responsible for avoiding malicious dependencies as these protections will not stand up to a targeted attack that chooses to use existing permissions.
-- Limiting permissions does not prevent a package you legitimately use from being taken over and used to attack you by modifying its functionality (eg. typescript compiler being modified to insert malware into the application it builds).
-- Environment variables are inherited by child processes by default, but `exec` and `spawn` calls can be made with an override, so a malicious script with permission to spawn can choose to spawn a child process without the `NODE_OPTIONS` environment variable. See [Node.js Permissions Model Constraints][permissions-constraints] for more details on possible bypasses and threat model.
+- Threat models for Node.js, its Permissions Model and LavaMoat all differ and may also differ from your project's threat model. **You** are still responsible for avoiding malicious dependencies as these protections **will not stand up to a targeted attack that chooses to use existing permissions.**
+- Limiting permissions does not prevent a package you legitimately use from being compromised and used to attack you by modifying its functionality (e.g., the  TypeScript compiler being modified to insert malware into the application it builds).
+- Environment variables are inherited by child processes by default, but `exec` and `spawn` calls can be made with an override; a malicious script with permission to spawn can choose to spawn a child process _without_ the `NODE_OPTIONS` environment variable. See [Node.js Permissions Model Constraints][permissions-constraints] for more details on possible bypasses and threat model.
 
 [permissions-constraints]: https://nodejs.org/api/permissions.html#permission-model-constraints
 [permissions]: https://nodejs.org/api/permissions.html

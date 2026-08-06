@@ -27,7 +27,7 @@ Don't have Node.js installed? [Download and install Node.js from the official si
 
 :::tip
 
-On modern versions of `npm`, `yarn`, or `pnpm`, [`@lavamoat/harden`][lavamoat-harden] is the preferred entry point and supersedes reaching for `@lavamoat/allow-scripts` directly - it covers lifecycle scripts alongside other supply-chain hardening settings. Just doing step 1 is a great improvement to your supply chain security.
+On modern versions of `npm`, `yarn`, or `pnpm`, [`@lavamoat/harden`][lavamoat-harden] is the preferred entry point and replaces `@lavamoat/allow-scripts`. `@lavamoat/harden` covers lifecycle scripts alongside other supply-chain hardening settings. Just doing the first step is a great improvement to your supply chain security.
 
 :::
 
