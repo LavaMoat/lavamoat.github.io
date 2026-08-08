@@ -29,7 +29,7 @@
     "@fontsource/radio-canada": "5.2.10",
     "astro": "6.4.2",
     "astro-embed": "0.13.0",
-    "typescript": "~6.0.0"
+    "typescript": "~7.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "21.2.1",
