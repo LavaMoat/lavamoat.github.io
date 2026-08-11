@@ -3,6 +3,12 @@ title: 'Protect dependency installation process with allow-scripts'
 description: 'A user guide for @lavamoat/allow-scripts'
 ---
 
+:::note[Deprecated]
+
+Use [@lavamoat/harden][lavamoat-harden] if you're using a modern version of a popular package manager. It leverages their native capabilities to provide the same protections. `@lavamoat/allow-scripts` is now only recommended for older versions of package managers or to achieve precise dependency pinning under yarn.
+
+:::
+
 `@lavamoat/allow-scripts` is a CLI tool for instructing your package manager to execute _only_ the dependency lifecycle hooks specified in an _allowlist_.
 
 ## Prerequisites
@@ -179,6 +185,7 @@ To enable protection against bin script confusion, use the `--experimental-bins`
 
 When a disallowed `bin` script is attempted to be executed, the command will fail with an error providing guidance.
 
+[lavamoat-harden]: /guides/harden
 [nodejs-ext]: https://nodejs.org/
 [husky-ext]: https://typicode.github.io/husky/
 [automatic-configuration]: #configuration

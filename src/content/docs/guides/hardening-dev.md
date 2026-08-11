@@ -3,10 +3,15 @@ title: 'Harden your local development environment'
 description: 'A guide on how to settings that minimise the risk of local dev compromise.'
 ---
 
-> Updated: 2026-05
+> Updated: 2026-07
 
 This document lists the low-hanging-fruit settings you can put in place to make your local development environment more resistant to compromise when working with the Web ecosystem.
 This is not _defense-in-depth_, but rather provides the most _bang-for-your-buck_ against supply chain attacks and other common attack vectors in the ecosystem.
+
+:::tip[Automate this with `@lavamoat/harden`]
+
+Most of the per-project settings described below can be applied automatically with [`@lavamoat/harden`](/guides/harden). On modern versions of `npm`, `yarn`, or `pnpm`, it is now the preferred way to configure these defaults.
+:::
 
 ## Malware avoidance defaults
 
@@ -17,6 +22,12 @@ If you use Node.js, then `npm` is installed. If you're not using it, it's all th
 :::
 
 ### npm
+
+:::tip[npm v12 improvements]
+
+With v12 release of npm most of these settings are now defaults! Upgrade to npm 12 and use [`@lavamoat/harden`](/guides/harden) to further improve your security config.
+
+:::
 
 For npm you should put a default `.npmrc` in your home folder; this configuration will be consulted whenever the project doesn't have one. Create this, and create one for every project.
 
@@ -142,7 +153,12 @@ trustPolicy: no-downgrade
 
 ### Securely Running Lifecycle Scripts
 
-If you need to allow lifecycle scripts for some packages, use `@lavamoat/allow-scripts` to set up a per-package allowlist.
+If you need to allow lifecycle scripts for some packages, an allowlist of which can run is needed.
+
+These days package managers support a good degree of lifecycle script protections out of the box.
+You can use [`@lavamoat/harden`](/guides/harden) to get that configured.
+
+If you're using an older version of your package manager of choice (and to specify versions in the allowlist when using yarn) use `@lavamoat/allow-scripts` to set up a per-package allowlist.
 It identifies packages with their position in the dependency tree, so if you allow one package, scripts from different packages that match the name will not run. (git and bundled dependencies declare their own name in `pacage.json` to be whatever they want)
 
 For more information, see the [complete `@lavamoat/allow-scripts` guide](./allow-scripts.md).
