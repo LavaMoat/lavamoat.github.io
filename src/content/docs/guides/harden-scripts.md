@@ -108,7 +108,7 @@ Be careful about situations where it's mixed:
 
 It's recommended that you organize your scripts so that the `scriptsConfig` entries have enough granularity to set the minimal permissions.
 
-### Starter Profiles
+### Starter profiles
 
 `@lavamoat/harden` ships two starter profiles. They are examples, not ideal end states.
 
@@ -126,10 +126,10 @@ The "strict" profile:
 
 Good candidates:
 
-- linters
-- formatters
-- simple type-checking
-- scripts that read and write project files only
+- Linters
+- Formatters
+- Simple type-checking
+- Scripts that read and write project files only
 
 ### `lavamoat/scripts.loose.json`
 
@@ -137,25 +137,25 @@ Use this for scripts that are still local-only in spirit, but depend on toolchai
 
 The "loose" profile:
 
-- enables the Node.js permission model
-- allows broad file reads
-- allows writing to the project directory
-- allows temp-directory writes
-- denies network
-- allows native modules and child processes for compatibility (sometimes they can't be avoided)
+- Enables the Node.js permission model.
+- Allows broad file reads.
+- Allows writing to the project directory.
+- Allows temp-directory writes.
+- Denies network access.
+- Allows native modules and child processes for compatibility, because sometimes they can't be avoided.
 
 Good candidates:
 
-- build pipelines that shell out to other tools
-- scripts that rely on native addons
-- scripts that need temporary files
-- transitional setups while you learn what a tool actually needs
+- Build pipelines that shell out to other tools
+- Scripts that rely on native addons
+- Scripts that need temporary files
+- Transitional setups while you learn what a tool actually needs
 
 The loose profile is useful, but it is intentionally much broader than the strict one. Treat it as a starting point to narrow down.
 
 **It is recommended to create multiple tailored profiles, especially for the more sensitive scripts or the ones that pull in many dependencies.**
 
-## Example Custom Profiles
+## Example custom profiles
 
 In practice, most projects benefit from adding a few custom profiles instead of relying only on `strict` and `loose`.
 
@@ -196,8 +196,8 @@ Start from `scripts.strict.json`.
 
 Usually keep:
 
-- project read access
-- project write access if the tool writes caches or reports
+- Project read access
+- Project write access if the tool writes caches or reports
 
 Consider enabling only if needed:
 
@@ -212,15 +212,15 @@ Start from `scripts.loose.json`, then remove what is unnecessary.
 
 Build tools commonly need one or more of:
 
-- child processes
-- workers
-- native addons
-- temp-directory writes
+- Child processes
+- Workers
+- Native addons
+- Temp-directory writes
 
 They do not usually need:
 
-- outbound network access during a normal local build
-- inspector access
+- Outbound network access during a normal local build
+- Inspector access
 
 If your build is pure JavaScript and stays within the project tree, try moving it closer to the strict profile.
 
@@ -230,10 +230,10 @@ Do not reuse your general-purpose default for release automation.
 
 Create a dedicated profile for scripts that:
 
-- publish to registries
-- create releases
-- upload artifacts
-- contact remote APIs
+- Publish to registries
+- Create releases
+- Upload artifacts
+- Contact remote APIs
 
 These scripts may need `--allow-net`, but they should usually remain special-case entries in `scriptsConfig`, never the `#default` profile.
 Having allowed network access, you might want to limit the file-system access to avoid accidental exposure of your `.ssh` or browser profiles in your development environment.
@@ -273,8 +273,7 @@ Other LavaMoat tools can help you reduce the risk of attacks through these capab
 
 - `--allow-fs-tmp` allows writing to the OS temporary directory. This is a common need for many tools, and usually safe to allow, but very uncomfortable to maintain in a file shared among team members with different operating systems.
 - Resolving environment variables in `--allow-fs-*` permissions:
-   The `@lavamoat/harden` script runtime will resolve environment variables in the `--allow-fs-*` permissions, so you can use `$npm_*` environment variables that package managers set based on their configuration but also any environment variables that you set in your CI or local.
-
+  The `@lavamoat/harden` script runtime will resolve environment variables in the `--allow-fs-*` permissions, so you can use `$npm_*` environment variables that package managers set based on their configuration but also any environment variables that you set in your CI or local.
 
 ## How it works
 
@@ -288,7 +287,7 @@ For `npm` and `pnpm`, we make the modifications by intercepting the shell in whi
 
 - The mechanism relies on specific package manager features and `node --run` is not currently supported. If you use `node --run` to run scripts, the permission flags will not be applied.
 - Threat models for Node.js, its Permissions Model and LavaMoat all differ and may also differ from your project's threat model. **You** are still responsible for avoiding malicious dependencies as these protections **will not stand up to a targeted attack that chooses to use existing permissions.**
-- Limiting permissions does not prevent a package you legitimately use from being compromised and used to attack you by modifying its functionality (e.g., the  TypeScript compiler being modified to insert malware into the application it builds).
+- Limiting permissions does not prevent a package you legitimately use from being compromised and used to attack you by modifying its functionality (e.g., the TypeScript compiler being modified to insert malware into the application it builds).
 - Environment variables are inherited by child processes by default, but `exec` and `spawn` calls can be made with an override; a malicious script with permission to spawn can choose to spawn a child process _without_ the `NODE_OPTIONS` environment variable. See [Node.js Permissions Model Constraints][permissions-constraints] for more details on possible bypasses and threat model.
 
 [permissions-constraints]: https://nodejs.org/api/permissions.html#permission-model-constraints
