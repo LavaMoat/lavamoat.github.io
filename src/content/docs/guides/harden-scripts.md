@@ -255,7 +255,7 @@ The example `scripts.loose.json` allows broad reads because some real-world tool
 
 ### Network permissions
 
-::: warning
+:::caution[Node.js < 26]
 
 `--allow-net` is the most recently added permission in Node.js and versions prior to 26 will silently ignore it.
 
