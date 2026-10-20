@@ -11,7 +11,7 @@ This page focuses on how to use `scriptsConfig` to achieve the best [principle o
 
 If you want the broader overview of the tool first, start with the [main harden guide](/guides/harden).
 
-## Quick start
+## Quick Start
 
 When script hardening is enabled, `@lavamoat/harden` creates two example profiles:
 
@@ -30,7 +30,7 @@ It also writes a `scriptsConfig` object in `package.json`. The generated default
 
 That is a compatibility-first default. For better security, review it and move as many scripts as possible to stricter configurations.
 
-## What goes in `scriptsConfig`
+## What Goes in `scriptsConfig`
 
 `scriptsConfig` is a map from script names (of the `scripts` field in package.json) to JSON files that contain `NODE_OPTIONS` values with the permission profile for that script.
 
@@ -38,7 +38,7 @@ The permissions are set using the Node.js permission model, which is documented 
 
 There are two approaches you can take:
 
-### 1. Security-first
+### 1. Security-First
 
 - Use `#default` for the profile most scripts should get.
 - Add explicit entries only for exceptions.
@@ -72,7 +72,7 @@ This means:
 
 It is unlikely—but possible—that some of your scripts will be very difficult to cover with an impactful permissions profile without breaking them. If you're introducing this tool to an existing project with many complex scripts, you may initially prefer the compatibility-first approach.
 
-### 2. Compatibility-first
+### 2. Compatibility-First
 
 - Don't set a default profile.
 - Add explicit entries for most commonly used scripts that you can afford to harden.
@@ -108,7 +108,7 @@ Be careful about situations where it's mixed:
 
 It's recommended that you organize your scripts so that the `scriptsConfig` entries have enough granularity to set the minimal permissions.
 
-### Starter profiles
+### Starter Profiles
 
 `@lavamoat/harden` ships two starter profiles. They are examples, not ideal end states.
 
@@ -155,11 +155,11 @@ The loose profile is useful, but it is intentionally much broader than the stric
 
 **It is recommended to create multiple tailored profiles, especially for the more sensitive scripts or the ones that pull in many dependencies.**
 
-## Example custom profiles
+## Example Custom Profiles
 
 In practice, most projects benefit from adding a few custom profiles instead of relying only on `strict` and `loose`.
 
-### Null profile
+### Null Profile
 
 If you need to explicitly allow a script to run without any permission restrictions, you can create a null profile:
 
@@ -169,7 +169,7 @@ If you need to explicitly allow a script to run without any permission restricti
 }
 ```
 
-### Lint and formatting
+### Lint and Formatting
 
 Start from `scripts.strict.json`.
 
@@ -190,7 +190,7 @@ Do your best to deny:
 
 If your formatter or linter only reads files and writes nothing, you can try dropping write access too. If it autofixes, keep write access to `./`.
 
-### Type-checking and local tests
+### Type-Checking and Local Tests
 
 Start from `scripts.strict.json`.
 
@@ -206,7 +206,7 @@ Consider enabling only if needed:
 
 Keep network disabled unless the test intentionally talks to external services.
 
-### Build scripts and bundlers
+### Build Scripts and Bundlers
 
 Start from `scripts.loose.json`, then remove what is unnecessary.
 
@@ -224,7 +224,7 @@ They do not usually need:
 
 If your build is pure JavaScript and stays within the project tree, try moving it closer to the strict profile.
 
-### Release and publish scripts
+### Release and Publish Scripts
 
 Do not reuse your general-purpose default for release automation.
 
@@ -238,9 +238,9 @@ Create a dedicated profile for scripts that:
 These scripts may need `--allow-net`, but they should usually remain special-case entries in `scriptsConfig`, never the `#default` profile.
 Having allowed network access, you might want to limit the file-system access to avoid accidental exposure of your `.ssh` or browser profiles in your development environment.
 
-## Choosing permissions
+## Choosing Permissions
 
-### File system permissions
+### File System Permissions
 
 Be deliberate with file access. This is usually where the biggest security gain comes from.
 
@@ -253,7 +253,7 @@ Good defaults:
 
 The example `scripts.loose.json` allows broad reads because some real-world toolchains expect access outside the project directory. This maximizes compatibility, but is not ideal. Narrow it when you can.
 
-### Network permissions
+### Network Permissions
 
 :::caution[Node.js < 26]
 
@@ -261,13 +261,13 @@ The example `scripts.loose.json` allows broad reads because some real-world tool
 
 :::
 
-### Native capabilities and process spawning
+### Native Capabilities and Process Spawning
 
 These are the most powerful capabilities and could be used to bypass your disk and network access limitations, but are commonly used in developer toolchains. The best you can do is narrow them down as much as possible.
 
 Other LavaMoat tools can help you reduce the risk of attacks through these capabilities; see [LavaMoat Node.js runtime guide](/guides/lavamoat-node) for more details.
 
-## Extensions to Node.js permissions
+## Extensions to Node.js Permissions
 
 `@lavamoat/harden` adds a few extensions to the Node.js permission model:
 
@@ -275,7 +275,7 @@ Other LavaMoat tools can help you reduce the risk of attacks through these capab
 - Resolving environment variables in `--allow-fs-*` permissions:
   The `@lavamoat/harden` script runtime will resolve environment variables in the `--allow-fs-*` permissions, so you can use `$npm_*` environment variables that package managers set based on their configuration but also any environment variables that you set in your CI or local.
 
-## How it works
+## How It Works
 
 `@lavamoat/harden` applies the permission profiles by setting the `NODE_OPTIONS` environment variable for each script to include the permission flags from the profile file. That way, every Node.js process running under this environment will be covered with the policy _even though_ your script might be a line of bash with a few indirections or a shell script.
 

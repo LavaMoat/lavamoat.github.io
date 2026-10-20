@@ -13,7 +13,7 @@ The main vector for supply chain attacks in the development environment is _inst
 
 If you chortle disapprovingly at `curl | bash` scripts, why are you still running `npm install`?
 
-### The Problem With `npm install`
+### The Problem with `npm install`
 
 `npm`'s default behavior is to execute the `postinstall` lifecycle script of every installed package. It's no longer just "data in transit" or "data at rest"--it becomes "data at runtime" as well.
 

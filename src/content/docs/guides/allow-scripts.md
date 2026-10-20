@@ -1,5 +1,5 @@
 ---
-title: 'Protect dependency installation process with allow-scripts'
+title: 'Protect Dependency Installation Process with allow-scripts'
 description: 'A user guide for @lavamoat/allow-scripts'
 ---
 
@@ -22,7 +22,7 @@ Use [@lavamoat/harden][lavamoat-harden] if you're using a modern version of a po
 
 ## Install
 
-### Install globally
+### Install Globally
 
 We recommend using the globally installed `@lavamoat/allow-scripts` for the initial `setup`. This avoids triggering installation of your other dependencies before the setup and the allowlist is in place.
 
@@ -38,7 +38,7 @@ Now without triggering an installation in the project you're setting up, you can
 allow-scripts setup
 ```
 
-### Project-local installation
+### Project-Local Installation
 
 Install as a project-local development dependency to enable contributors to execute allowed scripts.
 
@@ -76,14 +76,14 @@ Configuration can be done automatically or manually.
 While you _can_ choose to allow everything you've been running, strive to limit the list--a tool with an _existing_ lifecycle script can exploited. To determine which packages' scripts can be safely ignored, consider [can-i-ignore-scripts][can-i-ignore-scripts-ext] before you manually research each one of them.
 :::
 
-#### Automatic Allow-listing
+#### Automatic Allow-Listing
 
 The `auto` command will generate and write a configuration to the `lavamoat` property of `package.json`.
 
 - **npm**: `npm exec allow-scripts auto`
 - **Yarn**: `yarn allow-scripts auto`
 
-#### Manual Allow-listing
+#### Manual Allow-Listing
 
 `@lavamoat/allow-scripts`'s configuration is stored in the `lavamoat` property of `package.json` within its `allowScripts` property.
 
@@ -123,7 +123,7 @@ When invoked without a command (or with the `run` command), `allow-scripts` will
 
 `allow-scripts` will fail if it detects dependencies attempting to run scripts which haven't yet been configured; you will be advised to run [`allow-scripts auto`][automatic-configuration] to rectify the situation.
 
-### Yarn plugin
+### Yarn Plugin
 
 To comfortably work with Yarn Berry (specifically yarn v3 or above) it's recommended that you use a simple plugin to execute `allow-scripts` after installation.
 
@@ -159,7 +159,7 @@ In the future, when you add additional post-processing scripts, e.g. [`husky`][h
 }
 ```
 
-## Mitigating bin script confusion
+## Mitigating Bin Script Confusion
 
 :::caution
 
@@ -177,7 +177,7 @@ More details in can be found in on [Socket][]'s blog: [npm bin script confusion:
 
 To enable protection against bin script confusion, use the `--experimental-bins` flag when executing `allow-scripts`.
 
-### What does `--experimental-bins` do?
+### What Does `--experimental-bins` Do?
 
 - `allow-scripts setup` will add a new configuration option to your project's package manager RC file (`.npmrc`/`.yarnrc`) to disable automatic linking `bin` scripts
 - `allow-scripts auto` will generate an allowlist of `bin` scripts allowed for execution

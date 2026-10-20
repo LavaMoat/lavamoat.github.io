@@ -1,5 +1,5 @@
 ---
-title: 'lavamoat and webpack'
+title: 'LavaMoat and Webpack'
 description: 'A user guide for adding LavaMoat protections to a webpack bundle'
 ---
 
@@ -81,7 +81,7 @@ module.exports = {
 };
 ```
 
-### All options
+### All Options
 
 The LavaMoat plugin takes an options object with the following properties (all optional):
 
@@ -99,7 +99,7 @@ The LavaMoat plugin takes an options object with the following properties (all o
 | `debugRuntime`             | Only for local debugging use - Enables debugging tools that help detect gaps in generated policy and add missing entries to overrides                                                                                                                                                                                 | `false`                  |
 | `policy`                   | The LavaMoat policy object (if not loading from file; see `policyLocation`)                                                                                                                                                                                                                                           | `undefined`              |
 
-### Excluding modules
+### Excluding Modules
 
 The default way to define specific behaviors for webpack is creating module rules. To ensure exclude rules are applied on the same exact files that match certain rules (the same RegExp may be matched against different things at different times) we're providing the exclude functionality as a loader you can add to the list of existing loaders or use individually.
 The loader is available as `LavaMoatPlugin.exclude` from the default export of the plugin. It doesn't do anything to the code, but its presence is detected and treated as a mark on the file. Any file that's been processed by `LavaMoatPlugin.exclude` will not be wrapped in a Compartment.
@@ -128,11 +128,11 @@ Example: avoid wrapping CSS modules:
 
 ### Gotchas
 
-#### `concatenateModules` option
+#### `concatenateModules` Option
 
 One important thing to note when using the LavaMoat plugin is that it disables the `concatenateModules` optimization in webpack. This is because it puts modules in shared scope and LavaMoat is here to isolate them.
 
-#### Implicit modules
+#### Implicit Modules
 
 - Webpack may include dependencies polyfilling Node.js built-ins, such as the `events` or `buffer` packages. In other cases, it will ignore the built-ins and provide empty modules in their place (see below).
 
@@ -142,7 +142,7 @@ When a dependency (eg. `buffer`) is provided by Webpack, and you need to add it 
 Error: LavaMoat - Encountered unknown package directory for file "/home/(...)/node_modules/buffer/index.js"
 ```
 
-#### Webpack-ignored modules
+#### Webpack-Ignored Modules
 
 When a built-in Node.js module is ignored by Webpack5, Webpack generates something like this:
 
@@ -155,7 +155,7 @@ Sadly, even tree shaking doesn't eliminate that module. It's left there and fail
 
 This plugin will skip policy enforcement for such ignored modules so that they do not have to be explicitly listed in the policy file.
 
-#### Ambient assets
+#### Ambient Assets
 
 Whenever webpack finds `new URL('./existing/path/to/file')` in the code it turns that file into an asset in your output folder by default. LavaMoat disables that for files requested from node_modules.
 
@@ -177,7 +177,7 @@ Whenever webpack finds `new URL('./existing/path/to/file')` in the code it turns
 - Some plugins (eg. MiniCssExtractPlugin) execute code from the bundle at build time. To make the plugin work you need to trust it and the modules it runs and add the LavaMoat.exclude loader for them.
 - This Webpack plugin _does not_ protect against malicious execution by other third-party plugins at runtime (use [LavaMoat](https://npm.im/lavamoat) for that).
 
-### Webpack runtime
+### Webpack Runtime
 
 Elements of the Webpack runtime (e.g., `__webpack_require__.*`) are currently mostly left intact. To avoid opening up potential bypasses, some functionality of the Webpack runtime is not available.
 

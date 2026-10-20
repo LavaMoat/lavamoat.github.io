@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-## What is LavaMoat?
+## What Is LavaMoat?
 
 **LavaMoat** is a suite of tools for securing JavaScript projects against a category of attacks called **supply chain attacks**.
 
@@ -17,13 +17,13 @@ LavaMoat can mitigate the risk of supply chain attacks in:
 - The build pipeline (e.g., `webpack`, `browserify`)
 - The runtime environment (e.g., Node.js & browser)
 
-## What is the goal of the LavaMoat project?
+## What Is the Goal of the LavaMoat Project?
 
 **The goal of LavaMoat** is _to protect JavaScript apps_ from supply chain attacks by _meeting them where they are_.
 
 In other words: _you shouldn't need to rewrite your app from scratch_ to improve your software's security posture.
 
-## Can I use LavaMoat with _X_?
+## Can I Use LavaMoat with _X_?
 
 **LavaMoat** is usable by any Node.js application, and is compatible with the following bundlers:
 
@@ -32,7 +32,7 @@ In other words: _you shouldn't need to rewrite your app from scratch_ to improve
 
 **LavaMoat** is designed to be framework-agnostic—but if you run into problems, please read our [troubleshooting guide][troubleshooting].
 
-## What is a supply chain attack?
+## What Is a Supply Chain Attack?
 
 A **supply chain attack** occurs when a malicious dependency makes its way into a developer's application. An attacker could use the dependency to then steal important secrets (like credit card numbers, private keys, or data) or make the application vulnerable to a range of other attacks.
 

@@ -102,11 +102,11 @@ An intrinsic value that is accessible to ECMAScript code and required to exist b
 
 See the [TC39 glossary][tc39-glossary-primordial-ext] for more information.
 
-## Prototype poisoning
+## Prototype Poisoning
 
 > See [Prototype pollution][prototype-pollution].
 
-## Prototype pollution
+## Prototype Pollution
 
 A class of JavaScript vulnerabilities and bugs where a modification is inadvertently made on an object prototype. For example, using unsanitized user input for keys, the following:
 

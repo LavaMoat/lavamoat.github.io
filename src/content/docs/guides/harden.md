@@ -1,5 +1,5 @@
 ---
-title: 'Harden your project with @lavamoat/harden'
+title: 'Harden Your Project with @lavamoat/harden'
 description: 'A user guide for @lavamoat/harden'
 ---
 
@@ -45,7 +45,7 @@ npx @lavamoat/harden
 - `harden wizard` — interactively apply hardening settings by asking questions.
 - `harden check` — check the current config against a hardening level without changing files.
 
-### Apply defaults
+### Apply Defaults
 
 ```sh
 harden defaults
@@ -87,7 +87,7 @@ harden wizard
 
 Assesses your project and interactively applies hardening settings. The wizard asks questions about your project and applies the changes you select.
 
-#### Wizard options
+#### Wizard Options
 
 ```txt
 Options:
@@ -96,7 +96,7 @@ Options:
   -s, --save-decisions  Save decisions snapshot to ./decisions-snapshot.json at end of run
 ```
 
-### Decisions snapshot
+### Decisions Snapshot
 
 Use `--decisions-snapshot` (`-d`) to load a JSON file with saved decisions, and `--save-decisions` (`-s`) to write the final decisions to `./decisions-snapshot.json`.
 
@@ -139,7 +139,7 @@ harden check --level moderate
 harden check -p yarn -l strict
 ```
 
-#### Check options
+#### Check Options
 
 ```txt
 Options:

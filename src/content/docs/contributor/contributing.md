@@ -57,7 +57,7 @@ Keep an eye on your notifications, as maintainers may ask for more information.
 
 Thanks for helping us improve LavaMoat!
 
-## I Have An Idea For a New Feature
+## I Have an Idea for a New Feature
 
 This section guides you through submitting an enhancement suggestion for LavaMoat, **including completely new features** or **minor improvements to existing functionality**.
 
@@ -84,7 +84,7 @@ When deciding what features to add to LavaMoat, its team must consider the _main
 
 :::
 
-## I Want To Contribute Code
+## I Want to Contribute Code
 
 :::caution[Before You Begin]
 
@@ -149,7 +149,7 @@ The process of submitting a pull request follows this pattern:
 
 Details about each step are found below.
 
-#### Step 1: Create a new branch<a name="step1"></a>
+#### Step 1: Create a New Branch<a name="step1"></a>
 
 The first step to sending a pull request is to create a new branch in your ESLint fork. Give the branch a descriptive name that describes what it is you're fixing, such as:
 
@@ -161,7 +161,7 @@ You should do all of your development for the issue in this branch.
 
 **Note:** Do not combine fixes for multiple issues into one branch. Use a separate branch for each issue you're working on.
 
-### Step 2: Make your changes<a name="step2"></a>
+### Step 2: Make Your Changes<a name="step2"></a>
 
 Make the changes to the code and tests, following the [code conventions](./code-conventions) as you go. Once you have finished, commit the changes to your branch:
 
@@ -221,7 +221,7 @@ fix: semicolons no longer breaking everything
 chore(webpack): upgrade to browserify v5
 ```
 
-### Step 3: Rebase onto upstream<a name="step3"></a>
+### Step 3: Rebase onto Upstream<a name="step3"></a>
 
 Before you send the pull request, be sure to rebase onto the upstream source. This ensures your code is running on the latest available code.
 
@@ -230,7 +230,7 @@ git fetch upstream
 git rebase upstream/main
 ```
 
-### Step 4: Run the tests<a name="step4"></a>
+### Step 4: Run the Tests<a name="step4"></a>
 
 After rebasing, be sure to run all of the tests once again to make sure nothing broke:
 
@@ -242,7 +242,7 @@ If there are any failing tests, update your code until all tests pass.
 
 **If you forgot to write tests, now would be a good time to add them!**
 
-### Step 5: Double check your submission<a name="step5"></a>
+### Step 5: Double Check Your Submission<a name="step5"></a>
 
 With your code ready to go, this is a good time to double-check your submission to make sure it follows our conventions. Here are the things to check:
 
@@ -252,7 +252,7 @@ With your code ready to go, this is a good time to double-check your submission 
 - All changes must be accompanied by tests, even if the feature you're working on previously had no tests.
 - All user-facing changes must be accompanied by appropriate documentation.
 
-### Step 6: Push your changes<a name="step6"></a>
+### Step 6: Push Your Changes<a name="step6"></a>
 
 Next, push your changes to your clone:
 
@@ -272,7 +272,7 @@ Force-pushing is a potentially dangerous operation. Read this post about [how to
 
 :::
 
-### Step 7: Send the pull request<a name="step7"></a>
+### Step 7: Send the Pull Request<a name="step7"></a>
 
 Now you're ready to send the pull request. Go to your Lav aMoat fork and then follow the [GitHub documentation][github-pr] on how to send a pull request.
 
