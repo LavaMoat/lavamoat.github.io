@@ -1,15 +1,15 @@
 ---
-title: 'LavaMoat Node.js runtime'
+title: 'LavaMoat Node.js Runtime (Legacy)'
 description: 'A user guide for running LavaMoat-protected NodeJS applications'
 ---
 
-`lavamoat` is a Node.js runtime where modules are defined in [SES][ses-github-ext] Compartments. It virtualizes CommonJS module loading to apply runtime protections according to a Policy.
+:::caution[Deprecated]
 
-:::caution
-
-This runtime does not support ESM modules. A new runtime that's ESM-first is a work in progress. You can try it out by installing `@lavamoat/node`.
+The `lavamoat` package is no longer under active development. Its replacement is [`@lavamoat/node`](/guides/lavamoat-node), which supports ESM.
 
 :::
+
+`lavamoat` is a Node.js runtime where modules are defined in [SES][ses-github-ext] Compartments. It virtualizes CommonJS module loading to apply runtime protections according to a Policy.
 
 ## LavaMoat Runtime
 
@@ -55,13 +55,13 @@ You can regenerate the main policy file on updates (and review for unexpected ne
 
 :::
 
-### All options
+### All Options
 
 ```text
 lavamoat <entryPath> [Options]
 
 Positionals:
-  entryPath  the path to the entry file for your application. same as node.js
+  entryPath  the path to the entry file for your application. same as Node.js
                                                                         [string]
 
 Options:
@@ -113,7 +113,7 @@ Options:
 
 ## Examples
 
-### Run with Policy in default location
+### Run with Policy in Default Location
 
 This uses the existing policy and policy-override files to run your app.
 
@@ -139,7 +139,7 @@ lavamoat index.js --override './policies/policy-override.json'
 
 For more details go to the [troubleshooting section][troubleshooting]
 
-## Programmatic usage
+## Programmatic Usage
 
 Programmatic usage is almost identical to the commandline and its arguments.
 

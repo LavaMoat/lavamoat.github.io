@@ -1,0 +1,557 @@
+---
+title: 'LavaMoat Node.js Runtime'
+description: 'A user guide for running LavaMoat-protected Node.js applications'
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+`@lavamoat/node` ([npm][], [GitHub][]) provides a runtime environment for LavaMoat-protected Node.js applications.
+
+## What Is the LavaMoat Node.js Runtime?
+
+`@lavamoat/node` differs from the standard Node.js runtime in that it:
+
+1. **Prevents tampering with the execution environment** via [SES][ses-github-ext]' hardening facilities. This completely mitigates prototype-pollution attacks, among other concerns.
+2. **Isolates each package's execution** via SES' Compartments. Packages share no references whatsoever unless explicitly allowed by [Policy][]. This is possible because SES itself—not Node.js—is responsible for loading and executing modules.
+3. **Enforces a user-provided Policy**. The Policy controls which globals, Node.js APIs and other packages any given package can access. The Policy provides granular control over whether a global (or even a property thereof) is exposed, read-only, or writable.
+
+## Installation
+
+:::note[Production or Development?]
+
+This depends entirely on which application(s) you want to run in LavaMoat. If running a Node.js app in production, then install `@lavamoat/node` as a _production_ dependency, since you'll need it to launch the process.
+
+If instead you intend to run dev tools under LavaMoat, install `@lavamoat/node` as a _development_ dependency.
+:::
+
+<Tabs syncKey="content-type">
+
+<TabItem label="npm">
+
+```bash frame="none"
+npm install @lavamoat/node
+```
+
+</TabItem>
+
+<TabItem label="yarn">
+
+```bash frame="none"
+yarn add @lavamoat/node
+```
+
+</TabItem>
+
+<TabItem label="pnpm">
+
+```bash frame="none"
+pnpm add @lavamoat/node
+```
+
+</TabItem>
+
+</Tabs>
+
+:::caution[Mind The Package!]
+
+This guide covers `@lavamoat/node`, which is under active development. Be sure you are not installing the `lavamoat` package! [`lavamoat` is considered deprecated](./legacy-lavamoat-node) and will see no further development.
+
+:::
+
+## Getting Started
+
+:::note[Learn About Policies!]
+
+Before beginning this guide, please familiarize yourself with [LavaMoat's Policy files](./Policy).
+
+:::
+
+The first step is to generate a Policy for your application.
+
+### Generating a Policy
+
+`@lavamoat/node` generates a Policy from your application's entry point by crawling _all_ reachable modules, detecting globals, Node.js builtins, and references to other packages[^1].
+
+Creating a Policy differs slightly depending on whether you intend to run your own application[^4] or a third-party tool under LavaMoat.
+
+#### For Your Own Application
+
+<dl>
+<dt>
+
+To create a Policy for your own application:
+
+</dt>
+<dd>
+
+Execute the following command from your project's root directory:
+
+<Tabs syncKey="content-type">
+
+<TabItem label="npm">
+
+```bash frame="none"
+npx lavamoat generate <app.js>
+```
+
+</TabItem>
+
+<TabItem label="yarn">
+
+```bash frame="none"
+yarn exec lavamoat generate <app.js>
+```
+
+</TabItem>
+
+<TabItem label="pnpm">
+
+```bash frame="none"
+pnpm exec lavamoat generate <app.js>
+```
+
+</TabItem>
+
+</Tabs>
+
+…where `<app.js>` is the entry point of your application.
+
+:::note[What About TypeScript?]
+If you're running TypeScript sources directly via Node.js' [type-stripping][] facilities, you can use `app.ts`. But if you're compiling to `.js`, use the compiled `.js` file instead.
+:::
+
+</dd>
+
+<dt>
+
+To create a Policy for a third-party tool:
+
+</dt>
+
+<dd>
+
+:::note[Untrusted Applications]
+This will generate a Policy for an **untrusted** application. Make sure you understand the [difference between trusted and untrusted applications](./policy#trusted-vs-untrusted-applications).
+:::
+
+Execute the following command from your project's root directory:
+
+<Tabs syncKey="content-type">
+
+<TabItem label="npm">
+
+```bash frame="none"
+npx lavamoat generate --bin <executable>
+```
+
+</TabItem>
+
+<TabItem label="yarn">
+
+```bash frame="none"
+yarn exec lavamoat generate --bin <executable>
+```
+
+</TabItem>
+<TabItem label="pnpm">
+```bash frame="none"
+pnpm exec lavamoat generate --bin <executable>
+```
+
+</TabItem>
+
+</Tabs>
+
+…where `<executable>` is the tool's executable[^6] (e.g., `eslint`).
+
+</dd>
+</dl>
+
+In either case, you should see some output like the following:
+
+```text frame="none"
+info    › Generating LavaMoat Policy from ./dist/index.js…
+info    › Crawling dependency graph…
+info    › ✓ Found 1437 packages in ~0.61s
+info    › ✓ Inspected 160 (~26.47 modules/s)
+warning › source-map-support is not a builtin module, but was otherwise not accessible from typescript. This may be due to an implicit dependency.
+warning › Package cosmiconfig>import-fresh contains potential SES violations at the following location:
+warning ›   ▶ /path/to/node_modules/import-fresh/index.js:33:63 — dynamic requires
+warning › Package typescript contains potential SES violations at the following location:
+warning ›   ▶ /path/to/node_modules/typescript/lib/typescript.js:8397:27 — dynamic requires
+info    › ✓ Policy for ./dist/index.js generated in ~6.82s
+info    › ✓ Wrote Policy to ./lavamoat/node/policy.json
+```
+
+The Policy file will be written to `./lavamoat/node/policy.json`, which is the default location[^2].
+
+The above example output shows _warnings_. **Warnings indicate potential runtime failures,** and generally shouldn't be ignored. Check out the [Troubleshooting Guide][troubleshooting] for more information. **If you see warnings, it's likely you'll need to [create a Policy Override file][policy-override] to explicitly grant access to the resources your application needs.**
+
+Once we have a Policy and/or Policy Override file, we can now move on to actually running the application.
+
+### Running Your Application
+
+To execute your application under LavaMoat:
+
+<Tabs syncKey="content-type">
+
+<TabItem label="npm">
+
+```bash frame="none"
+npx lavamoat <app.js> -- --flag1 --flag2
+```
+
+</TabItem>
+
+<TabItem label="yarn">
+
+```bash frame="none"
+yarn exec lavamoat <app.js> -- --flag1 --flag2
+```
+
+</TabItem>
+
+<TabItem label="pnpm">
+
+```bash frame="none"
+pnpm exec lavamoat <app.js> -- --flag1 --flag2
+```
+
+</TabItem>
+
+</Tabs>
+
+…where `<app.js>` is the entry point of your application and `--flag1 --flag2` are any flags your application needs[^3].
+
+With any luck, you should see your application running as expected. If you're seeing unexpected failures, then there's more work to do; read about [creating a _Policy Override_][policy-override] and our [troubleshooting guide][troubleshooting] for more information.
+
+## Basic Usage
+
+`@lavamoat/node`'s two main modes of operation are _Policy generation_ and _execution_:
+
+<dl>
+<dt>
+
+`generate`
+
+</dt>
+<dd>
+
+Generate a Policy for the application.
+
+</dd>
+<dt>
+
+`run`
+
+</dt>
+<dd>
+
+Run the application with the given Policy.
+
+_When no command is provided, `run` is `@lavamoat/node`'s default command._
+
+</dd>
+</dl>
+
+### Common Flags
+
+Both commands (`run` and `generate`) support the following flags.
+
+#### Custom Policy & Policy Override Paths
+
+When using LavaMoat to run multiple applications or tools, you'll want to keep separate Policy and Policy Override files for each application or tool; this is done by providing the following flags.
+
+<dl>
+<dt>
+
+`--policy/-p`
+
+</dt>
+<dd>
+
+Path to Policy file; in the case of Policy generation, this is the path to
+_write_, and in the case of execution, this is the path to _read_.
+
+The default location for the Policy file is `./lavamoat/node/policy.json`.
+
+</dd>
+<dt>
+
+`--policy-override/-o`
+
+</dt>
+<dd>
+
+Path to Policy override file; similar to `--policy`.
+
+The default location for the Policy Override file is `./lavamoat/node/policy-override.json`.
+
+</dd>
+</dl>
+
+#### Using a Third-Party Application
+
+<dl>
+<dt>
+
+`--bin`
+
+</dt>
+<dd>
+
+Specify a third-party executable as the entry point.
+
+**This is a boolean flag**; if provided, the positional argument is assumed to be an executable in `node_modules/.bin/` and `@lavamoat/node` will find it for you[^5].
+
+:::note[Untrusted Applications]
+When using this flag, the application is considered **untrusted** by default. A generated Policy will contain a `root.usePolicy` field—it is not required to provide `root.usePolicy` in a Policy Override file if used this way—which declares a named resource as the "root" of the application.
+
+This resource entry, and thus the `root.usePolicy` value, will typically be computed as the package name of the third-party tool.
+
+[Read more about trusted vs. untrusted applications](./policy#trusted-vs-untrusted-applications) and a Policy's [`root` field](./policy#root).
+:::
+
+**If `--bin` was provided to `generate`, `--bin` must _also_ be provided to `run`.** `@lavamoat/node` will refuse to execute applications which contain `root.usePolicy` in a trusted context. The converse is also true; if `--bin` _wasn't_ provided to `generate`, `--bin` _cannot_ be provided to `run`.
+
+If either case is detected, `@lavamoat/node` will throw a `TrustMismatchError` and fail.
+
+</dd>
+</dl>
+
+#### Custom Project Root
+
+<dl>
+<dt>
+
+`--root/--project-root`
+
+</dt>
+<dd>
+
+Path to the root of the project; used to determine relative paths.
+
+</dd>
+</dl>
+
+#### Output Flags
+
+<dl>
+<dt>
+
+`--verbose`
+
+</dt>
+<dd>
+
+Emit verbose output.
+
+</dd>
+<dt>
+
+`--quiet`
+
+</dt>
+<dd>
+
+Emit no output whatsoever.
+
+</dd>
+<dt>
+
+`--help/-h`
+
+</dt>
+
+<dd>
+
+Show help and exit.
+
+</dd>
+<dt>
+
+`--version/-v`
+
+</dt>
+<dd>
+
+Show version and exit.
+
+</dd>
+</dl>
+
+### `generate` Command Flags
+
+These flags are available when using the `generate` command.
+
+#### Disable Warnings
+
+<dl>
+<dt>`--no-warnings`</dt>
+
+<dd>
+
+Disable warnings during Policy generation.
+
+By default, warnings are _enabled_ when generating Policy.
+
+</dd>
+</dl>
+
+#### Exclude Development Dependencies
+
+<dl>
+<dt>
+
+`--prod-only`
+
+</dt>
+
+<dd>
+
+Exclude development dependencies (`devDependencies`) from the Policy if the entry point accesses them.
+
+By default, **development dependencies are included** in the Policy if the entry point accesses them.
+
+When using `@lavamoat/node` to run a third-party tool, you will typically want to **avoid** this flag.
+
+</dd>
+</dl>
+
+#### Writing to Standard Output
+
+<dl>
+<dt>
+
+`--no-write`
+
+</dt>
+<dd>
+
+Write Policy to standard output instead of a file.
+
+</dd>
+</dl>
+
+#### Treating Warnings as Errors
+
+<dl>
+<dt>
+
+`--warnings-as-errors`
+
+</dt>
+
+<dd>
+
+Treat warnings as errors. Any warnings will cause the process to exit with code `1`.
+
+This can be useful in certain situations, such as running in a CI environment.
+
+</dd>
+</dl>
+
+#### Limiting Concurrency
+
+If Policy generation is too taxing on your system (hello, CI runners!), you can tradeoff speed for memory by limiting the number of worker threads used.
+
+<dl>
+<dt>
+
+`--concurrency <number>`
+
+</dt>
+<dd>
+Limit the number of worker threads to use for Policy generation.
+
+By default, Policy generation uses _n - 1_ worker threads.
+
+</dd>
+</dl>
+
+#### Compacting Overrides
+
+You may see a notice during Policy generation that your Policy override file contains redundant entries; `--compact-overrides` is the solution. This will help reduce the size of your Policy Override file, and thus its maintenance burden.
+
+<dl>
+<dt>
+
+`--compact-overrides`
+
+</dt>
+<dd>
+
+Remove redundant information from your Policy override file and **overwrite** it.
+
+Entries which _would have been created_ by analysis alone (i.e., disregarding Policy Overrides entirely) will be removed from your Policy Override file.
+
+</dd>
+</dl>
+
+### `run` Command Flags
+
+These flags are available when using the `run` command.
+
+#### Enable Warnings
+
+<dl>
+<dt>
+
+`--warnings`
+
+</dt>
+<dd>
+
+Enable warnings during execution.
+
+By default, warnings are _disabled_ during execution, as they may interfere with the application's output.
+
+</dd>
+</dl>
+
+#### Scuttle Globals
+
+[Scuttling][] provides an additional layer of security, but is not compatible with all applications.
+
+<dl>
+<dt>
+
+`--scuttle`
+
+</dt>
+<dd>
+
+If provided, the `--scuttle` flag will _scuttle_ the `globalThis` object. As another layer of security, this attempts to _destroy_ any global property which is not explicitly allowed by Policy.
+
+Scuttling is applied to the global object (`globalThis`) _after_ its copy was made, so all of the code running under LavaMoat should never reach the real scuttled properties and instead use the copies.
+
+If code attempts direct access to a global prop outside of LavaMoat's sandbox, an exception will be thrown.
+
+Scuttling protections come in handy when a Policy allows access to an object which _transitively_ exposes the real `globalThis`.
+
+</dd>
+</dl>
+
+---
+
+[^1]: Because JavaScript is such a dynamic language, automatic Policy generation using static analysis is considered _best-effort._ For example, dynamic imports will be unknown until runtime. Additionally, a trusted a package may obfuscate access to APIs and/or globals, and `@lavamoat/node` will not detect such cases.
+
+[^2]: The location of Policy and Policy Override files are configurable via [command-line flag](#custom-Policy--Policy-override-paths)
+
+[^3]: Flags to `lavamoat` must be provided _before_ the `--` separator.
+
+[^4]: If your project is a _library_, the library itself won't benefit from LavaMoat, since libraries are not "runnable." However, you can still benefit by using `@lavamoat/node` to run third-party tools.
+
+[^5]: If your package manager does not install executables into `node_modules/.bin/`, you can provide an absolute or relative filepath to the executable instead.
+
+[^6]: Only **project-local** JavaScript executables, as installed by a package manager, are supported. You cannot use a globally-installed executable, nor something like `/bin/cat`! [Read more about the `--bin` flag](#using-a-third-party-application).
+
+[ses-github-ext]: https://github.com/endojs/endo/tree/master/packages/ses
+[policy]: ./policy
+[policy-override]: ./policy##overriding-auto-generated-policies
+[least-privilege]: https://en.wikipedia.org/wiki/Principle_of_least_privilege
+[type-stripping]: https://nodejs.org/api/typescript.html
+[troubleshooting]: ./troubleshooting
+[npm]: https://www.npmjs.com/package/@lavamoat/node
+[github]: https://github.com/LavaMoat/LavaMoat/tree/main/packages/node
+[scuttling]: ./runtime-environment/#scuttling
