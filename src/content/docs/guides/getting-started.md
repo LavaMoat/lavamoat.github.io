@@ -18,12 +18,12 @@ Don't have Node.js installed? [Download and install Node.js from the official si
 
 :::
 
-## How to secure your app against supply-chain attacks
+## How to Secure Your App Against Supply-Chain Attacks
 
-1. Harden your project's configuration with [@lavamoat/harden][lavamoat-harden]
-   1.a. Or control dependency lifecycle scripts (eg. "postinstall") via [@lavamoat/allow-scripts][lavamoat-allowscripts]
-2. Run your server or build process in [lavamoat-node][lavamoat-node]
-3. Build your ui with our [Webpack5 plugin][lavamoat-webpack] or use LavaMoat for [Browserify][lavamoat-browserify]
+1. Harden your project's configuration with [@lavamoat/harden][]
+   1. Or control dependency lifecycle scripts (eg. "postinstall") via [@lavamoat/allow-scripts][]
+2. Run your server or tooling with [@lavamoat/node][]
+3. Build your UI with the [LavaMoat Webpack plugin][@lavamoat/webpack] or use [LavaMoat for Browserify][lavamoat-browserify]
 
 :::tip
 
@@ -31,10 +31,16 @@ On modern versions of `npm`, `yarn`, or `pnpm`, [`@lavamoat/harden`][lavamoat-ha
 
 :::
 
-[lavamoat-harden]: /guides/harden
-[lavamoat-allowscripts]: /guides/allow-scripts
-[lavamoat-node]: /guides/lavamoat-node
+:::caution[Legacy LavaMoat Node.js runtime]
+
+The `lavamoat` package is no longer under active development. Its replacement is [@lavamoat/node][], which supports ESM. You can still read the [legacy documentation](/guides/legacy-lavamoat-node) for more information.
+
+:::
+
+[@lavamoat/harden]: /guides/harden
+[@lavamoat/allow-scripts]: /guides/allow-scripts
+[@lavamoat/node]: /guides/lavamoat-node
 [lavamoat-browserify]: /guides/browserify
-[lavamoat-webpack]: /guides/webpack
+[@lavamoat/webpack]: /guides/webpack
 [node-download]: https://nodejs.org/en/download
 [node]: https://nodejs.org

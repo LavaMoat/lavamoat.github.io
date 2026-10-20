@@ -51,7 +51,7 @@ app.js
 
 When generating a Policy from this application, LavaMoat will write the following to `./lavamoat/node/policy.json`:
 
-<a name="example-policy-json" />
+<a name="example-policy-json"></a>
 
 ```json title=policy.json
 {
@@ -90,6 +90,22 @@ When generating a Policy from this application, LavaMoat will write the followin
 }
 ```
 
+### Trusted vs. Untrusted Applications
+
+:::caution[@lavamoat/node Exclusive]
+
+> _As of October 20 2026_
+
+The concept of an **untrusted** application is only supported by [`@lavamoat/node`](./lavamoat-node); it is not supported by [`@lavamoat/webpack`](./webpack), nor any legacy LavaMoat tool. These tools always treat the entry point as **trusted**, with access to all resources.
+
+:::
+
+When running _your own application_ under LavaMoat, it is given free access to all resources (globals, built-ins, packages, etc.). This is a **trusted** application; a Policy for such an app will _not_ contain an entry in `resources` for your application.
+
+However, when running a _third-party application_ under `@lavamoat/node`—such as a linting or build tool—the app is considered **untrusted**. A generated Policy will contain a `root` field which declares a named resource as the "root" of the application, and the resource is treated as _any other dependency_, with an explicit Policy limiting access by the [principle of least privilege][least-privilege].
+
+An app running under `@lavamoat/node` will always have either zero (0) or one (1) trusted package, which can _only_ correspond to the entry point. **All other packages are considered untrusted** and must explicitly be granted access to resources via Policy.
+
 ### Fields of `policy.json`
 
 This section is an overview of the fields of `policy.json`.
@@ -115,6 +131,165 @@ Since granting write access to globals is potentially dangerous, write access is
 #### `native`
 
 Not shown in the example above, `native` is a boolean flag that indicates a package is allowed to load a native Node.js module. **Any auto-generated occurrence of `native` should be reviewed carefully**—a native module is a powerful resource!
+
+#### `root`
+
+:::caution[@lavamoat/node Exclusive]
+
+> _As of October 20 2026_
+
+`root` is _only_ supported by [`@lavamoat/node`](./lavamoat-node); it is not supported by [`@lavamoat/webpack`](./webpack), nor any legacy LavaMoat tool.
+
+:::
+
+##### `root.usePolicy`
+
+The `root.usePolicy` field is used to declare a named resource as the [untrusted](#trusted-vs-untrusted-applications) entry point of the application. An example Policy may look like this:
+
+```json title="policy.json"
+{
+  "resources": {
+    "webpack": {
+      "globals": {
+        "console": true
+      }
+    }
+  },
+  "root": {
+    "usePolicy": "webpack"
+  }
+}
+```
+
+In this situation, `webpack`'s executable is the entry point.
+
+#### `include`
+
+:::caution[@lavamoat/node v2+ Exclusive]
+
+> _As of October 20 2026_
+
+`include` is _only_ supported by [`@lavamoat/node`](./lavamoat-node) v2+; it is not supported by [`@lavamoat/webpack`](./webpack), nor any legacy LavaMoat tool.
+
+:::
+
+Sometimes a dependency may be missed by policy generation, typically due to it being dynamically imported. If a package is missed in this way, none of _its_ dependencies will be crawled, and thus omitted from policy entirely. Your app will most definitely break at runtime!
+
+`include` offers an escape hatch to "force" a package or specific module to be included during Policy generation[^4].
+
+##### Using `include` with `@lavamoat/node`
+
+In `@lavamoat/node`, when dynamic imports (or `require`s) are encountered, `@lavamoat/node` emits a warning with a link to the specific line of code causing the issue. At runtime, `@lavamoat/node` will fail with an exception which mentions the name of the disallowed, dynamically-imported package. In tandem, this information can help you create `include` entries to solve the problem.
+
+`include` can be specified using three (3) different forms, which are described below.
+
+<dl>
+<dt>
+
+Basic Dynamic Imports & Requires
+
+</dt>
+
+<dd>
+
+Consider this situation:
+
+You're generating policy for your app and `@lavamoat/node` emits a warning during which references package `yargs`. After this, you run your app via `@lavamoat/node`, and it fails with an exception explaining that `yargs` attempted to import `cliui`, which was disallowed.
+
+To solve this, create an `include` entry:
+
+```json title="policy-override.json"
+{
+  "include": ["yargs>cliui"],
+  "resources": {
+    "yargs": {
+      "packages": {
+        "yargs>cliui": true
+      }
+    }
+  }
+}
+```
+
+This uses the `string` form of `include`; it assumes a dynamic import of `cliui`'s "main" (or `.`) export.
+
+**It's not enough to only provide the `include` field**! The corresponding package Policy granting access to `yargs>cliui` from `yargs` is also needed, since static analysis cannot determine the relationship between `yargs` and `cliui`; `include` only tells LavaMoat it needs to _analyze_ `cliui`.
+
+</dd>
+<dt>
+
+Subpath Module Imports
+
+</dt>
+<dd>
+
+If a _non_-"main" module is imported—such as `./builds/lib/string-utils.js`—the `include` entry will have a `name` field corresponding to the resource[^5], and a `modules` array containing relative path(s)[^2] to the imported file(s):
+
+```json title="policy-override.json"
+{
+  "include": [
+    {
+      "name": "yargs>cliui",
+      "modules": ["./builds/lib/string-utils.js"]
+    }
+  ],
+  "resources": {
+    "yargs": {
+      "packages": {
+        "yargs>cliui": true
+      }
+    }
+  }
+}
+```
+
+</dd>
+
+<dt>
+
+Dynamic Imports of Arbitrary Modules
+
+</dt>
+<dd>
+
+In certain cases, a package will dynamically import a module _which isn't present in its own dependencies,_ such as a configuration file.
+
+For example, `webpack` will want to load your `webpack.config.js` file, but your application surely isn't a dependency of `webpack`! Because `webpack` will be treated as an _untrusted_ application under `@lavamoat/node`, it only has access to resources to which it's explicitly been granted—and "your code" isn't among them.
+
+For this situation, an `include` entry can instead provide a `location` field (instead of `name`), which is a relative path from the [project root][] to a `package.json`-containing directory. Be sure to allow access to `my-app`[^3] via `webpack`'s `packages` property:
+
+```json title="policy-override.json"
+{
+  "include": [
+    {
+      "location": ".",
+      "modules": ["./webpack.config.js"]
+    }
+  ],
+  "resources": {
+    "webpack": {
+      "packages": {
+        "my-app": true
+      }
+    }
+  }
+}
+```
+
+Here, we're running the untrusted `webpack` via `@lavamoat/node`'s `--bin` flag. `my-app` is the name of _your application_ (as per its `package.json`), and the `location` field in the `include` entry references the _directory_ containing your application's `package.json`, relative to the [project root][] (which happens to be the same directory).
+
+Thus, your application's entry point _will not_ be crawled during Policy generation, _but `webpack.config.js` will be_.
+
+_Only those modules modules appearing_ in the `modules` array will be accessible by `webpack`. `webpack` won't have access to any other file in `my-app` (such as `app.js`, or whatever your "main" module is) _unless_ it appears in the `modules` array[^1].
+
+This form of `include` is useful for tools which load configuration files (e.g., ESLint, Webpack, TypeScript and the usual suspects).
+
+</dd>
+</dl>
+
+Regardless of which form an `include` entry takes, any package and/or module referenced therein will will cause `@lavamoat/node`'s Policy generation to analyze it and any modules it can reach. This will be reflected in the resulting Policy file.
+
+Don't forget to grant access to the `include`'d package via the requesting resource's `packages` property!
 
 ### Limiting Property Access in Powerful Objects
 
@@ -230,3 +405,18 @@ More specifically, the deepest chain of properties needs to point to an allowed 
 For more examples, see `lavamoat-core`'s [`globals.spec.js`](https://github.com/LavaMoat/LavaMoat/blob/main/packages/core/test/globals.spec.js).
 
 **You shouldn't often need this level of complexity!** LavaMoat will not burden you by generating negative entries such as this.
+
+---
+
+[^1]: …or is otherwise directly depended upon by a resource, which is _highly unlikely_ unless you've created such a relationship via Policy Overrides.
+
+[^2]: Relative paths are computed relative to the [project root][]; _absolute_ paths should never appear in Policy.
+
+[^3]: Your application—e.g., `my-app` per `package.json`—is _not_ treated as a [trusted](#trusted-vs-untrusted-applications)application; it's a resource like any other. While `webpack.config.js` may be "your code", it is not considered the entry point (`webpack` is) and thus _cannot_ be considered trusted.
+
+[^4]: It's worth noting that with `@lavamoat/webpack`, lazily-loaded chunks are supported but are always known at compile-time; thus, `@lavamoat/webpack` has no need for `include`.
+
+[^5]: If an `include` entry has a `name` field but `modules` is omitted or empty, LavaMoat will assume the "main" module is being imported. Since this is the most common use-case, the `string` form is allowed for convenience.
+
+[least-privilege]: https://en.wikipedia.org/wiki/Principle_of_least_privilege
+[project root]: ./lavamoat-node#custom-project-root

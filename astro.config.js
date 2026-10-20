@@ -21,30 +21,30 @@ export default defineConfig({
           items: [
             { label: 'Getting Started', link: '/guides/getting-started/' },
             {
-              label: 'Harden your project',
+              label: 'Harden Your Project',
               link: '/guides/harden/',
             },
             {
-              label: 'LavaMoat with Node.js',
+              label: 'LavaMoat for Node.js',
               link: '/guides/lavamoat-node',
             },
             {
               label: 'LavaMoat with Webpack',
               link: '/guides/webpack',
             },
-            { label: 'Policy files', link: '/guides/policy' },
-            { label: 'Reviewing policy', link: '/guides/policy-diff' },
+            { label: 'Policy Files', link: '/guides/policy' },
+            { label: 'Reviewing Policy', link: '/guides/policy-diff' },
             {
-              label: 'Troubleshooting Common Problems',
+              label: 'Troubleshooting',
               link: '/guides/troubleshooting',
             },
             {
-              label: 'Hardening Dev Environment',
+              label: 'Hardening the Dev Environment',
               link: '/guides/hardening-dev',
             },
             {
-              label: 'Deprecated: allow-scripts tool',
-              link: '/guides/allow-scripts/',
+              label: 'Legacy Guides',
+              link: '/guides/legacy',
             },
           ],
         },
