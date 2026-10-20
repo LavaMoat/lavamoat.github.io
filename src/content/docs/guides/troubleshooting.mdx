@@ -5,20 +5,20 @@ description: Troubleshooting integrations and common problems with LavaMoat
 
 import { YouTube } from 'astro-embed';
 
-## Troubleshooting tutorial
+## Troubleshooting Tutorial
 
 <YouTube
   id="https://www.youtube.com/watch?v=E39cy5nrKtY"
   title="LavaMoat Troubleshooting Tutorial"
 />
 
-## Troubleshooting resources
+## Troubleshooting Resources
 
-### Policy configuration
+### Policy Configuration
 
 If the result of running automated policy generation is not enough to correctly run your application, remember to put changes you want to manually make in the policy in the `policy-override.json` file and avoid your changes being overwritten when you regenerate policy
 
-#### When I regenerate policy, package keys in `resources` change
+#### When I Regenerate Policy, Package Keys in `resources` Change
 
 The keys in the resources field (we refer to them as canonical names for packages) are the shortest paths through the dependency tree pointing to a package.
 We could not use names because it's possible for multiple entirely different packages to have the same name (see the intro video on the main page to learn how).
@@ -26,11 +26,11 @@ We could not use names because it's possible for multiple entirely different pac
 When you make changes to your dependency tree it's possible that a new, shorter path to a dependency was introduced and that will affect what it's called as a result.
 The algorithm for creating canonical names is designed to make them as stable as possible, but they can change and you may sometimes need to update the keys in `policy-override.json` to match.
 
-### Error codes beginning with `SES_`
+### Error Codes Beginning with `SES_`
 
 If you get an error beginning with `SES_` - look it up in the collection of documents here: https://github.com/endojs/endo/tree/master/packages/ses/error-codes
 
-### SES lockdown related issues
+### SES Lockdown Related Issues
 
 For troubleshooting interactions with SES->lockdown you should be aware that LavaMoat is passing the following configuration to lockdown:
 
@@ -54,18 +54,18 @@ const lockdownOptions = {
 
 Detailed documentation of `lockdown`: https://github.com/endojs/endo/blob/master/packages/ses/docs/reference.md
 
-#### TypeError: Cannot assign to read only property...
+#### TypeError: Cannot Assign to Read Only Property...
 
 If you get an error like that, it means there was an attempt to assign to one of the frozen global prototypes.
 While overrideTaming is enabled, some override mistakes are still possible, so if the assignment looks like it's assigning to a regular object, be aware that the error might be caused by the prototype of that object being frozen.
 See the video above for detailed examples.
 
-#### Troublesome packages
+#### Troublesome Packages
 
 If a package is having trouble working in a locked-down environment, it's either on the list here: https://github.com/endojs/endo/issues/2037 or is worth reporting.
 The issue contains links to fixes you can introduce.
 
-### Patching packages locally
+### Patching Packages Locally
 
 When a package has a compatibility issue, you can patch it locally before/instead of fixing upstream.
 

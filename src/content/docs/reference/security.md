@@ -11,7 +11,7 @@ LavaMoat does not maintain old versions. LavaMoat does not backport fixes, inclu
 
 Please report any vulnerabilities to `security@metamask.io`.
 
-### Reporting a vulnerability in SES
+### Reporting a Vulnerability in SES
 
 You can report SES vulnerabilities directly, but feel free to go through us if you're not sure.
 

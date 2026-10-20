@@ -1,5 +1,5 @@
 ---
-title: 'Harden your local development environment'
+title: 'Harden Your Local Development Environment'
 description: 'A guide on how to settings that minimise the risk of local dev compromise.'
 ---
 
@@ -13,7 +13,7 @@ This is not _defense-in-depth_, but rather provides the most _bang-for-your-buck
 Most of the per-project settings described below can be applied automatically with [`@lavamoat/harden`](/guides/harden). On modern versions of `npm`, `yarn`, or `pnpm`, it is now the preferred way to configure these defaults.
 :::
 
-## Malware avoidance defaults
+## Malware Avoidance Defaults
 
 This section explains how to configure your project to prevent dangerous package manager behavior.
 
@@ -173,7 +173,7 @@ If you must use git dependencies, there's a tool to help you validate they're be
 BTW, you can also use it for your Github Actions workflows - they install all of their dependencies from git.
 :::
 
-## Fundamental secrets hygiene
+## Fundamental Secrets Hygiene
 
 1. Use a password manager
 2. Enable 2fa on your `npmjs.com` account (even if you don't publish from localhost)
@@ -196,13 +196,13 @@ BTW, you can also use it for your Github Actions workflows - they install all of
 - `gh` CLI can reveal your access token. Logout after each use or only use it in a dedicated container.
 - in `.env` files or similar: If you have to put them there while you're testing, make sure to _delete them ASAP_ and only store them permanently in a password manager.
 
-## Get early warnings
+## Get Early Warnings
 
 You can install Socket Firewall to prevent known malware from being installed on your machine. In some cases it can detect malware that's still active on the npm registry.
 
 - [Socket Firewall Free](https://docs.socket.dev/docs/socket-firewall-free)
 
-## Proactive compartmentalization
+## Proactive Compartmentalization
 
 We've eliminated the most popular install-time compromise vectors by this point, but that's not the only time you run someone else's code in your dev environment. What about when you run `npm run build` or `yarn lint`?
 It'd be great to have a virtual dev environment for every project or find a way to consistently use tools like:

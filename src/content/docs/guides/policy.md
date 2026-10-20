@@ -38,7 +38,7 @@ Both `policy.json` and `policy-override.json` should be under version control. T
 
 :::
 
-## Policy, By Example
+## Policy, by Example
 
 Say we generate a Policy file for an application with the following dependency tree, where `app.js` is the entry point:
 
