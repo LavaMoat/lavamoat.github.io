@@ -17,35 +17,22 @@ LavaMoat is a monorepo organized into discrete packages. Below is a directory tr
 
 <FileTree>
 
-- .config/ Common TypeScript, ESLint & other [configuration][config]
-- .github/ [CI configuration][ci]
-- packages/ Contains all npm workspaces
-  - aa/ [**@lavamoat/aa**][lavamoat-aa] - Generates canonical package names
-  - allow-scripts/ [**@lavamoat/allow-scripts**][lavamoat-allow-scripts] - Allow-list for on-install lifecycle scripts
-  - browserify/ [**lavamoat-browserify**][lavamoat-browserify] - Browserify plugin
-  - core/ [**lavamoat-core**][lavamoat-core] Core LavaMoat functionality
-  - lavapack/ [**@lavamoat/lavapack**][lavamoat-lavapack] - Bundle packer for lavamoat-browserify
-  - laverna/ [**@lavamoat/laverna**][lavamoat-laverna] - Tool to publish multiple workspaces in a monorepo
-  - node/ [**lavamoat-node**][lavamoat-node] - Node.js adapter
-  - preinstall-always-fail/ **@lavamoat/preinstall-always-fail** - Fails if preinstall lifecycle script is run; helper for [allow-scripts][lavamoat-allow-scripts]
-  - tofu/ [**lavamoat-tofu**][lavamoat-tofu] - Generate LavaMoat policy from dependency graph
-  - webpack/ [**@lavamoat/webpack**][lavamoat-webpack] - Webpack plugin
-- scripts/ Custom [scripts][scripts]
+- .config/ Common TypeScript, ESLint & other configuration
+- .github/ CI configuration
+- packages/ Contains all workspaces
+  - aa/ **@lavamoat/aa** - Generates canonical package names
+  - allow-scripts/ **@lavamoat/allow-scripts** - Allow-list for on-install lifecycle scripts
+  - browserify/ **lavamoat-browserify** - [Browserify][] plugin
+  - core/ **lavamoat-core** - Core LavaMoat functionality
+  - lavapack/ **@lavamoat/lavapack** - Bundle packer for `lavamoat-browserify`
+  - lavamoat-node/ **lavamoat** - Node.js LavaMoat runtime adapter (DEPRECATED)
+  - laverna/ **@lavamoat/laverna** - Tool to publish multiple workspaces in a monorepo (DEPRECATED)
+  - node/ **@lavamoat/node** - Node.js LavaMoat runtime adapter
+  - preinstall-always-fail/ **@lavamoat/preinstall-always-fail** - Fails if preinstall lifecycle script is run; helper for `@lavamoat/allow-scripts`
+  - tofu/ **lavamoat-tofu** - Common AST-based module analysis for LavaMoat adapters
+  - webpack/ **@lavamoat/webpack** - Webpack plugin
+- scripts/ Custom scripts
 
 </FileTree>
 
-{/* the below are TODOs */}
-
-[ci]: /contributor/ci
-[config]: /contributor/config
-[lavamoat-aa]: /contributor/lavamoat-aa
-[lavamoat-allow-scripts]: /contributor/allow-scripts
-[lavamoat-browserify]: /contributor/lavamoat-browserify
-[lavamoat-core]: /contributor/lavamoat-core
-[lavamoat-lavapack]: /contributor/lavamoat-lavapack
-[lavamoat-laverna]: /contributor/lavamoat-laverna
-[lavamoat-node]: /contributor/lavamoat-node
-[lavamoat-preinstall-always-fail]: /contributor/lavamoat-preinstall-always-fail
-[lavamoat-tofu]: /contributor/lavamoat-tofu
-[lavamoat-webpack]: /contributor/lavamoat-webpack
-[scripts]: /contributor/scripts
+[browserify]: https://browserify.org
