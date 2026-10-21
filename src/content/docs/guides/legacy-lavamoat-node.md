@@ -1,6 +1,6 @@
 ---
 title: 'LavaMoat Node.js Runtime (Legacy)'
-description: 'A user guide for running LavaMoat-protected NodeJS applications'
+description: 'A user guide for running LavaMoat-protected Node.js applications'
 ---
 
 :::caution[Deprecated]

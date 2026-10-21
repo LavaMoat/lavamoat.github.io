@@ -159,7 +159,7 @@ These days package managers support a good degree of lifecycle script protection
 You can use [`@lavamoat/harden`](/guides/harden) to get that configured.
 
 If you're using an older version of your package manager of choice (and to specify versions in the allowlist when using yarn) use `@lavamoat/allow-scripts` to set up a per-package allowlist.
-It identifies packages with their position in the dependency tree, so if you allow one package, scripts from different packages that match the name will not run. (git and bundled dependencies declare their own name in `pacage.json` to be whatever they want)
+It identifies packages with their position in the dependency tree, so if you allow one package, scripts from different packages that match the name will not run. (git and bundled dependencies declare their own name in `package.json` to be whatever they want)
 
 For more information, see the [complete `@lavamoat/allow-scripts` guide](./allow-scripts.md).
 

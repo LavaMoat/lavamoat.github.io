@@ -1,6 +1,6 @@
 ---
 title: 'Legacy Guides'
-description: 'Legacy guides for running LavaMoat-protected NodeJS applications'
+description: 'Legacy guides for running LavaMoat-protected Node.js applications'
 ---
 
 :::caution
