@@ -1,31 +1,46 @@
 {
   "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/packages/cspell-types/cspell.schema.json",
   "allowCompoundWords": true,
-  "caseSensitive": false,
+  "caseSensitive": true,
   "dictionaries": [
+    "!aws",
+    "!cryptocurrencies",
+    "bash",
+    "coding-compound-terms",
     "companies",
+    "computing-acronyms",
     "css",
-    "en_US",
+    "en_us",
+    "en-us-common-misspellings",
     "filetypes",
     "fonts",
+    "fullstack",
+    "git",
+    "html-symbol-entities",
     "html",
     "misc",
     "node",
     "npm",
+    "public-licenses",
+    "shellscript",
+    "software-terms-alternative",
+    "software-tools",
     "softwareTerms",
     "typescript"
   ],
+  "flagWords": ["regardles", "nodejs", "NodeJS", "NPM"],
   "ignorePaths": [
-    ".coverage",
-    ".tmp",
-    ".vscode",
-    "public",
     ".husky",
-    "src/assets",
-    "dist"
+    ".vscode",
+    "cspell.json",
+    "tsconfig.json",
+    "dist",
+    "public",
+    "src/assets"
   ],
   "ignoreRandomStrings": true,
   "ignoreWords": ["seti", "entropoetry", "filterenv", "rezeplayer"],
+  "suggestWords": ["nodejs: Node.js", "NPM: npm"],
   "words": [
     "frobnicate",
     "endomoat",
@@ -36,7 +51,10 @@
     "Endo",
     "OCAP",
     "Consensys",
+    "Laverna",
+    "laverna",
     "virtualizes",
-    "Kipuka"
+    "Kipuka",
+    "radio-canada"
   ]
 }
