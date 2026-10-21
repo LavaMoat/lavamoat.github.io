@@ -197,7 +197,7 @@ We need to be careful with this, as it doesn't work the other way; [Policies _do
 
 ## Policies Are Not Deny-Lists
 
-In other wordfs, explicitly allowing access to an entire item and then attempting to narrow it down by denying specific fields is unsupported. If you want to allow allow access to `a.b`, you might try this:
+In other words, explicitly allowing access to an entire item and then attempting to narrow it down by denying specific fields is unsupported. If you want to allow allow access to `a.b`, you might try this:
 
 ```json title="Busted Example"
   "globals": {
