@@ -167,7 +167,7 @@ For more information, see the [complete `@lavamoat/allow-scripts` guide](./allow
 
 If you must use git dependencies, there's a tool to help you validate they're being used as safely as possible: [@lavamoat/git-safe-dependencies](https://www.npmjs.com/package/@lavamoat/git-safe-dependencies).
 
-`@lavamoawt/git-safe-dependencies` is a CLI tool which validates Git dependencies against a set of opinionated rules.
+`@lavamoat/git-safe-dependencies` is a CLI tool which validates Git dependencies against a set of opinionated rules.
 
 :::tip[Github Actions]
 BTW, you can also use it for your Github Actions workflows - they install all of their dependencies from git.
