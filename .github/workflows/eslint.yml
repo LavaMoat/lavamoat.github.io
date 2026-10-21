@@ -19,3 +19,5 @@ jobs:
           node-version: 24
       - run: npm ci
       - run: npm run lint:eslint
+      - name: Check Spelling
+        run: npm run lint:spelling

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/packages/cspell-types/cspell.schema.json",
+  "allowCompoundWords": true,
+  "caseSensitive": false,
+  "dictionaries": [
+    "companies",
+    "css",
+    "en_US",
+    "filetypes",
+    "fonts",
+    "html",
+    "misc",
+    "node",
+    "npm",
+    "softwareTerms",
+    "typescript"
+  ],
+  "ignorePaths": [
+    ".coverage",
+    ".tmp",
+    ".vscode",
+    "public",
+    ".husky",
+    "src/assets",
+    "dist"
+  ],
+  "ignoreRandomStrings": true,
+  "ignoreWords": ["seti", "entropoetry", "filterenv", "rezeplayer"],
+  "words": [
+    "frobnicate",
+    "endomoat",
+    "keccak",
+    "Kowal",
+    "naugtur",
+    "Devcon",
+    "Endo",
+    "OCAP",
+    "Consensys",
+    "virtualizes",
+    "Kipuka"
+  ]
+}
