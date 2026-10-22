@@ -1,0 +1,21 @@
+name: LabelBot
+on:
+  - pull_request_target
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  labeler:
+    if: github.repository == 'LavaMoat/lavamoat.github.io'
+    name: Automatically label PRs
+    permissions:
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Label PRs
+        uses: actions/labeler@bf12e9b00b37c5c0ca2b87b79b2daf7891dbda13 # v7.0.0

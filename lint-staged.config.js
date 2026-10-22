@@ -1,11 +1,11 @@
 export default {
-  '*.(m?js|ts)': [
+  '*.{mjs,js,ts}': [
     'eslint --fix',
     'prettier --write',
     'cspell lint --no-must-find-files',
   ],
   '*.md': ['markdownlint-cli2 --fix', 'cspell lint --no-must-find-files'],
-  '*.(mdx?|ya?ml|json|astro)': [
+  '*.{mdx,yml,yaml,json,astro}': [
     'prettier --write',
     'cspell lint --no-must-find-files',
   ],
