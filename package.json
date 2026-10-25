@@ -43,7 +43,7 @@
     "globals": "17.13.0",
     "husky": "9.1.7",
     "lint-staged": "17.6.0",
-    "markdownlint-cli2": "0.23.3",
+    "markdownlint-cli2": "0.24.0",
     "markdownlint-cli2-formatter-pretty": "0.0.10",
     "prettier": "3.9.10",
     "prettier-plugin-astro": "1.1.1",
