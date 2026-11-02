@@ -1,0 +1,19 @@
+'dependencies':
+  - changed-files:
+      - any-glob-to-any-file:
+          - './package?(-lock).json'
+
+'chore':
+  - changed-files:
+      - any-glob-to-any-file:
+          - '.*/**'
+          - 'tsconfig.json'
+          - 'cspell.json'
+          - '*.config.js'
+          - '.*'
+
+'documentation':
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'public/**'
+          - 'src/**'
